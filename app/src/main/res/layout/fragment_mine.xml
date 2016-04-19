@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_mine">
+
+    <cn.common.ui.widgt.RoundImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/test_avatar" />
+
+    <ImageView
+        android:id="@+id/iv_edit_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iv_avatar"
+        android:layout_toRightOf="@+id/iv_avatar"
+        android:padding="15dp"
+        android:src="@android:drawable/ic_menu_edit" />
+
+    <TextView
+        android:id="@+id/tv_nick_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_avatar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:text="漂亮得不像实力派"
+        android:textColor="@color/black_363636"
+        android:textSize="@dimen/text_size_content" />
+
+    <View
+        android:id="@+id/v_divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/tv_nick_name"
+        android:layout_marginTop="15dp"
+        android:background="#7986CB" />
+
+    <ListView
+        android:id="@+id/lv_menu_item"
+        android:layout_below="@+id/v_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="@color/trans"
+        android:divider="#7986CB"
+        android:dividerHeight="0.5dp" />
+</RelativeLayout>

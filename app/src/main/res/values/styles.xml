@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="AppTheme" parent="base_activity_style"></style>
+
+    <style name="main_activity" parent="base_activity_style" />
+
+    <style name="swipe_activity" parent="base_swipe_activity_style" />
+
+</resources>
