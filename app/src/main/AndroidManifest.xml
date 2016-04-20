@@ -12,6 +12,7 @@
         <meta-data
             android:name="cn.common.config.GlideConfig"
             android:value="GlideModule" />
+
         <activity
             android:name=".ui.activity.SplashActivity"
             android:theme="@style/main_activity">
@@ -24,9 +25,6 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:theme="@style/main_activity" />
-        <activity
-            android:name=".ui.NavigationActivity"
-            android:label="@string/title_activity_navigation"></activity>
     </application>
 
 </manifest>

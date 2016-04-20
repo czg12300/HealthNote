@@ -1,19 +1,33 @@
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <include
+        android:id="@+id/layout_title"
+        layout="@layout/title_bar" />
 
-    <fragment
-        android:id="@+id/container"
-        android:name="com.jake.health.ui.fragment.MainFragment"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <fragment
-        android:id="@+id/navigation_drawer"
-        android:name="com.jake.health.ui.fragment.MineFragment"
-        android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
-        android:layout_gravity="start" />
+        android:layout_below="@+id/layout_title">
 
-</android.support.v4.widget.DrawerLayout>
+        <include layout="@layout/view_main_container" />
+
+        <fragment
+            android:id="@+id/navigation_drawer"
+            android:name="com.jake.health.ui.fragment.MineFragment"
+            android:layout_width="@dimen/navigation_drawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start" />
+
+    </android.support.v4.widget.DrawerLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/layout_title"
+        android:background="@drawable/img_shadow_bottom" />
+</RelativeLayout>
+

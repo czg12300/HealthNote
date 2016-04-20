@@ -11,7 +11,7 @@
         android:layout_height="@dimen/title_height">
 
         <ImageView
-            android:id="@+id/tv_title_back"
+            android:id="@+id/iv_title_back"
             android:layout_width="@dimen/title_height"
             android:layout_height="match_parent"
             android:visibility="gone"
@@ -22,6 +22,8 @@
             android:id="@+id/tv_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/white"
             android:layout_centerInParent="true"
             android:singleLine="true" />
 
