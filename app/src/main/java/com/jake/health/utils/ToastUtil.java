@@ -12,7 +12,7 @@ import com.jake.health.ui.base.BaseApplication;
  *
  * @author Created by jakechen on 2015/8/11.
  */
-public class BaseToastUtil {
+public class ToastUtil {
     protected static Toast mToast;
     protected static String mMsg;
 

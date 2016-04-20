@@ -7,16 +7,21 @@ import com.jake.health.utils.DisplayUtil;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.Scroller;
 
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -95,9 +100,9 @@ public class BannerView extends FrameLayout implements OnPageChangeListener {
     }
 
     public static interface IListener {
-        void itemClick(Object banner);
+        void clickBannerItem(Object banner);
 
-        void loadImage(Object banner, ImageView ivBanner);
+        void loadImageToBanner(Object banner, ImageView ivBanner);
 
     }
 
@@ -154,6 +159,54 @@ public class BannerView extends FrameLayout implements OnPageChangeListener {
 
     public DotView getDotView() {
         return mDotView;
+    }
+
+    public ViewPager getViewPager() {
+        return mViewPager;
+    }
+
+    public void setDuration(int time) {
+        try {
+            Field field = ViewPager.class.getDeclaredField("mScroller");
+            field.setAccessible(true);
+            FixedSpeedScroller scroller = new FixedSpeedScroller(mViewPager.getContext(),
+                    new AccelerateInterpolator());
+            field.set(mViewPager, scroller);
+            scroller.setmDuration(time);
+        } catch (Exception e) {
+        }
+    }
+
+    public class FixedSpeedScroller extends Scroller {
+        private int mDuration = 1500;
+
+        public FixedSpeedScroller(Context context) {
+            super(context);
+        }
+
+        public FixedSpeedScroller(Context context, Interpolator interpolator) {
+            super(context, interpolator);
+        }
+
+        @Override
+        public void startScroll(int startX, int startY, int dx, int dy, int duration) {
+            // Ignore received duration, use fixed one instead
+            super.startScroll(startX, startY, dx, dy, mDuration);
+        }
+
+        @Override
+        public void startScroll(int startX, int startY, int dx, int dy) {
+            // Ignore received duration, use fixed one instead
+            super.startScroll(startX, startY, dx, dy, mDuration);
+        }
+
+        public void setmDuration(int time) {
+            mDuration = time;
+        }
+
+        public int getmDuration() {
+            return mDuration;
+        }
     }
 
     private void updateDotView() {
@@ -300,16 +353,16 @@ public class BannerView extends FrameLayout implements OnPageChangeListener {
             @Override
             public void onClick(View v) {
                 if (clickListener != null) {
-                    clickListener.itemClick(v.getTag());
+                    clickListener.clickBannerItem(v.getTag(getId()));
                 }
             }
         });
-        imageView.setTag(object);
+        imageView.setTag(getId(), object);
         if (defaultResId > 0) {
             imageView.setImageResource(defaultResId);
         }
         if (clickListener != null) {
-            clickListener.loadImage(object, imageView);
+            clickListener.loadImageToBanner(object, imageView);
         }
         return imageView;
     }

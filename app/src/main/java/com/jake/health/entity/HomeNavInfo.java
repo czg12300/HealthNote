@@ -9,6 +9,15 @@ package com.jake.health.entity;
 public class HomeNavInfo {
     private String title;
     private String icon;
+    private int showDot;
+
+    public int getShowDot() {
+        return showDot;
+    }
+
+    public void setShowDot(int showDot) {
+        this.showDot = showDot;
+    }
 
     public String getTitle() {
         return title;

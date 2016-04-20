@@ -20,7 +20,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseFragmentActivity extends FragmentActivity implements IUi {
+public abstract class BaseFragmentActivity extends FragmentActivity implements IUi,ImageLoadListener {
     protected static final int REQUEST_CODE = 0x123f;
 
     protected static final int RESULT_CODE = 0x124f;
@@ -80,6 +80,11 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements I
             };
             registerReceiver(mReceiver, filter);
         }
+    }
+
+    @Override
+    public void loadImageByUrl(String url, ImageView imageView) {
+        loadImage(url,imageView);
     }
 
     protected void loadImage(String url, ImageView view) {

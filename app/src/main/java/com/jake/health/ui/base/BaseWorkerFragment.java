@@ -54,13 +54,7 @@ public abstract class BaseWorkerFragment extends BaseFragment {
         }
     }
 
-    protected void loadImage(String url, ImageView view) {
-        if (view != null && !TextUtils.isEmpty(url)) {
-            Glide.with(this).load(url)
-                    .placeholder(BaseApplication.getInstance().getDefaultImageResources())
-                    .crossFade(800).into(view);
-        }
-    }
+
 
     public void handleBackgroundMessage(Message msg) {
     }

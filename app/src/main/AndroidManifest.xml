@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
-            android:name="cn.common.config.GlideConfig"
+            android:name="com.jake.health.config.GlideConfig"
             android:value="GlideModule" />
 
         <activity

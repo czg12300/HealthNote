@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.jake.health.ui.base.ImageLoadListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseListAdapter<T> extends BaseAdapter {
     private Context mContext;
-
+    protected ImageLoadListener mImageLoadListener;
     private LayoutInflater mInflater;
 
     protected List<T> mDataList;
@@ -38,6 +40,9 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     }
 
     public BaseListAdapter(Context context, List<T> list) {
+        if (context instanceof ImageLoadListener){
+            mImageLoadListener= (ImageLoadListener) context;
+        }
         mContext = context;
         mInflater = LayoutInflater.from(context);
         if (isAvailable(list)) {
