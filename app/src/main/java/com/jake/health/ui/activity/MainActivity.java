@@ -55,7 +55,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     }
 
     private void initTitleBar() {
-        ChangeThemeUtils.adjustStatusBar(findViewById(R.id.ll_root_title), this);
+        ChangeThemeUtils.adjustStatusBar(findViewById(R.id.layout_title), this);
         mTvTitle = ((TextView) findViewById(R.id.tv_title_text));
     }
 
@@ -69,7 +69,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         mBannerTop.getDotView().setNormalColor(Color.parseColor("#60000000"));
         mBannerTop.getDotView().setSelectColor(Color.parseColor("#afffffff"));
         mBannerTop.getViewPager().setPageTransformer(true, new ZoomOutPageTransformer());
-        mBannerTop.setDuration(800);
+        mBannerTop.setDuration(500);
     }
 
     private void initData() {
