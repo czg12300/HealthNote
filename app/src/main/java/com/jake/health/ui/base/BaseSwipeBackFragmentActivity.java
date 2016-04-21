@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 
-import com.jake.health.ui.widgt.ChangeThemeUtils;
+import com.jake.health.ui.widgt.ThemeUtils;
 import com.jake.health.ui.widgt.swipeback.SwipeBackActivityHelper;
 import com.jake.health.ui.widgt.swipeback.SwipeBackLayout;
 
@@ -49,7 +49,7 @@ public class BaseSwipeBackFragmentActivity extends BaseWorkerFragmentActivity {
     }
 
     public void scrollToFinishActivity() {
-        ChangeThemeUtils.convertActivityToTranslucent(this);
+        ThemeUtils.convertActivityToTranslucent(this);
         getSwipeBackLayout().scrollToFinishActivity();
     }
 }

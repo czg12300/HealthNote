@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jake.health">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".ui.HealthApplication"
         android:allowBackup="true"
@@ -15,6 +16,7 @@
 
         <activity
             android:name=".ui.activity.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/main_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +26,12 @@
         </activity>
         <activity
             android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/main_activity" />
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/swipe_activity" />
     </application>
 
 </manifest>

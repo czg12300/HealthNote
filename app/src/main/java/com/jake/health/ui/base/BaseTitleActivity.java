@@ -14,7 +14,7 @@ public abstract class BaseTitleActivity extends BaseSwipeBackFragmentActivity {
 
     private static final int MSG_UI_INIT_DATA = 10000;
 
-    private FrameLayout mFlContent;
+    protected FrameLayout mFlContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +101,7 @@ public abstract class BaseTitleActivity extends BaseSwipeBackFragmentActivity {
 
     }
 
-    protected void setTitle(String title) {
-    }
+    protected abstract void setTitle(String title);
 
     protected boolean hasTitle() {
         return true;

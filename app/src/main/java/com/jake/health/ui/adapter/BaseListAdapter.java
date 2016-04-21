@@ -36,13 +36,19 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     }
 
     public BaseListAdapter(Context context) {
-        this(context, null);
+        this(context, null, context instanceof ImageLoadListener ? (ImageLoadListener) context : null);
+    }
+
+    public BaseListAdapter(Context context, ImageLoadListener listener) {
+        this(context, null, listener);
     }
 
     public BaseListAdapter(Context context, List<T> list) {
-        if (context instanceof ImageLoadListener){
-            mImageLoadListener= (ImageLoadListener) context;
-        }
+        this(context, list, null);
+    }
+
+    public BaseListAdapter(Context context, List<T> list, ImageLoadListener listener) {
+        mImageLoadListener = listener;
         mContext = context;
         mInflater = LayoutInflater.from(context);
         if (isAvailable(list)) {
@@ -86,9 +92,10 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
             mDataList.addAll(list);
         }
     }
-    public void addAll(int position,List<T> list) {
+
+    public void addAll(int position, List<T> list) {
         if (list != null && list.size() > 0) {
-            mDataList.addAll(position,list);
+            mDataList.addAll(position, list);
         }
     }
 

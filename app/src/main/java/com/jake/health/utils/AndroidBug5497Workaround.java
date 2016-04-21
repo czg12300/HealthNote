@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
-import com.jake.health.ui.widgt.ChangeThemeUtils;
+import com.jake.health.ui.widgt.ThemeUtils;
 
 
 public class AndroidBug5497Workaround {
@@ -59,7 +59,7 @@ public class AndroidBug5497Workaround {
         Rect r = new Rect();
         mChildOfContent.getWindowVisibleDisplayFrame(r);
         if (isAdjustStatusBar && Build.VERSION.SDK_INT >= 19) {
-            return (r.bottom - r.top + ChangeThemeUtils.getStatusBarHeight(mActivity));
+            return (r.bottom - r.top + ThemeUtils.getStatusBarHeight(mActivity));
         }
         return (r.bottom - r.top);
     }

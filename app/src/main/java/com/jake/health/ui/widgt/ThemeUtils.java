@@ -11,8 +11,8 @@ import android.view.View;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public class ChangeThemeUtils {
-    private ChangeThemeUtils() {
+public class ThemeUtils {
+    private ThemeUtils() {
     }
 
     public static void adjustStatusBar(View view, Context context) {

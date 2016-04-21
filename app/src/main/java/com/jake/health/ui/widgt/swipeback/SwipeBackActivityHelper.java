@@ -1,7 +1,7 @@
 
 package com.jake.health.ui.widgt.swipeback;
 
-import com.jake.health.ui.widgt.ChangeThemeUtils;
+import com.jake.health.ui.widgt.ThemeUtils;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
@@ -25,13 +25,13 @@ public class SwipeBackActivityHelper {
             @Override
             public void onScrollStateChange(int state, float scrollPercent) {
                 if (state == SwipeBackLayout.STATE_IDLE && scrollPercent == 0) {
-                    ChangeThemeUtils.convertActivityFromTranslucent(mActivity);
+                    ThemeUtils.convertActivityFromTranslucent(mActivity);
                 }
             }
 
             @Override
             public void onEdgeTouch(int edgeFlag) {
-                ChangeThemeUtils.convertActivityToTranslucent(mActivity);
+                ThemeUtils.convertActivityToTranslucent(mActivity);
             }
 
             @Override
@@ -43,7 +43,7 @@ public class SwipeBackActivityHelper {
 
     public void onPostCreate() {
         mSwipeBackLayout.attachToActivity(mActivity);
-        ChangeThemeUtils.convertActivityFromTranslucent(mActivity);
+        ThemeUtils.convertActivityFromTranslucent(mActivity);
     }
 
     public View findViewById(int id) {

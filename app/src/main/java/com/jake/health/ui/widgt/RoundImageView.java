@@ -61,6 +61,11 @@ public class RoundImageView extends ImageView {
     super(context, attrs, defStyle);
   }
 
+  @Override
+  public void setImageBitmap(Bitmap bm) {
+    super.setImageBitmap(bm);
+    postInvalidate();
+  }
 
   @Override
   protected void onDraw(Canvas canvas) {

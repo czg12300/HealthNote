@@ -1,12 +1,15 @@
 
 package com.jake.health.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -16,10 +19,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jake.health.R;
+import com.jake.health.config.ActionConfig;
 import com.jake.health.entity.HomeNavInfo;
 import com.jake.health.ui.adapter.HomeNavAdapter;
 import com.jake.health.ui.base.BaseWorkerFragmentActivity;
-import com.jake.health.ui.widgt.ChangeThemeUtils;
+import com.jake.health.ui.widgt.ThemeUtils;
 import com.jake.health.ui.widgt.ZoomOutPageTransformer;
 import com.jake.health.ui.widgt.banner.BannerView;
 import com.jake.health.utils.DisplayUtil;
@@ -55,7 +59,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     }
 
     private void initTitleBar() {
-        ChangeThemeUtils.adjustStatusBar(findViewById(R.id.layout_title), this);
+        ThemeUtils.adjustStatusBar(findViewById(R.id.layout_title), this);
         mTvTitle = ((TextView) findViewById(R.id.tv_title_text));
     }
 
@@ -69,7 +73,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         mBannerTop.getDotView().setNormalColor(Color.parseColor("#60000000"));
         mBannerTop.getDotView().setSelectColor(Color.parseColor("#afffffff"));
         mBannerTop.getViewPager().setPageTransformer(true, new ZoomOutPageTransformer());
-        mBannerTop.setDuration(500);
+        mBannerTop.setDuration(300);
     }
 
     private void initData() {
@@ -78,6 +82,12 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         mGvNav.setAdapter(mHomeNavAdapter);
 
         sendEmptyUiMessage(MSG_UI_INIT_DATA);
+    }
+
+    private boolean isLogin = false;
+
+    public void closeMine() {
+        mDrawerLayout.closeDrawer(Gravity.LEFT);
     }
 
     private void initEvent() {
@@ -117,6 +127,10 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         mIvTitleMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!isLogin) {
+                    goActivity(LoginActivity.class);
+                    return;
+                }
                 if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
                 } else {
@@ -196,6 +210,28 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         mBannerTop.startScroll(5);
     }
 
+    @Override
+    public void setupBroadcastActions(List<String> actions) {
+        super.setupBroadcastActions(actions);
+        actions.add(ActionConfig.ACTION_LOGIN_CANCEL);
+        actions.add(ActionConfig.ACTION_LOGIN_SUCCESS);
+    }
+
+    @Override
+    public void handleBroadcast(Context context, Intent intent) {
+        super.handleBroadcast(context, intent);
+        final String action = intent.getAction();
+        if (TextUtils.equals(action, ActionConfig.ACTION_LOGIN_SUCCESS)) {
+            ToastUtil.show("登录成功");
+            isLogin = true;
+        } else {
+            if (TextUtils.equals(action, ActionConfig.ACTION_LOGIN_CANCEL)) {
+                ToastUtil.show("取消登录");
+
+            }
+        }
+    }
+
     private ArrayList<?> getTestBanner() {
         ArrayList<String> list = new ArrayList<>();
         list.add("http://img0.imgtn.bdimg.com/it/u=535245040,1392341624&fm=21&gp=0.jpg");
@@ -209,6 +245,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         List<HomeNavInfo> list = new ArrayList<>();
         HomeNavInfo info = new HomeNavInfo();
         info.setTitle("求医问药");
+        info.setShowDot(1);
         info.setIcon("http://img2.imgtn.bdimg.com/it/u=1390048268,4118739760&fm=21&gp=0.jpg");
         list.add(info);
         info = new HomeNavInfo();

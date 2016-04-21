@@ -6,10 +6,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +21,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.jake.health.ui.eventbus.EventBus;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseFragment extends Fragment implements IUi ,ImageLoadListener {
+public abstract class BaseFragment extends Fragment implements IUi, ImageLoadListener {
     private static final int MSG_UI_INIT_DATA = 30000;
 
     protected static final int REQUEST_CODE = 0x125f;
@@ -105,17 +108,37 @@ public abstract class BaseFragment extends Fragment implements IUi ,ImageLoadLis
         mUiHandler = new UiHandler(this);
 
     }
+
     @Override
     public void loadImageByUrl(String url, ImageView imageView) {
-        loadImage(url,imageView);
+        loadImage(url, imageView);
     }
+
     protected void loadImage(String url, ImageView view) {
+       loadImage(url,view,false);
+    }
+
+    protected void loadImage(String url, ImageView view, boolean isCircle) {
         if (view != null && !TextUtils.isEmpty(url)) {
-            Glide.with(this).load(url)
-                    .placeholder(BaseApplication.getInstance().getDefaultImageResources())
-                    .crossFade(800).into(view);
+            if (isCircle) {
+                Glide.with(this).load(url).asBitmap()
+                        .placeholder(BaseApplication.getInstance().getDefaultImageResources()).into(new BitmapImageViewTarget(view) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        view.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+            } else {
+                Glide.with(this).load(url)
+                        .placeholder(BaseApplication.getInstance().getDefaultImageResources())
+                        .crossFade(800).into(view);
+            }
         }
     }
+
     /**
      * 获取资源文件的颜色值
      *
