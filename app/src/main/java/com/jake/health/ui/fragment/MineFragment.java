@@ -91,18 +91,17 @@ public class MineFragment extends BaseWorkerFragment implements View.OnClickList
     private List<MineMenuInfo> getTestMenu() {
         List<MineMenuInfo> list = new ArrayList<>();
         MineMenuInfo info = new MineMenuInfo();
-        info.setTitle("我的关注");
+        info.setTitle("消息");
+        info.setShowDot(1);
         info.setIcon("http://img2.imgtn.bdimg.com/it/u=1390048268,4118739760&fm=21&gp=0.jpg");
         list.add(info);
         info = new MineMenuInfo();
-        info.setShowDot(1);
-        info.setTitle("我的粉丝");
-        info.setIcon("http://img2.imgtn.bdimg.com/it/u=3119963880,936101450&fm=21&gp=0.jpg");
+        info.setTitle("关注");
+        info.setIcon("http://img2.imgtn.bdimg.com/it/u=1390048268,4118739760&fm=21&gp=0.jpg");
         list.add(info);
-
         info = new MineMenuInfo();
-        info.setTitle("工具箱");
-        info.setIcon("http://img5.imgtn.bdimg.com/it/u=3297870962,4077987313&fm=21&gp=0.jpg");
+        info.setTitle("粉丝");
+        info.setIcon("http://img2.imgtn.bdimg.com/it/u=3119963880,936101450&fm=21&gp=0.jpg");
         list.add(info);
         info = new MineMenuInfo();
         info.setTitle("设置");
