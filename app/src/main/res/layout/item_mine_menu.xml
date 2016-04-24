@@ -23,13 +23,11 @@
         android:singleLine="true"
         android:textColor="@color/black_363636"
         android:textSize="@dimen/text_size_content" />
-
-    <View
-        android:id="@+id/v_red_dot"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
+    <include
+        layout="@layout/view_red_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/tv_name"
-        android:background="@drawable/bg_red_dot" />
+        android:layout_toRightOf="@+id/tv_name"/>
 </RelativeLayout>

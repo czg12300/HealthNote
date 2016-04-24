@@ -7,6 +7,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -38,13 +39,14 @@ public class MineFragment extends BaseWorkerFragment implements View.OnClickList
     private ImageView mIvAvatar;
     private ListView mLvMenu;
     private MineMenuAdapter mMineMenuAdapter;
-
+private Button mBtnLoginOut;
     @Override
     protected void initView() {
         setContentView(R.layout.fragment_mine);
         ThemeUtils.adjustStatusBar(findViewById(R.id.rl_top), getActivity());
         mIvBackMain = (ImageView) findViewById(R.id.iv_back_main);
         mIvAvatar = (ImageView) findViewById(R.id.iv_avatar);
+        mBtnLoginOut = (Button) findViewById(R.id.btn_login_out);
         mIvBackMain.setImageDrawable(ViewHelper.createBackDrawable());
         mLvMenu = (ListView) findViewById(R.id.lv_menu_item);
     }
@@ -53,6 +55,7 @@ public class MineFragment extends BaseWorkerFragment implements View.OnClickList
     protected void initEvent() {
         super.initEvent();
         mIvBackMain.setOnClickListener(this);
+        mBtnLoginOut.setOnClickListener(this);
         findViewById(R.id.rl_root).setOnClickListener(this);
     }
 
@@ -69,6 +72,8 @@ public class MineFragment extends BaseWorkerFragment implements View.OnClickList
         final int id = v.getId();
         if (id == R.id.iv_back_main) {
             ((MainActivity) getActivity()).closeMine();
+        }else if (id==R.id.btn_login_out){
+            ((MainActivity) getActivity()).loginOut();
         }
 
     }

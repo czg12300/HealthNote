@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">健康小秘</string>
-    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_home">首页</string>
+    <string name="login_weibo">微博</string>
+    <string name="login_qq">QQ</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="login_other_way">其他登录方式</string>
+    <string name="login_wechat">微信</string>
+    <string name="login_account_hint">手机号</string>
+    <string name="login_account_error">请输入正确的手机号</string>
+    <string name="login_pwd_hint">密码</string>
+    <string name="login_pwd_error">账号或密码错误</string>
+    <string name="login_pwd_on">abc</string>
+    <string name="login_pwd_off">...</string>
 
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
@@ -13,4 +25,5 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_main_navi">MainNaviActivity</string>
+
 </resources>

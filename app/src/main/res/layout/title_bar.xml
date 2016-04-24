@@ -14,25 +14,33 @@
             android:id="@+id/iv_title_back"
             android:layout_width="@dimen/title_height"
             android:layout_height="match_parent"
-            android:visibility="gone"
             android:scaleType="center"
-            android:src="@drawable/back" />
+            android:src="@drawable/back"
+            android:visibility="gone" />
+
+        <include
+            layout="@layout/view_red_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/iv_title_back"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="3dp"/>
 
         <TextView
             android:id="@+id/tv_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_title"
-            android:textColor="@color/white"
             android:layout_centerInParent="true"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_title" />
 
         <ImageView
             android:id="@+id/iv_title_opt"
             android:layout_width="@dimen/title_height"
             android:layout_height="match_parent"
-            android:visibility="gone"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </LinearLayout>

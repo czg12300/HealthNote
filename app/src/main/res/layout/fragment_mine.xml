@@ -66,15 +66,15 @@
         android:id="@+id/lv_menu_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_login_out"
+        android:layout_above="@+id/btn_login_out"
         android:layout_below="@+id/rl_top"
         android:layout_marginTop="10dp"
         android:cacheColorHint="@color/trans"
         android:divider="@color/trans"
         android:dividerHeight="0dp" />
 
-    <TextView
-        android:id="@+id/tv_login_out"
+    <Button
+        android:id="@+id/btn_login_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

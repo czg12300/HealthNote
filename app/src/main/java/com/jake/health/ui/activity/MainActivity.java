@@ -23,6 +23,7 @@ import com.jake.health.config.ActionConfig;
 import com.jake.health.entity.HomeNavInfo;
 import com.jake.health.ui.adapter.HomeNavAdapter;
 import com.jake.health.ui.base.BaseWorkerFragmentActivity;
+import com.jake.health.ui.helper.ViewHelper;
 import com.jake.health.ui.widgt.ThemeUtils;
 import com.jake.health.ui.widgt.ZoomOutPageTransformer;
 import com.jake.health.ui.widgt.banner.BannerView;
@@ -34,6 +35,7 @@ import java.util.List;
 
 public class MainActivity extends BaseWorkerFragmentActivity {
     private static final int MSG_UI_INIT_DATA = 0x001;
+    private static final int MSG_UI_SHOW_MINE = 0x002;
     private ImageView mIvTitleMenu;
 
     private DrawerLayout mDrawerLayout;
@@ -47,6 +49,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     private GridView mGvNav;
     private HomeNavAdapter mHomeNavAdapter;
     private BannerView mBannerTop;
+    private View mVTitleMenuRedDot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
 
     private void initView() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mVTitleMenuRedDot = findViewById(R.id.v_red_dot);
         mFabOpt = (FloatingActionButton) findViewById(R.id.fab_opt);
         mGvNav = (GridView) findViewById(R.id.gv_nav);
         mBannerTop = (BannerView) findViewById(R.id.banner_top);
@@ -77,11 +81,17 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     }
 
     private void initData() {
-        mTvTitle.setText("健康小秘");
+        mTvTitle.setText(R.string.title_home);
         mHomeNavAdapter = new HomeNavAdapter(this);
         mGvNav.setAdapter(mHomeNavAdapter);
 
         sendEmptyUiMessage(MSG_UI_INIT_DATA);
+        if (!isLogin) {
+            mVTitleMenuRedDot.setVisibility(View.VISIBLE);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED);
+        }
     }
 
     private boolean isLogin = false;
@@ -139,13 +149,10 @@ public class MainActivity extends BaseWorkerFragmentActivity {
             }
         });
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            private float lastPosition = 0;
 
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 float position = Math.min(1f, Math.max(0, slideOffset));
-                changeTitle(position);
-                Log.d("tag", "position" + position);
                 if (position == 1f) {
                     mDrawerArrowDrawable.setVerticalMirror(true);
                 } else if (position == 0f) {
@@ -155,26 +162,6 @@ public class MainActivity extends BaseWorkerFragmentActivity {
 
             }
 
-            private void changeTitle(float position) {
-                if (position > lastPosition) {
-                    if (1 - position > 0.5) {
-                        mTvTitle.setAlpha(1 - position);
-                        mTvTitle.setText("健康小秘");
-                    } else {
-                        mTvTitle.setAlpha(position);
-                        mTvTitle.setText("个人中心");
-                    }
-                } else {
-                    if (position > 0.5) {
-                        mTvTitle.setText("个人中心");
-                        mTvTitle.setAlpha(position);
-                    } else {
-                        mTvTitle.setAlpha(1 - position);
-                        mTvTitle.setText("健康小秘");
-                    }
-                }
-                lastPosition = position;
-            }
 
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -200,6 +187,9 @@ public class MainActivity extends BaseWorkerFragmentActivity {
             case MSG_UI_INIT_DATA:
                 dealInitData();
                 break;
+            case MSG_UI_SHOW_MINE:
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+                break;
         }
     }
 
@@ -208,6 +198,11 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         mBannerTop.setBannerList(getTestBanner());
         mBannerTop.notifyDataSetChanged();
         mBannerTop.startScroll(5);
+    }
+
+    public void loginOut() {
+        isLogin = false;
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     @Override
@@ -222,6 +217,8 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         super.handleBroadcast(context, intent);
         final String action = intent.getAction();
         if (TextUtils.equals(action, ActionConfig.ACTION_LOGIN_SUCCESS)) {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED);
+            sendEmptyUiMessageDelayed(MSG_UI_SHOW_MINE, 500);
             ToastUtil.show("登录成功");
             isLogin = true;
         } else {

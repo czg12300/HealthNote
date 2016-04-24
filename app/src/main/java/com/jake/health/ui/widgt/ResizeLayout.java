@@ -10,6 +10,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.lang.reflect.Field;
@@ -20,7 +21,7 @@ import java.lang.reflect.Field;
  * @author jakechen
  * @since 2016/4/19 15:02
  */
-public class ResizeLayout extends RelativeLayout implements ViewTreeObserver.OnGlobalLayoutListener {
+public class ResizeLayout extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener {
     private Activity mActivity;
 
     private View mActivityContentView;

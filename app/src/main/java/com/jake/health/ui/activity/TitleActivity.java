@@ -23,9 +23,9 @@ public abstract class TitleActivity extends BaseTitleActivity {
     @Override
     protected View getTitleLayoutView() {
         View vTitle = inflate(R.layout.title_bar);
-        mIvBack = (ImageView) vTitle.findViewById(R.id.iv_title_back);
         mTvTitle = (TextView) vTitle.findViewById(R.id.tv_title_text);
         mIvOpt = (ImageView) vTitle.findViewById(R.id.iv_title_opt);
+        mIvBack = (ImageView) vTitle.findViewById(R.id.iv_title_back);
         mIvBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
