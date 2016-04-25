@@ -1,25 +1,25 @@
-package com.jake.health.ui.activity;
 
-import android.os.Bundle;
-import android.os.Message;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
+package com.jake.health.ui.activity;
 
 import com.jake.health.R;
 import com.jake.health.config.ActionConfig;
 import com.jake.health.ui.base.BaseSwipeBackFragmentActivity;
+import com.jake.health.ui.dialog.CommonDialog;
 import com.jake.health.ui.helper.ViewHelper;
 import com.jake.health.ui.widgt.ThemeUtils;
-import com.jake.health.utils.TranslateUtil;
+import com.jake.health.utils.ToastUtil;
+
+import android.os.Bundle;
+import android.os.Message;
+import android.view.View;
+import android.widget.ImageView;
 
 /**
- * 描述：登录页面
- * 作者：jake on 2016/4/21 23:25
+ * 描述：登录页面 作者：jake on 2016/4/21 23:25
  */
 public class LoginActivity extends BaseSwipeBackFragmentActivity {
     private boolean isLogin = false;
-    private ImageView mIvBack;
+
     private ImageView mIvBg;
 
     @Override
@@ -27,16 +27,12 @@ public class LoginActivity extends BaseSwipeBackFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ThemeUtils.adjustStatusBar(findViewById(R.id.v_state_bar), this);
-        mIvBack = (ImageView) findViewById(R.id.iv_title_back);
         mIvBg = (ImageView) findViewById(R.id.iv_bg);
-        mIvBack.setImageDrawable(ViewHelper.createBackDrawable());
-        mIvBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        loadImage("http://life.chinaunix.net/bbsfile/forum/month_0807/20080725_f20e048532825ae192dashNZJXNgofdT.jpg", mIvBg);
+        ((ImageView) findViewById(R.id.iv_title_back)).setImageDrawable(ViewHelper
+                .createBackDrawable());
+        loadImage(
+                "http://life.chinaunix.net/bbsfile/forum/month_0807/20080725_f20e048532825ae192dashNZJXNgofdT.jpg",
+                mIvBg);
     }
 
     public void onClick(View v) {
@@ -45,6 +41,14 @@ public class LoginActivity extends BaseSwipeBackFragmentActivity {
             isLogin = true;
             sendBroadcast(ActionConfig.ACTION_LOGIN_SUCCESS);
             finish();
+        } else if (id == R.id.iv_title_back) {
+            finish();
+        } else if (id == R.id.btn_wechat) {
+            ToastUtil.show("微信");
+        } else if (id == R.id.btn_wb) {
+            ToastUtil.show("微播");
+        } else if (id == R.id.btn_qq) {
+            ToastUtil.show("QQ");
         }
     }
 
@@ -58,6 +62,24 @@ public class LoginActivity extends BaseSwipeBackFragmentActivity {
         super.finish();
         if (!isLogin) {
             sendBroadcast(ActionConfig.ACTION_LOGIN_CANCEL);
+        }
+    }
+
+    private void showLoginDialog() {
+        if (!isFinishing()) {
+            CommonDialog dialog = new CommonDialog(this) {
+                @Override
+                protected void onNegativeBtnClick() {
+                    super.onNegativeBtnClick();
+                }
+
+                @Override
+                protected void onPositiveBtnClick() {
+                    super.onPositiveBtnClick();
+                }
+            };
+            dialog.setTitle(R.string.login);
+            dialog.setPositiveButton(R.string.login);
         }
     }
 }

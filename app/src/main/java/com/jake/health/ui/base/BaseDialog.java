@@ -6,31 +6,95 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import com.jake.health.R;
 
 /**
  * 描述：dialog的父类 Created by jakechen on 2015/8/28.
  */
-public class BaseDialog extends Dialog {
-
-    public static final int ANIMATION_ALPHA_IN_OUT = 0;
-
-    public static final int ANIMATION_UP_TO_DOWN = 1;
-
-    public static final int ANIMATION_LEFT_TO_RIGHT = 2;
-
-    public static final int ANIMATION_DOWN_TO_UP = 3;
-
-    public static final int ANIMATION_RIGHT_TO_LEFT = 4;
+public class BaseDialog extends Dialog implements View.OnClickListener {
 
     private static final int DEFAULT_INT = -1;
 
     private Window window = null;
 
+    protected FrameLayout mFlContent;
+
+    protected TextView mTvTitle;
+
+    protected Button mBtnPositive;
+
+    protected Button mBtnNegative;
+
+    protected View mVButton;
+
     public BaseDialog(Context context) {
         super(context);
         window = getWindow(); // 得到对话框
+        super.setContentView(R.layout.dialog_common);
+        mFlContent = (FrameLayout) findViewById(R.id.fl_content);
+        mTvTitle = (TextView) findViewById(R.id.tv_title);
+        mBtnNegative = (Button) findViewById(R.id.btn_negative);
+        mBtnPositive = (Button) findViewById(R.id.btn_positive);
+        mVButton = findViewById(R.id.rl_opt_button_layout);
+        mBtnNegative.setOnClickListener(this);
+        mBtnPositive.setOnClickListener(this);
+    }
+
+    public void setPositiveButton(int negative, int positive) {
+        setNegaticeButton(getContext().getString(negative), getContext().getString(negative));
+    }
+
+    public void setNegaticeButton(String negative, String positive) {
+        mBtnNegative.setText(negative);
+        mBtnPositive.setText(positive);
+        mVButton.setVisibility(View.VISIBLE);
+        mBtnPositive.setVisibility(View.VISIBLE);
+        mBtnNegative.setVisibility(View.VISIBLE);
+    }
+
+    public void setPositiveButton(CharSequence cs) {
+        mBtnPositive.setText(cs);
+        mVButton.setVisibility(View.VISIBLE);
+        mBtnPositive.setVisibility(View.VISIBLE);
+    }
+
+    public void setPositiveButton(int strId) {
+        setPositiveButton(getContext().getString(strId));
+    }
+
+    @Override
+    public void setTitle(int titleId) {
+        setTitle(getContext().getString(titleId));
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTvTitle.setVisibility(View.VISIBLE);
+        mTvTitle.setText(title);
+    }
+
+    protected void onNegativeBtnClick() {
+    }
+
+    protected void onPositiveBtnClick() {
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        setContentView(View.inflate(getContext(), layoutResID, null));
+    }
+
+    @Override
+    public void setContentView(View view) {
+        mFlContent.addView(view);
     }
 
     // 设置窗口显示
@@ -83,4 +147,13 @@ public class BaseDialog extends Dialog {
         }, delayMillis);
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v == mBtnNegative) {
+            onNegativeBtnClick();
+        } else if (v == mBtnPositive) {
+            onPositiveBtnClick();
+        }
+        dismiss();
+    }
 }

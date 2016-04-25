@@ -1,7 +1,6 @@
 <resources>
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light"></style>
 
-
     <style name="base_activity_style" parent="Theme.AppCompat.Light">
         <item name="android:windowNoTitle">true</item>
         <item name="android:screenOrientation">landscape</item>
@@ -11,15 +10,19 @@
     <style name="base_swipe_activity_style" parent="base_activity_style">
         <item name="android:windowIsTranslucent">true</item>
     </style>
-    <!--<style name="AppTheme" parent="base_activity_style"></style>-->
 
     <style name="main_activity" parent="base_activity_style" />
 
     <style name="swipe_activity" parent="base_swipe_activity_style" />
-    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
-    <!--</style>-->
+    <!-- 上面进出动画样式 -->
+    <style name="slide_top_bottom_animation" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_top</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_top</item>
+    </style>
+
+    <style name="alpha_animation" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/alpha_in</item>
+        <item name="android:windowExitAnimation">@anim/alpha_out</item>
+    </style>
+
 </resources>

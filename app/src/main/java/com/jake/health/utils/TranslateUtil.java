@@ -1,14 +1,14 @@
 package com.jake.health.utils;
 
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * TranslateUtil
@@ -85,7 +85,7 @@ public class TranslateUtil {
 
     private static void httpRequest(String url) throws IOException {
         //根据请求URL创建一个Request对象
-        Request request = new Request.Builder().url("http://www.baidu.com").build();
+        Request request = new Request.Builder().url(url).build();
 //        Request request = new Request.Builder().url(url).build();
         OkHttpClient client = new OkHttpClient();
 //根据Request对象发起Get同步Http请求
