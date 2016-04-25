@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="260dp"
     android:layout_height="match_parent"
     android:background="@drawable/bg_dialog_bg"
     android:orientation="vertical"
@@ -24,7 +24,7 @@
     <RelativeLayout
         android:id="@+id/rl_opt_button_layout"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="35dp"
         android:visibility="gone"
         android:layout_marginTop="10dp">
 
@@ -33,8 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/btn_positive"
-            android:background="@color/trans"
-            android:minWidth="65dp"
+            android:background="@drawable/selector_btn_dialog_opt"
+            android:minWidth="60dp"
             android:text="取消"
             android:visibility="gone"
             android:textColor="@color/black_363636"
@@ -45,8 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:background="@color/trans"
-            android:minWidth="65dp"
+            android:background="@drawable/selector_btn_dialog_opt"
+            android:minWidth="60dp"
             android:text="确定"
             android:visibility="gone"
             android:textColor="@color/black_363636"

@@ -92,6 +92,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         } else {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED);
         }
+        goActivity(LoginActivity.class);
     }
 
     private boolean isLogin = false;

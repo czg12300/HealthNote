@@ -15,7 +15,14 @@ import com.jake.health.ui.base.BaseDialog;
 public class CommonDialog extends BaseDialog {
     public CommonDialog(Context context) {
         super(context);
-        setWindow(R.style.slide_top_bottom_animation, 0.7f);
+        setWindow(R.style.alpha_animation, 0.6f);
     }
 
+    public void setPositiveBtnTextColor(int color) {
+        mBtnPositive.setTextColor(color);
+    }
+
+    public void setNegativeBtnTextColor(int color) {
+        mBtnNegative.setTextColor(color);
+    }
 }

@@ -1,5 +1,4 @@
 <resources>
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light"></style>
 
     <style name="base_activity_style" parent="Theme.AppCompat.Light">
         <item name="android:windowNoTitle">true</item>
@@ -24,5 +23,4 @@
         <item name="android:windowEnterAnimation">@anim/alpha_in</item>
         <item name="android:windowExitAnimation">@anim/alpha_out</item>
     </style>
-
 </resources>

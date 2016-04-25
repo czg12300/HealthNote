@@ -6,9 +6,11 @@ import com.jake.health.config.ActionConfig;
 import com.jake.health.ui.base.BaseSwipeBackFragmentActivity;
 import com.jake.health.ui.dialog.CommonDialog;
 import com.jake.health.ui.helper.ViewHelper;
+import com.jake.health.ui.widgt.DrawableEditText;
 import com.jake.health.ui.widgt.ThemeUtils;
 import com.jake.health.utils.ToastUtil;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
@@ -38,9 +40,10 @@ public class LoginActivity extends BaseSwipeBackFragmentActivity {
     public void onClick(View v) {
         final int id = v.getId();
         if (id == R.id.btn_login) {
-            isLogin = true;
-            sendBroadcast(ActionConfig.ACTION_LOGIN_SUCCESS);
-            finish();
+            showLoginDialog();
+//            isLogin = true;
+//            sendBroadcast(ActionConfig.ACTION_LOGIN_SUCCESS);
+//            finish();
         } else if (id == R.id.iv_title_back) {
             finish();
         } else if (id == R.id.btn_wechat) {
@@ -79,7 +82,17 @@ public class LoginActivity extends BaseSwipeBackFragmentActivity {
                 }
             };
             dialog.setTitle(R.string.login);
-            dialog.setPositiveButton(R.string.login);
+            dialog.setNegativeButton(R.string.cancel, R.string.ok);
+            dialog.setContentView(R.layout.dialog_login);
+            dialog.setPositiveBtnTextColor(Color.parseColor("#FF4081"));
+            DrawableEditText evPwd= (DrawableEditText) dialog.findViewById(R.id.ev_pwd);
+            evPwd.setDrawableRightListener(new DrawableEditText.DrawableRightListener() {
+                @Override
+                public void onDrawableRightClick(View view) {
+                    ToastUtil.show("忘记密码");
+                }
+            });
+            dialog.show();
         }
     }
 }

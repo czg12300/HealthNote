@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -38,7 +37,7 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
     public BaseDialog(Context context) {
         super(context);
         window = getWindow(); // 得到对话框
-        super.setContentView(R.layout.dialog_common);
+        super.setContentView(R.layout.dialog_base);
         mFlContent = (FrameLayout) findViewById(R.id.fl_content);
         mTvTitle = (TextView) findViewById(R.id.tv_title);
         mBtnNegative = (Button) findViewById(R.id.btn_negative);
@@ -48,11 +47,11 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
         mBtnPositive.setOnClickListener(this);
     }
 
-    public void setPositiveButton(int negative, int positive) {
-        setNegaticeButton(getContext().getString(negative), getContext().getString(negative));
+    public void setNegativeButton(int negative, int positive) {
+        setNegativeButton(getContext().getString(negative), getContext().getString(positive));
     }
 
-    public void setNegaticeButton(String negative, String positive) {
+    public void setNegativeButton(String negative, String positive) {
         mBtnNegative.setText(negative);
         mBtnPositive.setText(positive);
         mVButton.setVisibility(View.VISIBLE);
