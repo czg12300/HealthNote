@@ -53,11 +53,6 @@ public class DrawableEditText extends EditText {
         public void onDrawableRightClick(View view);
     }
     @Override
-    protected void drawableStateChanged() {
-        super.drawableStateChanged();
-        setAlpha((isPressed()) ? 0.7f : 1);
-    }
-    @Override
     public boolean onTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:

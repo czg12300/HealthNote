@@ -11,9 +11,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jake.health.R;
+import com.jake.health.ui.widgt.materialdesign.pullrefresh.MaterialProgressDrawable;
 
 /**
  * 描述：dialog的父类 Created by jakechen on 2015/8/28.
@@ -34,6 +36,20 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
 
     protected View mVButton;
 
+    protected ImageView mIbPositiveProgress;
+
+    protected MaterialProgressDrawable mDpdPositive;
+
+    protected boolean isOptDismiss = false;
+
+    public boolean isOptDismiss() {
+        return isOptDismiss;
+    }
+
+    public void setOptDismiss(boolean optDismiss) {
+        isOptDismiss = optDismiss;
+    }
+
     public BaseDialog(Context context) {
         super(context);
         window = getWindow(); // 得到对话框
@@ -42,9 +58,32 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
         mTvTitle = (TextView) findViewById(R.id.tv_title);
         mBtnNegative = (Button) findViewById(R.id.btn_negative);
         mBtnPositive = (Button) findViewById(R.id.btn_positive);
+        mIbPositiveProgress = (ImageView) findViewById(R.id.ib_positive_progress);
         mVButton = findViewById(R.id.rl_opt_button_layout);
         mBtnNegative.setOnClickListener(this);
         mBtnPositive.setOnClickListener(this);
+        mDpdPositive = new MaterialProgressDrawable(context, mIbPositiveProgress);
+        mDpdPositive.setColorSchemeColors(Color.WHITE);
+        mDpdPositive.setBackgroundColor(getContext().getResources().getColor(R.color.title_background));
+        mDpdPositive.showArrow(true);
+        mDpdPositive.setAlpha(176);
+        mIbPositiveProgress.setImageDrawable(mDpdPositive);
+        mIbPositiveProgress.setVisibility(View.INVISIBLE);
+
+    }
+
+    public void startPositionProgress() {
+        if (mBtnPositive.getVisibility() == View.VISIBLE) {
+            mBtnPositive.setVisibility(View.INVISIBLE);
+            mIbPositiveProgress.setVisibility(View.VISIBLE);
+            mDpdPositive.start();
+        }
+    }
+
+    public void stopPositionProgress() {
+        mBtnPositive.setVisibility(View.VISIBLE);
+        mIbPositiveProgress.setVisibility(View.INVISIBLE);
+        mDpdPositive.stop();
     }
 
     public void setNegativeButton(int negative, int positive) {
@@ -153,6 +192,8 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
         } else if (v == mBtnPositive) {
             onPositiveBtnClick();
         }
-        dismiss();
+        if (isOptDismiss) {
+            dismiss();
+        }
     }
 }

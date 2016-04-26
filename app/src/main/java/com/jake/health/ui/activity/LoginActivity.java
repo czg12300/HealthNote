@@ -8,11 +8,13 @@ import com.jake.health.ui.dialog.CommonDialog;
 import com.jake.health.ui.helper.ViewHelper;
 import com.jake.health.ui.widgt.DrawableEditText;
 import com.jake.health.ui.widgt.ThemeUtils;
+import com.jake.health.ui.widgt.materialdesign.ProgressWheel;
 import com.jake.health.utils.ToastUtil;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -41,9 +43,9 @@ public class LoginActivity extends BaseSwipeBackFragmentActivity {
         final int id = v.getId();
         if (id == R.id.btn_login) {
             showLoginDialog();
-//            isLogin = true;
-//            sendBroadcast(ActionConfig.ACTION_LOGIN_SUCCESS);
-//            finish();
+            // isLogin = true;
+            // sendBroadcast(ActionConfig.ACTION_LOGIN_SUCCESS);
+            // finish();
         } else if (id == R.id.iv_title_back) {
             finish();
         } else if (id == R.id.btn_wechat) {
@@ -73,19 +75,60 @@ public class LoginActivity extends BaseSwipeBackFragmentActivity {
             CommonDialog dialog = new CommonDialog(this) {
                 @Override
                 protected void onNegativeBtnClick() {
-                    super.onNegativeBtnClick();
+                    stopPositionProgress();
                 }
 
                 @Override
                 protected void onPositiveBtnClick() {
-                    super.onPositiveBtnClick();
+                    startPositionProgress();
                 }
             };
             dialog.setTitle(R.string.login);
             dialog.setNegativeButton(R.string.cancel, R.string.ok);
             dialog.setContentView(R.layout.dialog_login);
             dialog.setPositiveBtnTextColor(Color.parseColor("#FF4081"));
-            DrawableEditText evPwd= (DrawableEditText) dialog.findViewById(R.id.ev_pwd);
+            TextInputLayout tilAccount = (TextInputLayout) dialog.findViewById(R.id.til_account);
+            TextInputLayout tilPwd = (TextInputLayout) dialog.findViewById(R.id.til_pwd);
+            ViewHelper.changeTextInputLayoutLabelColor(tilAccount,
+                    getResources().getColor(R.color.edit_text_bg_focus));
+            ViewHelper.changeTextInputLayoutLabelColor(tilPwd,
+                    getResources().getColor(R.color.edit_text_bg_focus));
+            DrawableEditText evPwd = (DrawableEditText) dialog.findViewById(R.id.ev_pwd);
+            evPwd.setDrawableRightListener(new DrawableEditText.DrawableRightListener() {
+                @Override
+                public void onDrawableRightClick(View view) {
+                    ToastUtil.show("忘记密码");
+                }
+            });
+            dialog.show();
+        }
+    }
+
+    private void showRegisterDialog() {
+        if (!isFinishing()) {
+            CommonDialog dialog = new CommonDialog(this) {
+                @Override
+                protected void onNegativeBtnClick() {
+                    super.onNegativeBtnClick();
+                    stopPositionProgress();
+                }
+
+                @Override
+                protected void onPositiveBtnClick() {
+                    startPositionProgress();
+                }
+            };
+            dialog.setTitle(R.string.register);
+            dialog.setNegativeButton(R.string.cancel, R.string.ok);
+            dialog.setContentView(R.layout.dialog_register);
+            dialog.setPositiveBtnTextColor(Color.parseColor("#FF4081"));
+            TextInputLayout tilAccount = (TextInputLayout) dialog.findViewById(R.id.til_account);
+            TextInputLayout tilPwd = (TextInputLayout) dialog.findViewById(R.id.til_pwd);
+            ViewHelper.changeTextInputLayoutLabelColor(tilAccount,
+                    getResources().getColor(R.color.edit_text_bg_focus));
+            ViewHelper.changeTextInputLayoutLabelColor(tilPwd,
+                    getResources().getColor(R.color.edit_text_bg_focus));
+            DrawableEditText evPwd = (DrawableEditText) dialog.findViewById(R.id.ev_pwd);
             evPwd.setDrawableRightListener(new DrawableEditText.DrawableRightListener() {
                 @Override
                 public void onDrawableRightClick(View view) {

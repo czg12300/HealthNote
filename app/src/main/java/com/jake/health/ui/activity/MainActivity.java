@@ -8,14 +8,15 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jake.health.R;
@@ -23,10 +24,10 @@ import com.jake.health.config.ActionConfig;
 import com.jake.health.entity.HomeNavInfo;
 import com.jake.health.ui.adapter.HomeNavAdapter;
 import com.jake.health.ui.base.BaseWorkerFragmentActivity;
-import com.jake.health.ui.helper.ViewHelper;
 import com.jake.health.ui.widgt.ThemeUtils;
 import com.jake.health.ui.widgt.ZoomOutPageTransformer;
 import com.jake.health.ui.widgt.banner.BannerView;
+import com.jake.health.ui.widgt.materialdesign.pullrefresh.WaveSwipeRefreshLayout;
 import com.jake.health.utils.DisplayUtil;
 import com.jake.health.utils.ToastUtil;
 
@@ -35,7 +36,9 @@ import java.util.List;
 
 public class MainActivity extends BaseWorkerFragmentActivity {
     private static final int MSG_UI_INIT_DATA = 0x001;
+
     private static final int MSG_UI_SHOW_MINE = 0x002;
+
     private ImageView mIvTitleMenu;
 
     private DrawerLayout mDrawerLayout;
@@ -47,9 +50,16 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     private TextView mTvTitle;
 
     private GridView mGvNav;
+
     private HomeNavAdapter mHomeNavAdapter;
+
     private BannerView mBannerTop;
+
     private View mVTitleMenuRedDot;
+
+    private ListView mLvContent;
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +77,14 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     }
 
     private void initView() {
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResourceColor(R.color.title_background));
+        mSwipeRefreshLayout.setColorSchemeColors(getResourceColor(R.color.white));
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mLvContent = (ListView) findViewById(R.id.lv_content);
         mVTitleMenuRedDot = findViewById(R.id.v_red_dot);
         mFabOpt = (FloatingActionButton) findViewById(R.id.fab_opt);
+        mLvContent.addHeaderView(inflate(R.layout.header_main));
         mGvNav = (GridView) findViewById(R.id.gv_nav);
         mBannerTop = (BannerView) findViewById(R.id.banner_top);
         mBannerTop.setStyle(BannerView.STYLE_DOT_RIGHT);
@@ -93,6 +108,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED);
         }
         goActivity(LoginActivity.class);
+        mLvContent.setAdapter(mHomeNavAdapter);
     }
 
     private boolean isLogin = false;
@@ -102,6 +118,13 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     }
 
     private void initEvent() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ToastUtil.show("哈哈");
+                sendEmptyUiMessageDelayed(11,2000);
+            }
+        });
         mBannerTop.setBannerListener(new BannerView.IListener() {
             @Override
             public void clickBannerItem(Object banner) {
@@ -163,7 +186,6 @@ public class MainActivity extends BaseWorkerFragmentActivity {
 
             }
 
-
             @Override
             public void onDrawerOpened(View drawerView) {
                 mDrawerArrowDrawable.setVerticalMirror(true);
@@ -190,6 +212,9 @@ public class MainActivity extends BaseWorkerFragmentActivity {
                 break;
             case MSG_UI_SHOW_MINE:
                 mDrawerLayout.openDrawer(Gravity.LEFT);
+                break;
+            case 11:
+                mSwipeRefreshLayout.setRefreshing(false);
                 break;
         }
     }
