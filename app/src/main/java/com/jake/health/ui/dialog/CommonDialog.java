@@ -18,11 +18,4 @@ public class CommonDialog extends BaseDialog {
         setWindow(R.style.alpha_animation, 0.6f);
     }
 
-    public void setPositiveBtnTextColor(int color) {
-        mBtnPositive.setTextColor(color);
-    }
-
-    public void setNegativeBtnTextColor(int color) {
-        mBtnNegative.setTextColor(color);
-    }
 }

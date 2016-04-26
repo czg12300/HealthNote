@@ -12,6 +12,7 @@ import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.util.DisplayMetrics;
 
+import com.jake.health.R;
 import com.jake.health.ui.HealthApplication;
 import com.jake.health.utils.DisplayUtil;
 
@@ -67,6 +68,10 @@ public class ViewHelper {
                 e.printStackTrace();
             }
         }
+
+    }
+    public static void changeTextInputLayoutLabelColor(TextInputLayout layout) {
+        changeTextInputLayoutLabelColor(layout,HealthApplication.getInstance().getResources().getColor(R.color.edit_text_bg_focus));
 
     }
     public static ColorStateList createColorStateList(int normal, int pressed, int select,

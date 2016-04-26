@@ -7,9 +7,13 @@
     <string name="account_hint">手机号</string>
     <string name="pwd_hint">密码</string>
     <string name="ok">确定</string>
+    <string name="get_phone_code">获取验证码</string>
+    <string name="count_down_left">#秒后重发</string>
+    <string name="register_phone_code_hint">短信验证码</string>
     <string name="cancel">取消</string>
     <string name="register">注册</string>
     <string name="login_other_way">其他登录方式</string>
+    <string name="login_by_message_code">手机验证码登录</string>
     <string name="login_wechat">微信</string>
     <string name="login_account_hint">手机号</string>
     <string name="login_account_error">请输入正确的手机号</string>

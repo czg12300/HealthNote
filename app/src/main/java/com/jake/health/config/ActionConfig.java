@@ -13,4 +13,8 @@ public final class ActionConfig {
      * 用户取消登录
      */
     public static final String ACTION_LOGIN_CANCEL="com.jake.health.config.ActionConfig.ACTION_LOGIN_CANCEL";
+    /**
+     * 重置密码
+     */
+    public static final String ACTION_AUTO_RESET_PWD="com.jake.health.config.ActionConfig.ACTION_AUTO_RESET_PWD";
 }

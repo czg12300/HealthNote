@@ -36,11 +36,11 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
 
     protected View mVButton;
 
-    protected ImageView mIbPositiveProgress;
+    protected ImageView mIvPositiveProgress;
 
     protected MaterialProgressDrawable mDpdPositive;
 
-    protected boolean isOptDismiss = false;
+    protected boolean isOptDismiss = true;
 
     public boolean isOptDismiss() {
         return isOptDismiss;
@@ -58,31 +58,38 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
         mTvTitle = (TextView) findViewById(R.id.tv_title);
         mBtnNegative = (Button) findViewById(R.id.btn_negative);
         mBtnPositive = (Button) findViewById(R.id.btn_positive);
-        mIbPositiveProgress = (ImageView) findViewById(R.id.ib_positive_progress);
+        mIvPositiveProgress = (ImageView) findViewById(R.id.ib_positive_progress);
         mVButton = findViewById(R.id.rl_opt_button_layout);
         mBtnNegative.setOnClickListener(this);
         mBtnPositive.setOnClickListener(this);
-        mDpdPositive = new MaterialProgressDrawable(context, mIbPositiveProgress);
-        mDpdPositive.setColorSchemeColors(Color.WHITE);
-        mDpdPositive.setBackgroundColor(getContext().getResources().getColor(R.color.title_background));
-        mDpdPositive.showArrow(true);
-        mDpdPositive.setAlpha(176);
-        mIbPositiveProgress.setImageDrawable(mDpdPositive);
-        mIbPositiveProgress.setVisibility(View.INVISIBLE);
+        mDpdPositive = new MaterialProgressDrawable(context, mIvPositiveProgress);
+        mDpdPositive.setColorSchemeColors(getContext().getResources().getColor(R.color.title_background));
+        mDpdPositive.setAlpha(255);
+        mIvPositiveProgress.setImageDrawable(mDpdPositive);
+        mIvPositiveProgress.setVisibility(View.INVISIBLE);
 
+    }
+
+    public void setPositiveBtnTextColor(int color) {
+        mDpdPositive.setColorSchemeColors(color);
+        mBtnPositive.setTextColor(color);
+    }
+
+    public void setNegativeBtnTextColor(int color) {
+        mBtnNegative.setTextColor(color);
     }
 
     public void startPositionProgress() {
         if (mBtnPositive.getVisibility() == View.VISIBLE) {
             mBtnPositive.setVisibility(View.INVISIBLE);
-            mIbPositiveProgress.setVisibility(View.VISIBLE);
+            mIvPositiveProgress.setVisibility(View.VISIBLE);
             mDpdPositive.start();
         }
     }
 
     public void stopPositionProgress() {
         mBtnPositive.setVisibility(View.VISIBLE);
-        mIbPositiveProgress.setVisibility(View.INVISIBLE);
+        mIvPositiveProgress.setVisibility(View.INVISIBLE);
         mDpdPositive.stop();
     }
 
