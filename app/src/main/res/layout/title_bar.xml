@@ -30,8 +30,10 @@
             android:id="@+id/tv_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/iv_title_back"
+            android:layout_centerVertical="true"
             android:singleLine="true"
+            android:layout_marginLeft="30dp"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_title" />
 
@@ -40,6 +42,7 @@
             android:layout_width="@dimen/title_height"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+            android:scaleType="center"
             android:visibility="gone" />
     </RelativeLayout>
 

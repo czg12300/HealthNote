@@ -4,6 +4,7 @@ package com.jake.health.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
@@ -22,12 +23,15 @@ import android.widget.TextView;
 import com.jake.health.R;
 import com.jake.health.config.ActionConfig;
 import com.jake.health.entity.HomeNavInfo;
+import com.jake.health.entity.QAInfo;
+import com.jake.health.ui.adapter.HomeAdapter;
 import com.jake.health.ui.adapter.HomeNavAdapter;
 import com.jake.health.ui.base.BaseWorkerFragmentActivity;
+import com.jake.health.ui.helper.MainFabHelper;
 import com.jake.health.ui.widgt.ThemeUtils;
 import com.jake.health.ui.widgt.ZoomOutPageTransformer;
 import com.jake.health.ui.widgt.banner.BannerView;
-import com.jake.health.ui.widgt.materialdesign.pullrefresh.WaveSwipeRefreshLayout;
+import com.jake.health.ui.widgt.materialdesign.FabButton;
 import com.jake.health.utils.DisplayUtil;
 import com.jake.health.utils.ToastUtil;
 
@@ -43,7 +47,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
 
     private DrawerLayout mDrawerLayout;
 
-    private FloatingActionButton mFabOpt;
+    private FabButton mFabOpt;
 
     private DrawerArrowDrawable mDrawerArrowDrawable;
 
@@ -61,6 +65,11 @@ public class MainActivity extends BaseWorkerFragmentActivity {
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
+    private MainFabHelper mMainFabHelper;
+
+    private ImageView mTvTool;
+private HomeAdapter mHomeAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,16 +83,20 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     private void initTitleBar() {
         ThemeUtils.adjustStatusBar(findViewById(R.id.layout_title), this);
         mTvTitle = ((TextView) findViewById(R.id.tv_title_text));
+        mTvTool = (ImageView) findViewById(R.id.iv_title_opt);
+        mTvTool.setImageResource(R.drawable.img_tool);
+        mTvTool.setVisibility(View.VISIBLE);
     }
 
     private void initView() {
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResourceColor(R.color.title_background));
+        mSwipeRefreshLayout
+                .setProgressBackgroundColorSchemeColor(getResourceColor(R.color.title_background));
         mSwipeRefreshLayout.setColorSchemeColors(getResourceColor(R.color.white));
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLvContent = (ListView) findViewById(R.id.lv_content);
         mVTitleMenuRedDot = findViewById(R.id.v_red_dot);
-        mFabOpt = (FloatingActionButton) findViewById(R.id.fab_opt);
+        mFabOpt = (FabButton) findViewById(R.id.fab_opt);
         mLvContent.addHeaderView(inflate(R.layout.header_main));
         mGvNav = (GridView) findViewById(R.id.gv_nav);
         mBannerTop = (BannerView) findViewById(R.id.banner_top);
@@ -93,6 +106,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         mBannerTop.getDotView().setSelectColor(Color.parseColor("#afffffff"));
         mBannerTop.getViewPager().setPageTransformer(true, new ZoomOutPageTransformer());
         mBannerTop.setDuration(300);
+        mMainFabHelper = new MainFabHelper(this);
     }
 
     private void initData() {
@@ -107,8 +121,8 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         } else {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED);
         }
-        goActivity(LoginActivity.class);
-        mLvContent.setAdapter(mHomeNavAdapter);
+        mHomeAdapter=new HomeAdapter(this);
+        mLvContent.setAdapter(mHomeAdapter);
     }
 
     private boolean isLogin = false;
@@ -122,7 +136,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
             @Override
             public void onRefresh() {
                 ToastUtil.show("哈哈");
-                sendEmptyUiMessageDelayed(11,2000);
+                sendEmptyUiMessageDelayed(11, 2000);
             }
         });
         mBannerTop.setBannerListener(new BannerView.IListener() {
@@ -145,12 +159,6 @@ public class MainActivity extends BaseWorkerFragmentActivity {
                 if (info != null) {
                     ToastUtil.show(info.getTitle());
                 }
-            }
-        });
-        mFabOpt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.show("哈哈");
             }
         });
         mDrawerArrowDrawable = new DrawerArrowDrawable(this);
@@ -224,6 +232,35 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         mBannerTop.setBannerList(getTestBanner());
         mBannerTop.notifyDataSetChanged();
         mBannerTop.startScroll(5);
+        mHomeAdapter.setDataAndNotifyDataSetChanged(getTestQA());
+    }
+
+    private List<QAInfo> getTestQA() {
+        List<QAInfo> list=new ArrayList<>();
+        QAInfo info=new QAInfo();
+        info.setAvater("http://img3.imgtn.bdimg.com/it/u=1011027398,356111671&fm=21&gp=0.jpg");
+        info.setNickName("漂亮的不像实力派");
+        info.setTitle("科比来自哪里?");
+        info.setZanNum(12340);
+        info.setContent("科比童年科比童年科比·布莱恩特于1978年8月23日出生在美国宾夕法尼亚州费城，是前NBA球员及前洛杉矶火花队主教练乔·布莱恩特（Joe “Jellybean” Bryant）科比父子科比父子和帕梅拉·考克斯·布莱恩特（Pamela Cox Bryant）三个孩子中最小的一个也是唯一的儿子。[4-5]  他的父母在他出生前为他取名Kobe--一种日本牛排[3]  的名字， 是在一家餐馆的菜单上看到的。[4]  科比有两个姐姐，西莉亚和沙雅。科比的父亲乔，在NBA效力8个赛季");
+       list.add(info);
+        info=new QAInfo();
+        info.setAvater("http://img1.imgtn.bdimg.com/it/u=3767588862,2668021829&fm=21&gp=0.jpg");
+        info.setNickName("我是科比");
+        info.setTitle("科比来自与宇宙银河太阳系地球美洲美国洛杉矶的哪里?");
+        info.setZanNum(140);
+        info.setContent("在位于费城郊区高中时期的科比的劳尔梅里恩的劳尔梅里恩高中，科比凭借惊人的高中生涯赢得了全美国的认可。作为一个新人，科比就可以在学校（三年级和四年级）篮球队出任首发。");
+        list.add(info);
+        for (int i=0;i<20;i++){
+            info=new QAInfo();
+            info.setAvater("http://img1.imgtn.bdimg.com/it/u=435937637,1527161840&fm=21&gp=0.jpg");
+            info.setNickName("我是批量new出来的");
+            info.setZanNum(990+i);
+            info.setTitle("我是批量new出来的科比来自与宇宙银河太阳系地球美洲美国洛杉矶的哪里?");
+            info.setContent("在位于费城郊区高中时期的科比的劳尔梅里恩的劳尔梅里恩高中，科比凭借惊人的高中生涯赢得了全美国的认可。作为一个新人，科比就可以在学校（三年级和四年级）篮球队出任首发。");
+            list.add(info);
+      }
+        return list;
     }
 
     public void loginOut() {
@@ -272,17 +309,18 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         info.setIcon("http://img2.imgtn.bdimg.com/it/u=1390048268,4118739760&fm=21&gp=0.jpg");
         list.add(info);
         info = new HomeNavInfo();
-        info.setTitle("我的病例");
+        info.setTitle("病理分析");
+        info.setIcon("http://img5.imgtn.bdimg.com/it/u=3297870962,4077987313&fm=21&gp=0.jpg");
+        list.add(info);
+        info = new HomeNavInfo();
+        info.setTitle("七嘴八舌");
         info.setIcon("http://img2.imgtn.bdimg.com/it/u=3119963880,936101450&fm=21&gp=0.jpg");
         list.add(info);
         info = new HomeNavInfo();
         info.setTitle("附近诊所");
         info.setIcon("http://img3.imgtn.bdimg.com/it/u=2832776744,1381723459&fm=21&gp=0.jpg");
         list.add(info);
-        info = new HomeNavInfo();
-        info.setTitle("工具箱");
-        info.setIcon("http://img5.imgtn.bdimg.com/it/u=3297870962,4077987313&fm=21&gp=0.jpg");
-        list.add(info);
+
         return list;
     }
 }

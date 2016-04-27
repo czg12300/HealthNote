@@ -14,6 +14,6 @@
     <color name="indigo_C5CAE9">#C5CAE9</color>
     <color name="indigo_3F51B5">#3F51B5</color>
     <color name="text_primary">@color/black_363636</color>
-    <color name="text_second">@color/black_363636</color>
+    <color name="text_second">#757575</color>
 
 </resources>

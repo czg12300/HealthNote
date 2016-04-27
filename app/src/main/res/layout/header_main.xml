@@ -15,4 +15,15 @@
         android:layout_height="wrap_content"
         android:cacheColorHint="@color/trans"
         android:numColumns="4" />
+
+    <TextView
+        android:id="@+id/tv_hot_title"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="#f9f9f9"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="热门问题"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_size_tip_small" />
 </LinearLayout>

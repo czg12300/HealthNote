@@ -8,4 +8,5 @@ import android.widget.ImageView;
  */
 public interface ImageLoadListener {
     void loadImageByUrl(String url,ImageView imageView);
+    void loadImageByUrl(String url,ImageView imageView,boolean isCircle);
 }

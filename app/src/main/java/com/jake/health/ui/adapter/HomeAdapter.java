@@ -1,10 +1,15 @@
+
 package com.jake.health.ui.adapter;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.jake.health.entity.HomeNavInfo;
+import com.jake.health.R;
+import com.jake.health.entity.QAInfo;
+import com.jake.health.utils.ViewUtil;
 
 /**
  * 描述：首页数据
@@ -12,13 +17,46 @@ import com.jake.health.entity.HomeNavInfo;
  * @author jakechen
  * @since 2016/4/26 16:18
  */
-public class HomeAdapter extends BaseListAdapter<HomeNavInfo> {
+public class HomeAdapter extends BaseListAdapter<QAInfo> {
     public HomeAdapter(Context context) {
         super(context);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        ViewHolder holder;
+        if (convertView == null) {
+            holder = new ViewHolder();
+            convertView = inflate(R.layout.item_home);
+            holder.ivAvatar = (ImageView) convertView.findViewById(R.id.iv_avatar);
+            holder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
+            holder.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
+            holder.tvNikeName = (TextView) convertView.findViewById(R.id.tv_nike_name);
+            holder.tvZanNum = (TextView) convertView.findViewById(R.id.tv_zan_num);
+            convertView.setTag(convertView.getId(),holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag(convertView.getId());
+        }
+        QAInfo info = mDataList.get(position);
+        if (info != null) {
+            mImageLoadListener.loadImageByUrl(info.getAvater(), holder.ivAvatar,true);
+            ViewUtil.setText2TextView(holder.tvTitle, info.getTitle());
+            ViewUtil.setText2TextView(holder.tvNikeName, info.getNikeName());
+            ViewUtil.setText2TextView(holder.tvContent, info.getContent());
+            ViewUtil.setText2TextView(holder.tvZanNum, info.getZanNumText());
+        }
+        return convertView;
+    }
+
+    final class ViewHolder {
+        ImageView ivAvatar;
+
+        TextView tvTitle;
+
+        TextView tvContent;
+
+        TextView tvNikeName;
+
+        TextView tvZanNum;
     }
 }

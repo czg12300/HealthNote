@@ -113,7 +113,10 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
     public void loadImageByUrl(String url, ImageView imageView) {
         loadImage(url, imageView);
     }
-
+    @Override
+    public void loadImageByUrl(String url, ImageView imageView,boolean isCircle) {
+        loadImage(url,imageView,isCircle);
+    }
     protected void loadImage(String url, ImageView view) {
        loadImage(url,view,false);
     }
