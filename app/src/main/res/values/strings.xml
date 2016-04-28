@@ -21,6 +21,16 @@
     <string name="login_pwd_error">账号或密码错误</string>
     <string name="login_pwd_on">abc</string>
     <string name="login_pwd_off">...</string>
+    <string name="home_fab_sheet_dt">发布动态</string>
+    <string name="home_fab_sheet_bl">分析病理</string>
+    <string name="home_fab_sheet_yy">求医问药</string>
+    <string name="home_fab_sheet_wbl">记录病历</string>
+    <string name="load_more">加载更多</string>
+    <string name="load_finish">加载完毕</string>
+    <string name="load_no_data">没有数据</string>
+    <string name="loading">努力加载中...</string>
+    <string name="load_fail">加载失败，请点击屏幕重试</string>
+    <string name="load_fail_toast">加载失败</string>
 
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>

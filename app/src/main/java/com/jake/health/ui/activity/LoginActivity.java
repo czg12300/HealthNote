@@ -4,6 +4,8 @@ package com.jake.health.ui.activity;
 import com.jake.health.R;
 import com.jake.health.config.ActionConfig;
 import com.jake.health.ui.base.BaseSwipeBackFragmentActivity;
+import com.jake.health.ui.base.BaseWorkerFragment;
+import com.jake.health.ui.base.BaseWorkerFragmentActivity;
 import com.jake.health.ui.dialog.CommonDialog;
 import com.jake.health.ui.helper.ViewHelper;
 import com.jake.health.ui.widgt.DrawableEditText;
@@ -24,7 +26,7 @@ import android.widget.ImageView;
 /**
  * 描述：登录页面 作者：jake on 2016/4/21 23:25
  */
-public class LoginActivity extends BaseSwipeBackFragmentActivity {
+public class LoginActivity extends BaseWorkerFragmentActivity {
     private boolean isLogin = false;
 
     private ImageView mIvBg;
@@ -84,14 +86,15 @@ public class LoginActivity extends BaseSwipeBackFragmentActivity {
                 protected void onPositiveBtnClick() {
                     startPositionProgress();
                     isLogin = true;
-                    sendBroadcast(ActionConfig.ACTION_LOGIN_SUCCESS);
-                    dismissDelayed(2000);
+//                    sendBroadcast(ActionConfig.ACTION_LOGIN_SUCCESS);
+                    dismissDelayed(1000);
                 }
             };
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
                     if (isLogin) {
+                        goActivity(MainActivity.class);
                         finish();
                     }
                 }

@@ -44,7 +44,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     }
 
     public BaseListAdapter(Context context, List<T> list) {
-        this(context, list, null);
+        this(context, list,context instanceof ImageLoadListener ? (ImageLoadListener) context : null );
     }
 
     public BaseListAdapter(Context context, List<T> list, ImageLoadListener listener) {

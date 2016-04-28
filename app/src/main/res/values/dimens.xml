@@ -11,6 +11,7 @@
     <dimen name="text_size_tip">13dp</dimen>
     <dimen name="text_size_tip_small">10dp</dimen>
     <dimen name="text_size_title">18dp</dimen>
+    <dimen name="text_size_content_title">16dp</dimen>
     <dimen name="text_size_button">16dp</dimen>
     <dimen name="title_height">45dp</dimen>
 </resources>

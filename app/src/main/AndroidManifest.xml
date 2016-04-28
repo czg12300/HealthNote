@@ -31,7 +31,7 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/swipe_activity" />
+            android:theme="@style/main_activity" />
         <activity
             android:name=".ui.activity.SettingActivity"
             android:screenOrientation="portrait"

@@ -33,13 +33,15 @@ public class HomeAdapter extends BaseListAdapter<QAInfo> {
             holder.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
             holder.tvNikeName = (TextView) convertView.findViewById(R.id.tv_nike_name);
             holder.tvZanNum = (TextView) convertView.findViewById(R.id.tv_zan_num);
-            convertView.setTag(convertView.getId(),holder);
+            convertView.setTag(convertView.getId(), holder);
         } else {
             holder = (ViewHolder) convertView.getTag(convertView.getId());
         }
         QAInfo info = mDataList.get(position);
         if (info != null) {
-            mImageLoadListener.loadImageByUrl(info.getAvater(), holder.ivAvatar,true);
+            if (mImageLoadListener != null) {
+                mImageLoadListener.loadImageByUrl(info.getAvater(), holder.ivAvatar, true);
+            }
             ViewUtil.setText2TextView(holder.tvTitle, info.getTitle());
             ViewUtil.setText2TextView(holder.tvNikeName, info.getNikeName());
             ViewUtil.setText2TextView(holder.tvContent, info.getContent());
