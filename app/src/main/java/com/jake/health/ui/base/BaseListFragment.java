@@ -6,119 +6,21 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jake.health.R;
 import com.jake.health.ui.adapter.BaseListAdapter;
+import com.jake.health.ui.widgt.MaterialProgressBar;
 import com.jake.health.ui.widgt.StatusView;
-import com.jake.health.ui.widgt.materialdesign.pullrefresh.MaterialProgressDrawable;
 import com.jake.health.utils.ToastUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
         AbsListView.OnScrollListener, View.OnClickListener, AdapterView.OnItemClickListener {
 
     protected StatusView mStatusView;
-
-    private MaterialProgressDrawable mDpdLoadMore;
-
-    private ImageView mIvProgressBar;
-
-    /**
-     * 指定layout资源id
-     * 
-     * @return
-     */
-    protected int findLayoutId() {
-        return R.layout.fragment_base_list;
-    }
-
-    /**
-     * 添加头部
-     * 
-     * @param listView
-     */
-    protected void addHeaderView(ListView listView) {
-    }
-
-    /**
-     * 获取尾部
-     */
-    protected View getFooterView() {
-        return null;
-    }
-
-    /**
-     * 创建适配器
-     * 
-     * @return
-     */
-    protected abstract BaseListAdapter<T> createAdapter();
-
-    /**
-     * 加载数据，子类重写
-     * 
-     * @return
-     */
-    protected abstract List<T> loadData();
-
-    /**
-     * 列表点击回调
-     * 
-     * @param t
-     */
-    protected void onListItemClick(T t) {
-
-    }
-
-    /**
-     * 处理返回数据
-     * 
-     * @param datas
-     */
-    protected List<T> dealDatas(List<T> datas) {
-        return datas;
-    }
-
-    /**
-     * 设置是否延时加载
-     * 
-     * @param isDelayLoad
-     */
-    protected void setDelayLoad(boolean isDelayLoad) {
-        mDelayLoad = isDelayLoad;
-    }
-
-    /**
-     * 设置当所有数据加载完毕时是否移除footerView
-     * 
-     * @param remove
-     */
-    protected void setRemoveFooterViewAfterAllDataLoaded(boolean remove) {
-        mRemoveFooterViewAfterAllDataLoaded = remove;
-    }
-
-    /**
-     * 获取页码
-     * 
-     * @return
-     */
-    protected int getPageIndex() {
-        return mPageIndex;
-    }
-
-    /**
-     * 设置页码
-     * 
-     * @param pageIndex
-     */
-    protected void setPageIndex(int pageIndex) {
-        mPageIndex = pageIndex;
-    }
 
     protected ListView mListView;
 
@@ -133,8 +35,6 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
     // 数据是否已经全部加载完
     public boolean mHasLoadAllData;
 
-    // 是否延迟加载,如果延迟加载的话，在方法startLoadData中开始触发加载
-    private boolean mDelayLoad = false;
 
     private boolean mRemoveFooterViewAfterAllDataLoaded = false;
 
@@ -150,6 +50,10 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
         mSwipeRefreshLayout.setEnabled(enable);
     }
 
+    protected void setLoadViewBackgroundColor(int color) {
+        mFooterView.setBackgroundColor(color);
+    }
+
     @Override
     protected void initView() {
         mStatusView = new StatusView(getActivity());
@@ -163,7 +67,6 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
         mListView.setOnScrollListener(this);
         mListView.setOnItemClickListener(this);
         addHeaderView(mListView);
-
         if (mListView.getHeaderViewsCount() <= 0) {
             // 部分手机必须先addHeader后footer才能正常显示
             mListView.addHeaderView(new View(getActivity()));
@@ -172,7 +75,6 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
         if (mFooterView == null) {
             mFooterView = inflate(R.layout.footer_base_list_fragment, null);
             mFooterView.setVisibility(View.GONE);
-            mFooterView.findViewById(R.id.iv_progress_bar).setVisibility(View.GONE);
             mFooterView.findViewById(R.id.rl_load_more).setOnClickListener(this);
         }
         mListView.addFooterView(mFooterView);
@@ -193,8 +95,7 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ToastUtil.show("哈哈");
-                sendEmptyUiMessageDelayed(11, 2000);
+                reLoadData();
             }
         });
     }
@@ -209,10 +110,6 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
     public void reLoadData() {
         mHasLoadAllData = false;
         mPageIndex = 0;
-        if (mAdapter != null) {
-            mAdapter.clearAllData();
-            mAdapter.notifyDataSetChanged();
-        }
         sendEmptyBackgroundMessage(MSG_BACK_LOAD_DATA);
     }
 
@@ -224,32 +121,26 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
 
     // 设置footerView状态
     protected void setFooterViewState(int state) {
-        TextView textView = (TextView) mFooterView.findViewById(R.id.tv_loading_tips);
-        if (mIvProgressBar == null) {
-            mIvProgressBar = (ImageView) mFooterView.findViewById(R.id.iv_progress_bar);
-            mDpdLoadMore = new MaterialProgressDrawable(mFooterView.getContext(), mIvProgressBar);
-            mDpdLoadMore.setColorSchemeColors(getContext().getResources().getColor(
-                    R.color.title_background));
-            mDpdLoadMore.setAlpha(255);
+        if (mFooterView.getVisibility() != View.VISIBLE) {
+            mFooterView.setVisibility(View.VISIBLE);
         }
-        if (textView == null || mIvProgressBar == null) {
+        TextView textView = (TextView) mFooterView.findViewById(R.id.tv_loading_tips);
+        MaterialProgressBar progressBar = (MaterialProgressBar) mFooterView.findViewById(R.id.mpb_progress_bar);
+        if (textView == null || progressBar == null) {
             return;
         }
         if (state == STATE_LOADING) {
             // 显示正在加载
             textView.setText(R.string.loading);
-            mIvProgressBar.setVisibility(View.VISIBLE);
-            mDpdLoadMore.start();
+            progressBar.show();
         } else if (state == STATE_LOAD_MORE) {
             // 显示加载更多
             textView.setText(R.string.load_more);
-            mIvProgressBar.setVisibility(View.GONE);
-            mDpdLoadMore.stop();
+            progressBar.hide();
         } else if (state == STATE_LOAD_ALL_DATA) {
             // 显示数据全部加载
             textView.setText(R.string.load_finish);
-            mIvProgressBar.setVisibility(View.GONE);
-            mDpdLoadMore.stop();
+            progressBar.hide();
         }
     }
 
@@ -257,13 +148,13 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
 
     public static final int MSG_UI_LOAD_SUCCESS = 0x1001;
 
-    public static final int MSG_UI_LOAD_FAILE = 0x1002;
+    public static final int MSG_UI_LOAD_FAIL = 0x1002;
 
     public static final int MSG_UI_ALL_DATA_HAVE_LOADED = 0x1003;
 
     public static final int MSG_UI_NO_DATA = 0x1004;
 
-    public static final int MSG_UI_LOAD_HEAD_SUCCESS = 0x1005;
+    public static final int MSG_UI_FINISH_REFRESH = 0x1005;
 
     @Override
     public void handleUiMessage(Message msg) {
@@ -272,30 +163,29 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
             case MSG_UI_START_LOADING:
                 // 开始加载数据，显示loading
                 if (mPageIndex == 1) {
-                    mStatusView.showLoadingView();
+                    if (mAdapter.getCount() == 0) {
+                        mStatusView.showLoadingView();
+                    } else {
+                        mFooterView.setVisibility(View.GONE);
+                    }
                 } else {
                     setFooterViewState(STATE_LOADING);
                 }
                 break;
             case MSG_UI_LOAD_SUCCESS:
                 // 数据加载成功,且数据条数不为0
-                if (msg.obj instanceof ArrayList<?>) {
-                    ArrayList<T> datas = (ArrayList<T>) msg.obj;
-                    mAdapter.addAll(datas);
-                    mAdapter.notifyDataSetChanged();
-                    // ***8.0框架改动后，必须加上selection，否则列表会在启动一个新fragment后跳回头部***
-                    if (getPageIndex() == 1) {
-                        if (mSwipeRefreshLayout.isRefreshing()) {
-                            mSwipeRefreshLayout.setRefreshing(false);
-                        }
-                        mListView.setSelection(0);
-                        mFooterView.setVisibility(View.VISIBLE);
+                if (msg.obj != null && msg.obj instanceof List<?>) {
+                    List<T> list = (List<T>) msg.obj;
+                    if (mPageIndex == 1 && mAdapter.getCount() > 0) {
+                        mAdapter.setDataAndNotifyDataSetChanged(list);
+                    } else {
+                        mAdapter.addAllAndNotifyDataSetChanged(list);
                     }
                 }
                 setFooterViewState(STATE_LOAD_MORE);
                 mStatusView.showContentView();
                 break;
-            case MSG_UI_LOAD_FAILE:
+            case MSG_UI_LOAD_FAIL:
                 // 数据加载失败
                 if (mPageIndex > 0) {
                     mPageIndex--;
@@ -328,8 +218,14 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
                     mListView.removeFooterView(mFooterView);
                 }
                 break;
+            case MSG_UI_FINISH_REFRESH:
+                if (mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+                break;
         }
     }
+
 
     protected static final int MSG_BACK_LOAD_DATA = 0x2000;
 
@@ -338,28 +234,35 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
         super.handleBackgroundMessage(msg);
         switch (msg.what) {
             case MSG_BACK_LOAD_DATA:
-                // 开始请求数据
-                ++mPageIndex;
-                sendEmptyUiMessage(MSG_UI_START_LOADING);
-                List<T> datas = loadData();
-                if (datas != null) {
-                    List<T> dealResult = dealDatas(datas);
-                    if (dealResult != null && dealResult.size() > 0) {
-                        Message message = obtainUiMessage();
-                        message.what = MSG_UI_LOAD_SUCCESS;
-                        message.obj = dealResult;
-                        message.sendToTarget();
-                    } else {
-                        sendEmptyUiMessage(MSG_UI_NO_DATA);
-                    }
-                    if (datas.size() < PAGE_SIZE) {
-                        sendEmptyUiMessage(MSG_UI_ALL_DATA_HAVE_LOADED);
-                    }
-                } else {
-                    // apps为null表示加载数据失败
-                    sendEmptyUiMessage(MSG_UI_LOAD_FAILE);
-                }
+                baseLoadDataTask();
                 break;
+        }
+    }
+
+    private void baseLoadDataTask() {
+        // 开始请求数据
+        ++mPageIndex;
+        sendEmptyUiMessage(MSG_UI_START_LOADING);
+        List<T> list = loadData();
+        if (list != null) {
+            List<T> dealResult = dealData(list);
+            if (dealResult != null && dealResult.size() > 0) {
+                Message message = obtainUiMessage();
+                message.what = MSG_UI_LOAD_SUCCESS;
+                message.obj = dealResult;
+                message.sendToTarget();
+            } else {
+                sendEmptyUiMessage(MSG_UI_NO_DATA);
+            }
+            if (list.size() < PAGE_SIZE) {
+                sendEmptyUiMessage(MSG_UI_ALL_DATA_HAVE_LOADED);
+            }
+        } else {
+            // apps为null表示加载数据失败
+            sendEmptyUiMessage(MSG_UI_LOAD_FAIL);
+        }
+        if (mPageIndex == 1 && mAdapter.getCount() > 0) {
+            sendEmptyUiMessage(MSG_UI_FINISH_REFRESH);
         }
     }
 
@@ -390,11 +293,11 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
         if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
                 || scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
             if (view.getLastVisiblePosition() >= (view.getCount() - 1) && !mHasLoadAllData) {
-                if (mIvProgressBar.getVisibility() == View.VISIBLE) {
+                MaterialProgressBar progressBar = (MaterialProgressBar) mFooterView.findViewById(R.id.mpb_progress_bar);
+                if (progressBar.getVisibility() == View.VISIBLE) {
                     return;
                 }
-                mIvProgressBar.setVisibility(View.VISIBLE);
-                mDpdLoadMore.start();
+                progressBar.hide();
                 sendEmptyBackgroundMessage(MSG_BACK_LOAD_DATA);
             }
         }
@@ -402,14 +305,98 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
-            int totalItemCount) {
+                         int totalItemCount) {
     }
 
     @Override
     public void onClick(View v) {
-        if (mIvProgressBar.getVisibility() != View.VISIBLE && !mHasLoadAllData) {
+        if (mFooterView != null && mFooterView.findViewById(R.id.mpb_progress_bar).getVisibility() != View.VISIBLE && !mHasLoadAllData) {
             sendEmptyBackgroundMessage(MSG_BACK_LOAD_DATA);
         }
 
+    }
+
+    /**
+     * 指定layout资源id
+     *
+     * @return
+     */
+    protected int findLayoutId() {
+        return R.layout.fragment_base_list;
+    }
+
+    /**
+     * 添加头部
+     *
+     * @param listView
+     */
+    protected void addHeaderView(ListView listView) {
+    }
+
+    /**
+     * 获取尾部
+     */
+    protected View getFooterView() {
+        return null;
+    }
+
+    /**
+     * 创建适配器
+     *
+     * @return
+     */
+    protected abstract BaseListAdapter<T> createAdapter();
+
+    /**
+     * 加载数据，子类重写
+     *
+     * @return
+     */
+    protected abstract List<T> loadData();
+
+    /**
+     * 列表点击回调
+     *
+     * @param t
+     */
+    protected void onListItemClick(T t) {
+
+    }
+
+    /**
+     * 处理返回数据
+     *
+     * @param dataList
+     */
+    protected List<T> dealData(List<T> dataList) {
+        return dataList;
+    }
+
+
+    /**
+     * 设置当所有数据加载完毕时是否移除footerView
+     *
+     * @param remove
+     */
+    protected void setRemoveFooterViewAfterAllDataLoaded(boolean remove) {
+        mRemoveFooterViewAfterAllDataLoaded = remove;
+    }
+
+    /**
+     * 获取页码
+     *
+     * @return
+     */
+    protected int getPageIndex() {
+        return mPageIndex;
+    }
+
+    /**
+     * 设置页码
+     *
+     * @param pageIndex
+     */
+    protected void setPageIndex(int pageIndex) {
+        mPageIndex = pageIndex;
     }
 }

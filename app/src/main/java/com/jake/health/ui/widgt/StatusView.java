@@ -20,6 +20,7 @@ public class StatusView extends FrameLayout {
     }
 
     private View mContentView;
+    private MaterialProgressBar mProgressBar;
     private View mLoadView;
     private View mFailView;
     private View mNoDataView;
@@ -39,6 +40,7 @@ public class StatusView extends FrameLayout {
         super(context, attrs);
         inflate(context, R.layout.view_status_tip, this);
         mLoadView = findViewById(R.id.ll_loading);
+        mProgressBar = (MaterialProgressBar) findViewById(R.id.pb_loading);
         tvNoData = (TextView) findViewById(R.id.tv_no_data);
         mNoDataView = findViewById(R.id.ll_no_data);
         mFailView = findViewById(R.id.ll_fail);
@@ -52,31 +54,43 @@ public class StatusView extends FrameLayout {
     }
 
     public void showLoadingView() {
-        mContentView.setVisibility(GONE);
-        mFailView.setVisibility(GONE);
-        mNoDataView.setVisibility(GONE);
-        mLoadView.setVisibility(VISIBLE);
+        if (mLoadView.getVisibility() != VISIBLE) {
+            mContentView.setVisibility(GONE);
+            mFailView.setVisibility(GONE);
+            mNoDataView.setVisibility(GONE);
+            mLoadView.setVisibility(VISIBLE);
+            mProgressBar.show();
+        }
     }
 
     public void showContentView() {
-        mContentView.setVisibility(VISIBLE);
-        mFailView.setVisibility(GONE);
-        mLoadView.setVisibility(GONE);
-        mNoDataView.setVisibility(GONE);
+        if (mContentView.getVisibility() != VISIBLE) {
+            mContentView.setVisibility(VISIBLE);
+            mFailView.setVisibility(GONE);
+            mLoadView.setVisibility(GONE);
+            mProgressBar.hide();
+            mNoDataView.setVisibility(GONE);
+        }
     }
 
     public void showFailView() {
-        mContentView.setVisibility(GONE);
-        mFailView.setVisibility(VISIBLE);
-        mLoadView.setVisibility(GONE);
-        mNoDataView.setVisibility(GONE);
+        if (mFailView.getVisibility() != VISIBLE) {
+            mContentView.setVisibility(GONE);
+            mFailView.setVisibility(VISIBLE);
+            mLoadView.setVisibility(GONE);
+            mNoDataView.setVisibility(GONE);
+            mProgressBar.hide();
+        }
     }
 
     public void showNoDataView() {
-        mContentView.setVisibility(GONE);
-        mFailView.setVisibility(GONE);
-        mLoadView.setVisibility(GONE);
-        mNoDataView.setVisibility(VISIBLE);
+        if (mNoDataView.getVisibility() != VISIBLE) {
+            mContentView.setVisibility(GONE);
+            mFailView.setVisibility(GONE);
+            mLoadView.setVisibility(GONE);
+            mNoDataView.setVisibility(VISIBLE);
+            mProgressBar.hide();
+        }
     }
 
     public void setContentView(View vContent) {

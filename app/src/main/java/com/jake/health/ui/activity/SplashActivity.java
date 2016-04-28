@@ -31,7 +31,8 @@ public class SplashActivity extends BaseWorkerFragmentActivity {
         textView.setTextColor(Color.parseColor("#3F51B5"));
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 38);
         setContentView(textView);
-        sendEmptyUiMessageDelayed(MSG_UI_LOGIN, 500);
+//        sendEmptyUiMessageDelayed(MSG_UI_LOGIN, 500);
+        sendEmptyUiMessageDelayed(MSG_UI_MAIN, 500);
     }
 
     @Override

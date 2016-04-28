@@ -24,6 +24,7 @@ import com.jake.health.entity.QAInfo;
 import com.jake.health.ui.adapter.HomeAdapter;
 import com.jake.health.ui.adapter.HomeNavAdapter;
 import com.jake.health.ui.base.BaseWorkerFragmentActivity;
+import com.jake.health.ui.fragment.HomeFragment;
 import com.jake.health.ui.helper.MainFabHelper;
 import com.jake.health.ui.widgt.LoadMoreListView;
 import com.jake.health.ui.widgt.ThemeUtils;
@@ -86,7 +87,6 @@ public class MainActivity extends BaseWorkerFragmentActivity {
 
     private void initData() {
         mTvTitle.setText(R.string.title_home);
-
         sendEmptyUiMessage(MSG_UI_INIT_DATA);
         if (!isLogin) {
             mVTitleMenuRedDot.setVisibility(View.VISIBLE);

@@ -52,8 +52,8 @@
             android:textSize="@dimen/text_size_content"
             android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/ib_positive_progress"
+        <com.jake.health.ui.widgt.MaterialProgressBar
+            android:id="@+id/mpb_progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

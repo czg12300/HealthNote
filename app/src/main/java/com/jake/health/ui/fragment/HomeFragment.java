@@ -3,7 +3,6 @@ package com.jake.health.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Message;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -17,7 +16,6 @@ import com.jake.health.ui.adapter.BaseListAdapter;
 import com.jake.health.ui.adapter.HomeAdapter;
 import com.jake.health.ui.adapter.HomeNavAdapter;
 import com.jake.health.ui.base.BaseListFragment;
-import com.jake.health.ui.widgt.LoadMoreListView;
 import com.jake.health.ui.widgt.ZoomOutPageTransformer;
 import com.jake.health.ui.widgt.banner.BannerView;
 import com.jake.health.utils.DisplayUtil;
@@ -33,7 +31,7 @@ import java.util.List;
  * @since 2016/4/28 18:15
  */
 public class HomeFragment extends BaseListFragment<QAInfo> {
-private static final int MSG_UI_TOP_DATA=0x001;
+    private static final int MSG_UI_TOP_DATA = 0x001;
     private GridView mGvNav;
 
     private HomeNavAdapter mHomeNavAdapter;
@@ -46,7 +44,6 @@ private static final int MSG_UI_TOP_DATA=0x001;
 
     @Override
     protected BaseListAdapter<QAInfo> createAdapter() {
-
         mHomeAdapter = new HomeAdapter(getActivity());
         return mHomeAdapter;
     }
@@ -55,6 +52,11 @@ private static final int MSG_UI_TOP_DATA=0x001;
     protected void addHeaderView(ListView listView) {
         super.addHeaderView(listView);
         listView.addHeaderView(inflate(R.layout.header_main));
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
         mGvNav = (GridView) findViewById(R.id.gv_nav);
         mBannerTop = (BannerView) findViewById(R.id.banner_top);
         mBannerTop.setStyle(BannerView.STYLE_DOT_RIGHT);
@@ -65,11 +67,18 @@ private static final int MSG_UI_TOP_DATA=0x001;
         mBannerTop.setDuration(300);
         mHomeNavAdapter = new HomeNavAdapter(getActivity());
         mGvNav.setAdapter(mHomeNavAdapter);
+        setLoadViewBackgroundColor(Color.parseColor("#f9f9f9"));
     }
 
     @Override
     protected void initEvent() {
         super.initEvent();
+        getActivity().findViewById(R.id.title_layout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                slide2Top();
+            }
+        });
         mBannerTop.setBannerListener(new BannerView.IListener() {
             @Override
             public void clickBannerItem(Object banner) {
@@ -97,9 +106,8 @@ private static final int MSG_UI_TOP_DATA=0x001;
     @Override
     public void handleUiMessage(Message msg) {
         super.handleUiMessage(msg);
-        switch (msg.what){
+        switch (msg.what) {
             case MSG_UI_TOP_DATA:
-
                 mBannerTop.notifyDataSetChanged();
                 mHomeNavAdapter.notifyDataSetChanged();
                 mBannerTop.startScroll(5);
@@ -107,14 +115,27 @@ private static final int MSG_UI_TOP_DATA=0x001;
         }
     }
 
+    private boolean isFirstIn = true;
+
     @Override
     protected List<QAInfo> loadData() {
-        if (getPageIndex()==1){
+        if (isFirstIn) {
             mBannerTop.setBannerList(getTestBanner());
             mHomeNavAdapter.setData(getTestNav());
-           sendEmptyUiMessage(MSG_UI_TOP_DATA);
+            sendEmptyUiMessage(MSG_UI_TOP_DATA);
+            isFirstIn = false;
         }
-        return  getTestQA();
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        List<QAInfo> list = getTestQA();
+        if (mHomeAdapter.getCount() > 50&&getPageIndex()>1) {
+            list.remove(list.size() - 1);
+            list.remove(list.size() - 2);
+        }
+        return list;
     }
 
     private List<QAInfo> getTestQA() {
@@ -133,7 +154,7 @@ private static final int MSG_UI_TOP_DATA=0x001;
         info.setZanNum(140);
         info.setContent("在位于费城郊区高中时期的科比的劳尔梅里恩的劳尔梅里恩高中，科比凭借惊人的高中生涯赢得了全美国的认可。作为一个新人，科比就可以在学校（三年级和四年级）篮球队出任首发。");
         list.add(info);
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 8; i++) {
             info = new QAInfo();
             info.setAvater("http://img1.imgtn.bdimg.com/it/u=435937637,1527161840&fm=21&gp=0.jpg");
             info.setNickName("我是批量new出来的");

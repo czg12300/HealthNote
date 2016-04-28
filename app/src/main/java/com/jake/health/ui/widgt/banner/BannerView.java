@@ -86,12 +86,14 @@ public class BannerView extends FrameLayout implements OnPageChangeListener {
 
         public void setData(List<View> list) {
             if (CommonUtil.isListAvailable(list)) {
+                clear();
                 mViews = (ArrayList<View>) list;
             }
         }
 
         public void setDataWithNotifyDataSetChanged(List<View> list) {
             if (CommonUtil.isListAvailable(list)) {
+                clear();
                 mViews = (ArrayList<View>) list;
                 notifyDataSetChanged();
             }

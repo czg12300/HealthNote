@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -18,10 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jake.health.R;
+import com.jake.health.ui.widgt.MaterialProgressBar;
 import com.jake.health.ui.widgt.materialdesign.pullrefresh.MaterialProgressDrawable;
 
 /**
- * 描述：dialog的父类 Created by jakechen on 2015/8/28.
+ * 描述：dialog的父类
+ * 作者：jake on 2015/8/28.
  */
 public class BaseDialog extends Dialog implements View.OnClickListener {
 
@@ -39,9 +40,8 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
 
     protected View mVButton;
 
-    protected ImageView mIvPositiveProgress;
+    protected MaterialProgressBar mProgressBar;
 
-    protected MaterialProgressDrawable mDpdPositive;
 
     protected boolean isOptDismiss = true;
 
@@ -56,7 +56,7 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setWindow(R.style.alpha_animation,0.4f);
+        setWindow(R.style.alpha_animation, 0.4f);
     }
 
     public BaseDialog(Context context) {
@@ -68,20 +68,16 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
         mTvTitle = (TextView) findViewById(R.id.tv_title);
         mBtnNegative = (Button) findViewById(R.id.btn_negative);
         mBtnPositive = (Button) findViewById(R.id.btn_positive);
-        mIvPositiveProgress = (ImageView) findViewById(R.id.ib_positive_progress);
+        mProgressBar = (MaterialProgressBar) findViewById(R.id.mpb_progress_bar);
         mVButton = findViewById(R.id.rl_opt_button_layout);
         mBtnNegative.setOnClickListener(this);
         mBtnPositive.setOnClickListener(this);
-        mDpdPositive = new MaterialProgressDrawable(context, mIvPositiveProgress);
-        mDpdPositive.setColorSchemeColors(getContext().getResources().getColor(R.color.title_background));
-        mDpdPositive.setAlpha(255);
-        mIvPositiveProgress.setImageDrawable(mDpdPositive);
-        mIvPositiveProgress.setVisibility(View.INVISIBLE);
+        mProgressBar.setVisibility(View.INVISIBLE);
     }
 
     public void setPositiveBtnTextColor(int color) {
-        mDpdPositive.setColorSchemeColors(color);
         mBtnPositive.setTextColor(color);
+        mProgressBar.setProgressColors(color);
     }
 
     public void setNegativeBtnTextColor(int color) {
@@ -91,15 +87,13 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
     public void startPositionProgress() {
         if (mBtnPositive.getVisibility() == View.VISIBLE) {
             mBtnPositive.setVisibility(View.INVISIBLE);
-            mIvPositiveProgress.setVisibility(View.VISIBLE);
-            mDpdPositive.start();
+            mProgressBar.show();
         }
     }
 
     public void stopPositionProgress() {
         mBtnPositive.setVisibility(View.VISIBLE);
-        mIvPositiveProgress.setVisibility(View.INVISIBLE);
-        mDpdPositive.stop();
+        mProgressBar.hide();
     }
 
     public void setNegativeButton(int negative, int positive) {

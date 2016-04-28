@@ -33,9 +33,15 @@ public class HomeAdapter extends BaseListAdapter<QAInfo> {
             holder.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
             holder.tvNikeName = (TextView) convertView.findViewById(R.id.tv_nike_name);
             holder.tvZanNum = (TextView) convertView.findViewById(R.id.tv_zan_num);
+            holder.vDivider = convertView.findViewById(R.id.v_divider);
             convertView.setTag(convertView.getId(), holder);
         } else {
             holder = (ViewHolder) convertView.getTag(convertView.getId());
+        }
+        if (position < getCount() - 1) {
+            holder.vDivider.setVisibility(View.VISIBLE);
+        } else {
+            holder.vDivider.setVisibility(View.GONE);
         }
         QAInfo info = mDataList.get(position);
         if (info != null) {
@@ -60,5 +66,6 @@ public class HomeAdapter extends BaseListAdapter<QAInfo> {
         TextView tvNikeName;
 
         TextView tvZanNum;
+        View vDivider;
     }
 }

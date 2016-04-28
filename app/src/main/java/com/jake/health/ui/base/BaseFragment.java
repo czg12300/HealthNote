@@ -184,6 +184,7 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        initEvent();
         sendEmptyUiMessage(MSG_UI_INIT_DATA);
         super.onActivityCreated(savedInstanceState);
     }
@@ -250,9 +251,8 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
-        initEvent();
-    }
 
+    }
     protected View findViewById(int id) {
         return mDecorView.findViewById(id);
     }
