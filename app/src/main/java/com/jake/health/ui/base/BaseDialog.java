@@ -5,8 +5,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -50,8 +53,15 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
         isOptDismiss = optDismiss;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setWindow(R.style.alpha_animation,0.4f);
+    }
+
     public BaseDialog(Context context) {
         super(context);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         window = getWindow(); // 得到对话框
         super.setContentView(R.layout.dialog_base);
         mFlContent = (FrameLayout) findViewById(R.id.fl_content);
@@ -67,7 +77,6 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
         mDpdPositive.setAlpha(255);
         mIvPositiveProgress.setImageDrawable(mDpdPositive);
         mIvPositiveProgress.setVisibility(View.INVISIBLE);
-
     }
 
     public void setPositiveBtnTextColor(int color) {
@@ -164,7 +173,7 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
         if (animStyle != DEFAULT_INT) {
             window.setWindowAnimations(animStyle); // 设置窗口弹出动画
         }
-        window.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")));
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // //设置对话框背景为透明
         WindowManager.LayoutParams lp = window.getAttributes();
         // 根据x，y坐标设置窗口需要显示的位置
@@ -175,9 +184,10 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
             lp.y = y;
         }
         lp.dimAmount = showDimAmount;
+//        lp.flags=WindowManager.LayoutParams.FLAG_FULLSCREEN;
         // wl.alpha = 0.6f; //设置透明度
-        // wl.gravity = Gravity.BOTTOM; //设置重力
-        // window.setAttributes(lp);
+        lp.gravity = Gravity.CENTER; //设置重力
+//         window.setAttributes(lp);
         // hasSetWindow = true;
     }
 

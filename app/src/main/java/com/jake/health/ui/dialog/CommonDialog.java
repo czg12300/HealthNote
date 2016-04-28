@@ -15,7 +15,7 @@ import com.jake.health.ui.base.BaseDialog;
 public class CommonDialog extends BaseDialog {
     public CommonDialog(Context context) {
         super(context);
-        setWindow(R.style.alpha_animation, 0.6f);
+//        setWindow(R.style.alpha_animation, 0.6f);
     }
 
 }
