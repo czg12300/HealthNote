@@ -1,5 +1,7 @@
+
 package com.jake.health.ui.activity;
 
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +14,13 @@ import com.jake.health.ui.helper.ViewHelper;
 import com.jake.health.ui.widgt.ThemeUtils;
 
 /**
- * 描述：用于title的activity父类
- * 作者：jake on 2016/4/21 23:29
+ * 描述：用于title的activity父类 作者：jake on 2016/4/21 23:29
  */
 public abstract class TitleActivity extends BaseTitleActivity {
     protected ImageView mIvBack;
+
     protected TextView mTvTitle;
+
     protected ImageView mIvOpt;
 
     @Override
@@ -36,19 +39,23 @@ public abstract class TitleActivity extends BaseTitleActivity {
         mIvBack.setImageDrawable(ViewHelper.createBackDrawable());
         mIvBack.setVisibility(View.VISIBLE);
         ThemeUtils.adjustStatusBar(vTitle, this);
+        setBackgroundColor(Color.parseColor("#f9f9f9"));
         return vTitle;
     }
 
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
+        // mFlContent.addView(inflate(R.layout.view_top_shadow));
+    }
+
+    protected void showTopShadow() {
         mFlContent.addView(inflate(R.layout.view_top_shadow));
     }
 
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        mFlContent.addView(inflate(R.layout.view_top_shadow));
     }
 
     protected void showBackButton() {

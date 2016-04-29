@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">健康小秘</string>
     <string name="title_home">首页</string>
+    <string name="title_qa">求医问药</string>
+    <string name="title_analysis">病理分析</string>
+    <string name="title_moments">七嘴八舌</string>
+    <string name="title_hospital">附近诊所</string>
+    <string name="tab_qa_common">常见病</string>
+    <string name="tab_qa_sex">两性天地</string>
+    <string name="tab_qa_incurable">疑难杂症</string>
+    <string name="tab_analysis_common">常见病</string>
+    <string name="tab_analysis_infectious">传染病</string>
+    <string name="tab_analysis_incurable">疑难杂症</string>
+    <string name="tab_moments_treatment">求医经历</string>
+    <string name="tab_moments_sex">两性趣谈</string>
+    <string name="tab_moments_child">小儿难养</string>
+
     <string name="login_weibo">微博</string>
     <string name="login_qq">QQ</string>
     <string name="login">登录</string>
@@ -32,16 +46,5 @@
     <string name="load_fail">加载失败，请点击屏幕重试</string>
     <string name="load_fail_toast">加载失败</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_example">Example action</string>
-
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_main_navi">MainNaviActivity</string>
 
 </resources>

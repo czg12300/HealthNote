@@ -9,5 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@color/trans"
+        android:descendantFocusability="blocksDescendants"
         android:dividerHeight="0dp" />
 </android.support.v4.widget.SwipeRefreshLayout>

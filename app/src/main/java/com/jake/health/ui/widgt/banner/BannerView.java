@@ -344,7 +344,7 @@ public class BannerView extends FrameLayout implements OnPageChangeListener {
                 updateDotView();
             }
             mAdapter.setDataWithNotifyDataSetChanged(viewList);
-            mViewPager.setCurrentItem(100000 + mPageSize);
+//            mViewPager.setCurrentItem(100000 + mPageSize);
         }
     }
 

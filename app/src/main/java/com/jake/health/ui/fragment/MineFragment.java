@@ -1,31 +1,19 @@
+
 package com.jake.health.ui.fragment;
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
+import com.jake.health.R;
+import com.jake.health.ui.activity.MainActivity;
+import com.jake.health.ui.adapter.MineMenuAdapter;
+import com.jake.health.ui.base.BaseWorkerFragment;
+import com.jake.health.ui.helper.TestHelper;
+import com.jake.health.ui.helper.ViewHelper;
+import com.jake.health.ui.widgt.ThemeUtils;
+
 import android.os.Message;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.jake.health.R;
-import com.jake.health.entity.MineMenuInfo;
-import com.jake.health.ui.activity.MainActivity;
-import com.jake.health.ui.adapter.MineMenuAdapter;
-import com.jake.health.ui.base.BaseApplication;
-import com.jake.health.ui.base.BaseWorkerFragment;
-import com.jake.health.ui.helper.ViewHelper;
-import com.jake.health.ui.widgt.RoundImageView;
-import com.jake.health.ui.widgt.ThemeUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * 描述：侧边栏我的信息
@@ -35,11 +23,17 @@ import java.util.List;
  */
 public class MineFragment extends BaseWorkerFragment implements View.OnClickListener {
     private static final int MSG_UI_INIT_DATA = 0x001;
+
     private ImageView mIvBackMain;
+
     private ImageView mIvAvatar;
+
     private ListView mLvMenu;
+
     private MineMenuAdapter mMineMenuAdapter;
-private Button mBtnLoginOut;
+
+    private Button mBtnLoginOut;
+
     @Override
     protected void initView() {
         setContentView(R.layout.fragment_mine);
@@ -72,7 +66,7 @@ private Button mBtnLoginOut;
         final int id = v.getId();
         if (id == R.id.iv_back_main) {
             ((MainActivity) getActivity()).closeMine();
-        }else if (id==R.id.btn_login_out){
+        } else if (id == R.id.btn_login_out) {
             ((MainActivity) getActivity()).loginOut();
         }
 
@@ -89,33 +83,9 @@ private Button mBtnLoginOut;
     }
 
     private void dealInitData() {
-        loadImage("http://img3.imgtn.bdimg.com/it/u=287053482,141286521&fm=11&gp=0.jpg", mIvAvatar, true);
-        mMineMenuAdapter.setDataAndNotifyDataSetChanged(getTestMenu());
+        loadImage("http://img3.imgtn.bdimg.com/it/u=287053482,141286521&fm=11&gp=0.jpg", mIvAvatar,
+                true);
+        mMineMenuAdapter.setDataAndNotifyDataSetChanged(TestHelper.getTestMenu());
     }
 
-    private List<MineMenuInfo> getTestMenu() {
-        List<MineMenuInfo> list = new ArrayList<>();
-        MineMenuInfo info = new MineMenuInfo();
-        info.setTitle("消息");
-        info.setShowDot(1);
-        info.setIcon("http://img2.imgtn.bdimg.com/it/u=1390048268,4118739760&fm=21&gp=0.jpg");
-        list.add(info);
-        info = new MineMenuInfo();
-        info.setTitle("病例");
-        info.setIcon("http://img2.imgtn.bdimg.com/it/u=1390048268,4118739760&fm=21&gp=0.jpg");
-        list.add(info);
-        info = new MineMenuInfo();
-        info.setTitle("关注");
-        info.setIcon("http://img2.imgtn.bdimg.com/it/u=1390048268,4118739760&fm=21&gp=0.jpg");
-        list.add(info);
-        info = new MineMenuInfo();
-        info.setTitle("粉丝");
-        info.setIcon("http://img2.imgtn.bdimg.com/it/u=3119963880,936101450&fm=21&gp=0.jpg");
-        list.add(info);
-        info = new MineMenuInfo();
-        info.setTitle("设置");
-        info.setIcon("http://img3.imgtn.bdimg.com/it/u=2832776744,1381723459&fm=21&gp=0.jpg");
-        list.add(info);
-        return list;
-    }
 }

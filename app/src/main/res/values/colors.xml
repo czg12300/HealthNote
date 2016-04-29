@@ -8,6 +8,7 @@
     <color name="edit_text_bg_focus">#4CAF50</color>
     <color name="black_363636">#363636</color>
     <color name="white">#ffffff</color>
+    <color name="white_7f">#7fffffff</color>
     <color name="trans">#00000000</color>
     <color name="gray_cccccc">#cccccc</color>
     <color name="gray_dfdfdd">#dfdfdd</color>

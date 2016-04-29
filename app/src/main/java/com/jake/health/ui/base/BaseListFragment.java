@@ -35,7 +35,6 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
     // 数据是否已经全部加载完
     public boolean mHasLoadAllData;
 
-
     private boolean mRemoveFooterViewAfterAllDataLoaded = false;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -103,6 +102,7 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
     @Override
     protected void initData() {
         super.initData();
+        mStatusView.showLoadingView();
         sendEmptyBackgroundMessage(MSG_BACK_LOAD_DATA);
     }
 
@@ -125,7 +125,8 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
             mFooterView.setVisibility(View.VISIBLE);
         }
         TextView textView = (TextView) mFooterView.findViewById(R.id.tv_loading_tips);
-        MaterialProgressBar progressBar = (MaterialProgressBar) mFooterView.findViewById(R.id.mpb_progress_bar);
+        MaterialProgressBar progressBar = (MaterialProgressBar) mFooterView
+                .findViewById(R.id.mpb_progress_bar);
         if (textView == null || progressBar == null) {
             return;
         }
@@ -226,7 +227,6 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
         }
     }
 
-
     protected static final int MSG_BACK_LOAD_DATA = 0x2000;
 
     @Override
@@ -293,7 +293,8 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
         if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
                 || scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
             if (view.getLastVisiblePosition() >= (view.getCount() - 1) && !mHasLoadAllData) {
-                MaterialProgressBar progressBar = (MaterialProgressBar) mFooterView.findViewById(R.id.mpb_progress_bar);
+                MaterialProgressBar progressBar = (MaterialProgressBar) mFooterView
+                        .findViewById(R.id.mpb_progress_bar);
                 if (progressBar.getVisibility() == View.VISIBLE) {
                     return;
                 }
@@ -305,12 +306,14 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
-                         int totalItemCount) {
+            int totalItemCount) {
     }
 
     @Override
     public void onClick(View v) {
-        if (mFooterView != null && mFooterView.findViewById(R.id.mpb_progress_bar).getVisibility() != View.VISIBLE && !mHasLoadAllData) {
+        if (mFooterView != null
+                && mFooterView.findViewById(R.id.mpb_progress_bar).getVisibility() != View.VISIBLE
+                && !mHasLoadAllData) {
             sendEmptyBackgroundMessage(MSG_BACK_LOAD_DATA);
         }
 
@@ -372,7 +375,6 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
         return dataList;
     }
 
-
     /**
      * 设置当所有数据加载完毕时是否移除footerView
      *
@@ -398,5 +400,13 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
      */
     protected void setPageIndex(int pageIndex) {
         mPageIndex = pageIndex;
+    }
+
+    /**
+     * 获取适配器
+     * @return
+     */
+    protected BaseListAdapter<T> getAdapter() {
+        return mAdapter;
     }
 }

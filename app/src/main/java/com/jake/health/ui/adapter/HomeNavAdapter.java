@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.jake.health.R;
 import com.jake.health.entity.HomeNavInfo;
+import com.jake.health.ui.activity.QAActivity;
+import com.jake.health.utils.ToastUtil;
 import com.jake.health.utils.ViewUtil;
 
 /**

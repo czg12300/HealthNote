@@ -1,3 +1,4 @@
+
 package com.jake.health.entity;
 
 /**
@@ -8,8 +9,28 @@ package com.jake.health.entity;
  */
 public class HomeNavInfo {
     private String title;
+
     private String icon;
+
     private int showDot;
+
+    private int type;
+
+    public static final int TYPE_QA = 1;
+
+    public static final int TYPE_ANALYSIS = 2;
+
+    public static final int TYPE_MOMENTS = 3;
+
+    public static final int TYPE_HOSPITAL = 4;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getShowDot() {
         return showDot;
