@@ -13,6 +13,7 @@ import com.jake.health.R;
 import com.jake.health.entity.HomeNavInfo;
 import com.jake.health.entity.QAInfo;
 import com.jake.health.ui.activity.AnalysisActivity;
+import com.jake.health.ui.activity.HospitalActivity;
 import com.jake.health.ui.activity.MomentsActivity;
 import com.jake.health.ui.activity.QAActivity;
 import com.jake.health.ui.adapter.BaseListAdapter;
@@ -117,6 +118,7 @@ public class HomeFragment extends BaseListFragment<QAInfo> {
                         goActivity(MomentsActivity.class);
                         break;
                     case HomeNavInfo.TYPE_HOSPITAL:
+                        goActivity(HospitalActivity.class);
                         break;
                 }
             }

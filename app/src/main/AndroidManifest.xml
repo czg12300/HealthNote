@@ -48,6 +48,10 @@
             android:name=".ui.activity.MomentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/swipe_activity" />
+        <activity
+            android:name=".ui.activity.HospitalActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/swipe_activity" />
     </application>
 
 </manifest>
