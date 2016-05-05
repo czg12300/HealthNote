@@ -7,34 +7,21 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jake.health.R;
 import com.jake.health.config.ActionConfig;
-import com.jake.health.entity.HomeNavInfo;
-import com.jake.health.entity.QAInfo;
-import com.jake.health.ui.adapter.HomeAdapter;
-import com.jake.health.ui.adapter.HomeNavAdapter;
 import com.jake.health.ui.base.BaseWorkerFragmentActivity;
-import com.jake.health.ui.fragment.HomeFragment;
 import com.jake.health.ui.helper.MainFabHelper;
-import com.jake.health.ui.widgt.LoadMoreListView;
 import com.jake.health.ui.widgt.ThemeUtils;
-import com.jake.health.ui.widgt.ZoomOutPageTransformer;
-import com.jake.health.ui.widgt.banner.BannerView;
 import com.jake.health.ui.widgt.materialdesign.FabButton;
-import com.jake.health.utils.DisplayUtil;
 import com.jake.health.utils.ToastUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseWorkerFragmentActivity {
@@ -175,15 +162,15 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     }
 
     @Override
-    public void setupBroadcastActions(List<String> actions) {
-        super.setupBroadcastActions(actions);
+    public void setupSystemActions(List<String> actions) {
+        super.setupSystemActions(actions);
         actions.add(ActionConfig.ACTION_LOGIN_CANCEL);
         actions.add(ActionConfig.ACTION_LOGIN_SUCCESS);
     }
 
     @Override
-    public void handleBroadcast(Context context, Intent intent) {
-        super.handleBroadcast(context, intent);
+    public void handleLocalBroadcast(Context context, Intent intent) {
+        super.handleLocalBroadcast(context, intent);
         final String action = intent.getAction();
         if (TextUtils.equals(action, ActionConfig.ACTION_LOGIN_SUCCESS)) {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED);

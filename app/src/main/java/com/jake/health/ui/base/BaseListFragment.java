@@ -53,6 +53,7 @@ public abstract class BaseListFragment<T> extends BaseWorkerFragment implements
         mFooterView.setBackgroundColor(color);
     }
 
+
     @Override
     protected void initView() {
         mStatusView = new StatusView(getActivity());

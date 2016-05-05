@@ -6,6 +6,8 @@ import com.jake.health.utils.CommonUtil;
 import com.jake.health.utils.DisplayUtil;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -20,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.Scroller;
 
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,21 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class BannerView extends FrameLayout implements OnPageChangeListener {
+public class BannerView extends FrameLayout implements OnPageChangeListener, Handler.Callback {
+    private static final int MSG_UI_UPDATE_PAGE = 0;
+
+    @Override
+    public boolean handleMessage(Message msg) {
+        switch (msg.what) {
+            case MSG_UI_UPDATE_PAGE:
+                if (!isScroll && mPageSize > 1) {
+                    int index = 1 + mViewPager.getCurrentItem();
+                    mViewPager.setCurrentItem(index);// 切换当前显示的图片
+                }
+                break;
+        }
+        return true;
+    }
 
     public static interface IBannerInfo {
 
@@ -117,6 +132,8 @@ public class BannerView extends FrameLayout implements OnPageChangeListener {
     private MyPagerAdapter mAdapter;
 
     private ScheduledExecutorService scheduledExecutorService;
+
+    private Handler mHandler = new Handler(this);
 
     /**
      * 是否循环
@@ -260,6 +277,7 @@ public class BannerView extends FrameLayout implements OnPageChangeListener {
                 }
                 break;
         }
+        mHandler.removeMessages(MSG_UI_UPDATE_PAGE);
     }
 
     private boolean isStartedLoop = false;
@@ -278,15 +296,7 @@ public class BannerView extends FrameLayout implements OnPageChangeListener {
             scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
-                    post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (!isScroll && mPageSize > 1) {
-                                int index = 1 + mViewPager.getCurrentItem();
-                                mViewPager.setCurrentItem(index);// 切换当前显示的图片
-                            }
-                        }
-                    });
+                    mHandler.sendEmptyMessage(MSG_UI_UPDATE_PAGE);
                 }
             }, seconds, seconds, TimeUnit.SECONDS);
             isStartedLoop = true;
@@ -344,7 +354,7 @@ public class BannerView extends FrameLayout implements OnPageChangeListener {
                 updateDotView();
             }
             mAdapter.setDataWithNotifyDataSetChanged(viewList);
-//            mViewPager.setCurrentItem(100000 + mPageSize);
+            // mViewPager.setCurrentItem(100000 + mPageSize);
         }
     }
 

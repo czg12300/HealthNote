@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.text.TextUtils;
@@ -24,7 +25,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseFragmentActivity extends FragmentActivity implements IUi,ImageLoadListener {
+public abstract class BaseFragmentActivity extends FragmentActivity implements IUi,
+        ImageLoadListener {
     protected static final int REQUEST_CODE = 0x123f;
 
     protected static final int RESULT_CODE = 0x124f;
@@ -59,9 +61,13 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements I
         ;
     }
 
-    private ArrayList<String> mActions;
+    private ArrayList<String> mSystemActions;
 
-    private BroadcastReceiver mReceiver;
+    private ArrayList<String> mLocalActions;
+
+    private BroadcastReceiver mLocalReceiver;
+
+    private BroadcastReceiver mSystemReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,49 +75,86 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements I
         BaseApplication.getInstance().addActivity(this);
         dealIntent(getIntent().getExtras());
         mUiHandler = new UiHandler(this);
-        mActions = new ArrayList<String>();
-        setupBroadcastActions(mActions);
-        if (mActions != null && mActions.size() > 0) {
+        registerLocalReceiver();
+        registerSystemReceiver();
+    }
+
+    @Override
+    public void setupLocalActions(List<String> actions) {
+
+    }
+
+    private void registerLocalReceiver() {
+        mLocalActions = new ArrayList<String>();
+        setupLocalActions(mLocalActions);
+        if (mLocalActions != null && mLocalActions.size() > 0) {
             IntentFilter filter = new IntentFilter();
-            for (String action : mActions) {
+            for (String action : mSystemActions) {
                 filter.addAction(action);
             }
-            mReceiver = new BroadcastReceiver() {
+            ;
+            mLocalReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    handleBroadcast(context, intent);
+                    handleLocalBroadcast(context, intent);
                 }
             };
-            registerReceiver(mReceiver, filter);
+            LocalBroadcastManager.getInstance(this).registerReceiver(mLocalReceiver, filter);
+        } else {
+            mLocalActions.clear();
+            mLocalActions = null;
+        }
+    }
+
+    private void registerSystemReceiver() {
+        mSystemActions = new ArrayList<String>();
+        setupSystemActions(mSystemActions);
+        if (mSystemActions != null && mSystemActions.size() > 0) {
+            IntentFilter filter = new IntentFilter();
+            for (String action : mSystemActions) {
+                filter.addAction(action);
+            }
+            mSystemReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    handleSystemBroadcast(context, intent);
+                }
+            };
+            registerReceiver(mSystemReceiver, filter);
+        } else {
+            mSystemActions.clear();
+            mSystemActions = null;
         }
     }
 
     @Override
     public void loadImageByUrl(String url, ImageView imageView) {
-        loadImage(url,imageView);
+        loadImage(url, imageView);
     }
+
     @Override
-    public void loadImageByUrl(String url, ImageView imageView,boolean isCircle) {
-        loadImage(url,imageView,isCircle);
+    public void loadImageByUrl(String url, ImageView imageView, boolean isCircle) {
+        loadImage(url, imageView, isCircle);
     }
 
     protected void loadImage(String url, ImageView view) {
-        loadImage(url,view,false);
+        loadImage(url, view, false);
     }
 
     protected void loadImage(String url, ImageView view, boolean isCircle) {
         if (view != null && !TextUtils.isEmpty(url)) {
             if (isCircle) {
                 Glide.with(this).load(url).asBitmap()
-                        .placeholder(BaseApplication.getInstance().getDefaultImageResources()).into(new BitmapImageViewTarget(view) {
-                    @Override
-                    protected void setResource(Bitmap resource) {
-                        RoundedBitmapDrawable circularBitmapDrawable =
-                                RoundedBitmapDrawableFactory.create(getResources(), resource);
-                        circularBitmapDrawable.setCircular(true);
-                        view.setImageDrawable(circularBitmapDrawable);
-                    }
-                });
+                        .placeholder(BaseApplication.getInstance().getDefaultImageResources())
+                        .into(new BitmapImageViewTarget(view) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory
+                                        .create(getResources(), resource);
+                                circularBitmapDrawable.setCircular(true);
+                                view.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
             } else {
                 Glide.with(this).load(url)
                         .placeholder(BaseApplication.getInstance().getDefaultImageResources())
@@ -119,14 +162,18 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements I
             }
         }
     }
+
     protected void dealIntent(Bundle data) {
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mReceiver != null) {
-            unregisterReceiver(mReceiver);
+        if (mSystemReceiver != null) {
+            unregisterReceiver(mSystemReceiver);
+        }
+        if (mLocalReceiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mLocalReceiver);
         }
         BaseApplication.getInstance().removeActivity(this.getClass().getSimpleName());
     }
@@ -156,11 +203,15 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements I
     }
 
     @Override
-    public void setupBroadcastActions(List<String> actions) {
+    public void setupSystemActions(List<String> actions) {
     }
 
     @Override
-    public void handleBroadcast(Context context, Intent intent) {
+    public void handleLocalBroadcast(Context context, Intent intent) {
+    }
+
+    @Override
+    public void handleSystemBroadcast(Context context, Intent intent) {
     }
 
     @Override

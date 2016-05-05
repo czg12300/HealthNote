@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.jake.health.R;
 import com.jake.health.ui.adapter.HospitalAdapter;
+import com.jake.health.ui.helper.DividerGridItemDecoration;
 import com.jake.health.ui.helper.TestHelper;
 import com.jake.health.ui.widgt.StatusView;
 
@@ -36,6 +37,7 @@ public class HospitalActivity extends TitleActivity {
         setContentView(mStatusView);
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
         mHospitalAdapter = new HospitalAdapter(this);
         mRecyclerView.setAdapter(mHospitalAdapter);
     }

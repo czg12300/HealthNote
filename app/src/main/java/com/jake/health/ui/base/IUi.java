@@ -9,9 +9,11 @@ import android.os.Message;
 import java.util.List;
 
 public interface IUi {
-    void setupBroadcastActions(List<String> actions);
+    void setupSystemActions(List<String> actions);
+    void setupLocalActions(List<String> actions);
 
-    void handleBroadcast(Context context, Intent intent);
+    void handleLocalBroadcast(Context context, Intent intent);
+    void handleSystemBroadcast(Context context, Intent intent);
 
     void handleUiMessage(Message msg);
 

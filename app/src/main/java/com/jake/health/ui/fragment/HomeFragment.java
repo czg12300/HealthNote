@@ -141,12 +141,12 @@ public class HomeFragment extends BaseListFragment<QAInfo> {
 
     @Override
     protected List<QAInfo> loadData() {
-        if (isFirstIn) {
+//        if (isFirstIn) {
             mBannerTop.setBannerList(TestHelper.getTestBanner());
             mHomeNavAdapter.setData(TestHelper.getTestNav());
             sendEmptyUiMessage(MSG_UI_TOP_DATA);
             isFirstIn = false;
-        }
+//        }
 
         return TestHelper.loadQAInfoList(getAdapter(), getPageIndex());
     }

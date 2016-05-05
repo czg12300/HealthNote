@@ -1,7 +1,6 @@
 
 package com.jake.health.ui.base;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.text.TextUtils;
@@ -22,6 +22,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.squareup.leakcanary.LeakCanary;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -56,9 +57,13 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
         }
     }
 
-    private ArrayList<String> mActions;
+    private ArrayList<String> mSystemActions;
 
-    private BroadcastReceiver mReceiver;
+    private ArrayList<String> mLocalActions;
+
+    private BroadcastReceiver mLocalReceiver;
+
+    private BroadcastReceiver mSystemReceiver;
 
     public LayoutInflater getLayoutInflater() {
         return getActivity().getLayoutInflater();
@@ -75,65 +80,107 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
     private FrameLayout mDecorView;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActions = new ArrayList<String>();
-        setupBroadcastActions(mActions);
-        if (mActions != null && mActions.size() > 0) {
-            IntentFilter filter = new IntentFilter();
-            for (String action : mActions) {
-                filter.addAction(action);
-            }
-            mReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    handleBroadcast(context, intent);
-                }
-            };
-            getActivity().registerReceiver(mReceiver, filter);
-        }
+    public void handleSystemBroadcast(Context context, Intent intent) {
+
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        if (mReceiver != null) {
-            getActivity().unregisterReceiver(mReceiver);
-        }
+    public void setupLocalActions(List<String> actions) {
+
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mUiHandler = new UiHandler(this);
+        registerLocalReceiver();
+        registerSystemReceiver();
+    }
 
+    private void registerLocalReceiver() {
+        mLocalActions = new ArrayList<String>();
+        setupLocalActions(mLocalActions);
+        if (mLocalActions != null && mLocalActions.size() > 0) {
+            IntentFilter filter = new IntentFilter();
+            for (String action : mSystemActions) {
+                filter.addAction(action);
+            }
+            ;
+            mLocalReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    handleLocalBroadcast(context, intent);
+                }
+            };
+            LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mLocalReceiver,
+                    filter);
+        } else {
+            mLocalActions.clear();
+            mLocalActions = null;
+        }
+    }
+
+    private void registerSystemReceiver() {
+        mSystemActions = new ArrayList<String>();
+        setupSystemActions(mSystemActions);
+        if (mSystemActions != null && mSystemActions.size() > 0) {
+            IntentFilter filter = new IntentFilter();
+            for (String action : mSystemActions) {
+                filter.addAction(action);
+            }
+            mSystemReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    handleSystemBroadcast(context, intent);
+                }
+            };
+            getActivity().registerReceiver(mSystemReceiver, filter);
+        } else {
+            mSystemActions.clear();
+            mSystemActions = null;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mSystemReceiver != null) {
+            getActivity().unregisterReceiver(mSystemReceiver);
+        }
+        if (mLocalReceiver != null) {
+            LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mLocalReceiver);
+        }
     }
 
     @Override
     public void loadImageByUrl(String url, ImageView imageView) {
         loadImage(url, imageView);
     }
+
     @Override
-    public void loadImageByUrl(String url, ImageView imageView,boolean isCircle) {
-        loadImage(url,imageView,isCircle);
+    public void loadImageByUrl(String url, ImageView imageView, boolean isCircle) {
+        loadImage(url, imageView, isCircle);
     }
+
     protected void loadImage(String url, ImageView view) {
-       loadImage(url,view,false);
+        loadImage(url, view, false);
     }
 
     protected void loadImage(String url, ImageView view, boolean isCircle) {
         if (view != null && !TextUtils.isEmpty(url)) {
             if (isCircle) {
                 Glide.with(this).load(url).asBitmap()
-                        .placeholder(BaseApplication.getInstance().getDefaultImageResources()).into(new BitmapImageViewTarget(view) {
-                    @Override
-                    protected void setResource(Bitmap resource) {
-                        RoundedBitmapDrawable circularBitmapDrawable =
-                                RoundedBitmapDrawableFactory.create(getResources(), resource);
-                        circularBitmapDrawable.setCircular(true);
-                        view.setImageDrawable(circularBitmapDrawable);
-                    }
-                });
+                        .placeholder(BaseApplication.getInstance().getDefaultImageResources())
+                        .into(new BitmapImageViewTarget(view) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory
+                                        .create(getResources(), resource);
+                                circularBitmapDrawable.setCircular(true);
+                                view.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
             } else {
                 Glide.with(this).load(url)
                         .placeholder(BaseApplication.getInstance().getDefaultImageResources())
@@ -214,12 +261,12 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
     }
 
     @Override
-    public void setupBroadcastActions(List<String> actions) {
+    public void setupSystemActions(List<String> actions) {
 
     }
 
     @Override
-    public void handleBroadcast(Context context, Intent intent) {
+    public void handleLocalBroadcast(Context context, Intent intent) {
 
     }
 
@@ -241,7 +288,6 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
         return mDecorView;
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -253,6 +299,7 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
         initView();
 
     }
+
     protected View findViewById(int id) {
         return mDecorView.findViewById(id);
     }
