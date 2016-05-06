@@ -3,6 +3,8 @@ package com.jake.health.ui.activity;
 
 import android.graphics.Canvas;
 import android.os.Message;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import com.jake.health.R;
 import com.jake.health.ui.adapter.HospitalAdapter;
 import com.jake.health.ui.helper.DividerGridItemDecoration;
+import com.jake.health.ui.helper.GridItemDecoration;
 import com.jake.health.ui.helper.TestHelper;
 import com.jake.health.ui.widgt.StatusView;
 
@@ -35,9 +38,9 @@ public class HospitalActivity extends TitleActivity {
         mRecyclerView = new RecyclerView(this);
         mStatusView.setContentView(mRecyclerView);
         setContentView(mStatusView);
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL));
-        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,3,
+                GridLayoutManager.HORIZONTAL,false));
+        mRecyclerView.addItemDecoration(new GridItemDecoration());
         mHospitalAdapter = new HospitalAdapter(this);
         mRecyclerView.setAdapter(mHospitalAdapter);
     }

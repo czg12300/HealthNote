@@ -9,12 +9,16 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
 
 import com.jake.health.R;
 
@@ -129,9 +133,10 @@ public class SwipeBackLayout extends FrameLayout {
 
     private List<ViewPager> mViewPagers = new LinkedList<ViewPager>();
 
+    private List<RecyclerView> mRecyclerViews = new LinkedList<RecyclerView>();
+
     // private AutoScrollGrideView mChildScrollView;
     //
-    // private HorizontalListView mChildListView;
 
     public SwipeBackLayout(Context context) {
         this(context, null);
@@ -370,25 +375,51 @@ public class SwipeBackLayout extends FrameLayout {
                 break;
         }
 
-        // if (mChildListView != null && isTouchOnChild(mChildListView, event))
-        // {
-        // return false;
-        // } else if (mChildScrollView != null &&
-        // isTouchOnChild(mChildScrollView, event)) {
-        // return false;
-        // }
-
         ViewPager mViewPager = getTouchViewPager(mViewPagers, event);
-
+        RecyclerView recyclerView = getRecycleView(mRecyclerViews, event);
         if (mViewPager != null && mViewPager.getCurrentItem() != 0) {
             return super.onInterceptTouchEvent(event);
         }
-
+        if (recyclerView != null) {
+            RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+            if (manager != null) {
+                if (manager instanceof LinearLayoutManager) {
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) manager;
+                    if (linearLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
+                        if (linearLayoutManager.findFirstVisibleItemPosition() > 0) {
+                            return super.onInterceptTouchEvent(event);
+                        } else if (linearLayoutManager.findFirstVisibleItemPosition() == 0) {
+                            View view = recyclerView.getChildAt(0);
+                            Rect rect = new Rect();
+                            view.getGlobalVisibleRect(rect);
+                            if ((rect.right - rect.left) != view.getWidth()) {
+                                return super.onInterceptTouchEvent(event);
+                            }
+                        }
+                    }
+                } else if (manager instanceof StaggeredGridLayoutManager) {
+                    StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) manager;
+                    if (staggeredGridLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
+                        int[] poi = staggeredGridLayoutManager.findFirstVisibleItemPositions(null);
+                        if (poi != null && poi.length > 0) {
+                            if (poi[0] > 0) {
+                                return super.onInterceptTouchEvent(event);
+                            } else if (poi[0] == 0) {
+                                View view = recyclerView.getChildAt(0);
+                                Rect rect = new Rect();
+                                view.getGlobalVisibleRect(rect);
+                                if ((rect.right - rect.left) != view.getWidth()) {
+                                    return super.onInterceptTouchEvent(event);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         try {
             return mDragHelper.shouldInterceptTouchEvent(event);
         } catch (ArrayIndexOutOfBoundsException e) {
-            // FIXME: handle exception
-            // issues #9
             return false;
         }
     }
@@ -398,6 +429,18 @@ public class SwipeBackLayout extends FrameLayout {
             return null;
         }
         for (ViewPager v : mViewPagers) {
+            if (isTouchOnChild(v, ev)) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+    private RecyclerView getRecycleView(List<RecyclerView> mViewPagers, MotionEvent ev) {
+        if (mViewPagers == null || mViewPagers.size() == 0) {
+            return null;
+        }
+        for (RecyclerView v : mViewPagers) {
             if (isTouchOnChild(v, ev)) {
                 return v;
             }
@@ -443,6 +486,7 @@ public class SwipeBackLayout extends FrameLayout {
 
         if (changed) {
             getScrollChildView(mViewPagers, this);
+            getRecycleChildView(mRecyclerViews, this);
         }
     }
 
@@ -454,6 +498,18 @@ public class SwipeBackLayout extends FrameLayout {
                 mViewPagers.add((ViewPager) child);
             } else if (child instanceof ViewGroup) {
                 getScrollChildView(mViewPagers, (ViewGroup) child);
+            }
+        }
+    }
+
+    private void getRecycleChildView(List<RecyclerView> mViewPagers, ViewGroup parent) {
+        int childCount = parent.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View child = parent.getChildAt(i);
+            if (child instanceof RecyclerView) {
+                mViewPagers.add((RecyclerView) child);
+            } else if (child instanceof ViewGroup) {
+                getRecycleChildView(mViewPagers, (ViewGroup) child);
             }
         }
     }
@@ -522,7 +578,7 @@ public class SwipeBackLayout extends FrameLayout {
     public void attachToActivity(Activity activity) {
         mActivity = activity;
         TypedArray a = activity.getTheme().obtainStyledAttributes(new int[] {
-                android.R.attr.windowBackground
+            android.R.attr.windowBackground
         });
         int background = a.getResourceId(0, 0);
         a.recycle();
@@ -582,8 +638,8 @@ public class SwipeBackLayout extends FrameLayout {
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             super.onViewPositionChanged(changedView, left, top, dx, dy);
             if ((mTrackingEdge & EDGE_LEFT) != 0) {
-                mScrollPercent = Math.abs(
-                        (float) left / (mContentView.getWidth() + mShadowLeft.getIntrinsicWidth()));
+                mScrollPercent = Math.abs((float) left
+                        / (mContentView.getWidth() + mShadowLeft.getIntrinsicWidth()));
             } else if ((mTrackingEdge & EDGE_RIGHT) != 0) {
                 mScrollPercent = Math.abs((float) left
                         / (mContentView.getWidth() + mShadowRight.getIntrinsicWidth()));
@@ -620,15 +676,14 @@ public class SwipeBackLayout extends FrameLayout {
 
             int left = 0, top = 0;
             if ((mTrackingEdge & EDGE_LEFT) != 0) {
-                left = xvel > 0 || xvel == 0 && mScrollPercent > mScrollThreshold
-                        ? childWidth + mShadowLeft.getIntrinsicWidth() + OVERSCROLL_DISTANCE : 0;
+                left = xvel > 0 || xvel == 0 && mScrollPercent > mScrollThreshold ? childWidth
+                        + mShadowLeft.getIntrinsicWidth() + OVERSCROLL_DISTANCE : 0;
             } else if ((mTrackingEdge & EDGE_RIGHT) != 0) {
-                left = xvel < 0 || xvel == 0 && mScrollPercent > mScrollThreshold
-                        ? -(childWidth + mShadowLeft.getIntrinsicWidth() + OVERSCROLL_DISTANCE) : 0;
+                left = xvel < 0 || xvel == 0 && mScrollPercent > mScrollThreshold ? -(childWidth
+                        + mShadowLeft.getIntrinsicWidth() + OVERSCROLL_DISTANCE) : 0;
             } else if ((mTrackingEdge & EDGE_BOTTOM) != 0) {
-                top = yvel < 0 || yvel == 0 && mScrollPercent > mScrollThreshold
-                        ? -(childHeight + mShadowBottom.getIntrinsicHeight() + OVERSCROLL_DISTANCE)
-                        : 0;
+                top = yvel < 0 || yvel == 0 && mScrollPercent > mScrollThreshold ? -(childHeight
+                        + mShadowBottom.getIntrinsicHeight() + OVERSCROLL_DISTANCE) : 0;
             }
 
             mDragHelper.settleCapturedViewAt(left, top);

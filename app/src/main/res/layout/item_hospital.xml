@@ -62,5 +62,6 @@
         android:id="@+id/v_divider"
         android:layout_width="match_parent"
         android:layout_height="10dp"
+        android:visibility="gone"
         android:background="#f9f9f9" />
 </LinearLayout>
