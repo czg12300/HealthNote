@@ -3,6 +3,7 @@ package com.jake.health.ui.base;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.jake.health.config.GlideConfig;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -142,25 +143,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements I
     }
 
     protected void loadImage(String url, ImageView view, boolean isCircle) {
-        if (view != null && !TextUtils.isEmpty(url)) {
-            if (isCircle) {
-                Glide.with(this).load(url).asBitmap()
-                        .placeholder(BaseApplication.getInstance().getDefaultImageResources())
-                        .into(new BitmapImageViewTarget(view) {
-                            @Override
-                            protected void setResource(Bitmap resource) {
-                                RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory
-                                        .create(getResources(), resource);
-                                circularBitmapDrawable.setCircular(true);
-                                view.setImageDrawable(circularBitmapDrawable);
-                            }
-                        });
-            } else {
-                Glide.with(this).load(url)
-                        .placeholder(BaseApplication.getInstance().getDefaultImageResources())
-                        .crossFade(800).into(view);
-            }
-        }
+        GlideConfig.loadImage(this, url, view, isCircle);
     }
 
     protected void dealIntent(Bundle data) {

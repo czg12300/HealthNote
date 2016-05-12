@@ -22,6 +22,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.jake.health.config.GlideConfig;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.lang.ref.WeakReference;
@@ -88,7 +89,6 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
     public void setupLocalActions(List<String> actions) {
 
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -168,25 +168,7 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
     }
 
     protected void loadImage(String url, ImageView view, boolean isCircle) {
-        if (view != null && !TextUtils.isEmpty(url)) {
-            if (isCircle) {
-                Glide.with(this).load(url).asBitmap()
-                        .placeholder(BaseApplication.getInstance().getDefaultImageResources())
-                        .into(new BitmapImageViewTarget(view) {
-                            @Override
-                            protected void setResource(Bitmap resource) {
-                                RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory
-                                        .create(getResources(), resource);
-                                circularBitmapDrawable.setCircular(true);
-                                view.setImageDrawable(circularBitmapDrawable);
-                            }
-                        });
-            } else {
-                Glide.with(this).load(url)
-                        .placeholder(BaseApplication.getInstance().getDefaultImageResources())
-                        .crossFade(800).into(view);
-            }
-        }
+        GlideConfig.loadImage(this, url, view, isCircle);
     }
 
     /**

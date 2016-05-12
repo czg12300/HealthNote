@@ -50,9 +50,6 @@ public abstract class BaseApplication extends Application {
 
     protected abstract void onRelease();
 
-    public int getDefaultImageResources() {
-        return R.drawable.test_avatar;
-    }
 
     public void addActivity(Activity activity) {
         if (activity != null) {
