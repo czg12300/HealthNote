@@ -5,7 +5,9 @@ import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 import com.jake.health.R;
 import com.jake.health.entity.HomeSheetInfo;
+import com.jake.health.ui.activity.AddAnalysisActivity;
 import com.jake.health.ui.adapter.BaseListAdapter;
+import com.jake.health.ui.base.BaseFragmentActivity;
 import com.jake.health.ui.widgt.materialdesign.FabButton;
 import com.jake.health.utils.ToastUtil;
 import com.jake.health.utils.ViewUtil;
@@ -37,9 +39,9 @@ public class MainFabHelper implements AdapterView.OnItemClickListener {
 
     private CardView mCardView;
 
-    private Activity mActivity;
+    private BaseFragmentActivity mActivity;
 
-    public MainFabHelper(Activity activity) {
+    public MainFabHelper(BaseFragmentActivity activity) {
         mActivity = activity;
         setupFab();
     }
@@ -50,6 +52,7 @@ public class MainFabHelper implements AdapterView.OnItemClickListener {
         // mFab.getBackgroundTintList().getDefaultColor()
         ListView lvSheet = (ListView) findViewById(R.id.lv_sheet);
         lvSheet.setAdapter(new HomeFabSheetAdapter(mActivity, getSheetData()));
+        lvSheet.setOnItemClickListener(this);
         mMaterialSheetFab = new MaterialSheetFab<>(mFab, mCardView, findViewById(R.id.overlay),
                 Color.WHITE, mFab.getBackgroundTintList().getDefaultColor());
         mMaterialSheetFab.setEventListener(new MaterialSheetFabEventListener() {
@@ -102,6 +105,7 @@ public class MainFabHelper implements AdapterView.OnItemClickListener {
                 // TODO
                 break;
             case 1:
+                mActivity.goActivity(AddAnalysisActivity.class);
                 break;
             case 2:
                 break;

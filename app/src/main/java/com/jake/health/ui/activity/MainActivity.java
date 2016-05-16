@@ -55,7 +55,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         initView();
         initEvent();
         initData();
-        goActivity(HospitalActivity.class);
+//        goActivity(HospitalActivity.class);
     }
 
     private void initTitleBar() {
