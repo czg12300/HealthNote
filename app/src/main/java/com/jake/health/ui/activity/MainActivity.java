@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.jake.health.R;
 import com.jake.health.config.ActionConfig;
+import com.jake.health.ui.AddActivity;
+import com.jake.health.ui.RichEditorActivity;
 import com.jake.health.ui.base.BaseWorkerFragmentActivity;
 import com.jake.health.ui.helper.MainFabHelper;
 import com.jake.health.ui.widgt.ThemeUtils;
@@ -55,7 +57,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         initView();
         initEvent();
         initData();
-//        goActivity(HospitalActivity.class);
+        goActivity(RichEditorActivity.class);
     }
 
     private void initTitleBar() {

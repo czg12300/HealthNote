@@ -119,7 +119,7 @@ public class ChoosePictureHelper {
 
     private void handleCallback(String path) {
         Bitmap result = null;
-        deleteFile(takeFile);
+//        deleteFile(takeFile);
         if (needCut) {
             result = BitmapFactory.decodeFile(path);
         } else {
@@ -128,6 +128,7 @@ public class ChoosePictureHelper {
         if (mCallback != null) {
             mCallback.handleResult(result);
         }
+        deleteFile(takeFile);
         if (isSavePhoto) {
             savePic(result);
         }
