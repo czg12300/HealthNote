@@ -1,6 +1,9 @@
 
 package com.jake.health.ui.helper;
 
+import com.getbase.floatingactionbutton.AddFloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 import com.jake.health.R;
@@ -23,12 +26,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 描述：首页floatButton的操作逻辑
- *
+ * compile 'com.getbase:floatingactionbutton:1.10.1'
  * @author jakechen
  * @since 2016/4/27 10:58
  */
@@ -38,34 +42,76 @@ public class MainFabHelper implements AdapterView.OnItemClickListener {
     private FabButton mFab;
 
     private CardView mCardView;
-
+private FloatingActionsMenu mFloatingActionsMenu;
     private BaseFragmentActivity mActivity;
-
+private View mVBg;
     public MainFabHelper(BaseFragmentActivity activity) {
         mActivity = activity;
         setupFab();
     }
 
     private void setupFab() {
-        mFab = (FabButton) findViewById(R.id.fab_opt);
-        mCardView = (CardView) findViewById(R.id.cv_fab_sheet);
-        // mFab.getBackgroundTintList().getDefaultColor()
-        ListView lvSheet = (ListView) findViewById(R.id.lv_sheet);
-        lvSheet.setAdapter(new HomeFabSheetAdapter(mActivity, getSheetData()));
-        lvSheet.setOnItemClickListener(this);
-        mMaterialSheetFab = new MaterialSheetFab<>(mFab, mCardView, findViewById(R.id.overlay),
-                Color.WHITE, mFab.getBackgroundTintList().getDefaultColor());
-        mMaterialSheetFab.setEventListener(new MaterialSheetFabEventListener() {
+        mFloatingActionsMenu= (FloatingActionsMenu) findViewById(R.id.fam_menu);
+        mVBg= findViewById(R.id.overlay);
+        mVBg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onShowSheet() {
+            public void onClick(View v) {
+
+                mFloatingActionsMenu.collapse();
+            }
+        });
+        mFloatingActionsMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+            @Override
+            public void onMenuExpanded() {
+                try {
+//                    Field field = mFloatingActionsMenu.getClass().getDeclaredField("mAddButton");
+//                    field.setAccessible(true);
+//                    AddFloatingActionButton addFloatingActionButton= (AddFloatingActionButton) field.get(mFloatingActionsMenu);
+//                    addFloatingActionButton.setSize(FloatingActionButton.SIZE_MINI);
+//                    field.set();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                mVBg.setVisibility(View.VISIBLE);
             }
 
             @Override
-            public void onHideSheet() {
-                // Restore status bar color
-                // setStatusBarColor(statusBarColor);
+            public void onMenuCollapsed() {
+                try {
+//                    Field field = mFloatingActionsMenu.getClass().getDeclaredField("mAddButton");
+//                    field.setAccessible(true);
+//                    AddFloatingActionButton addFloatingActionButton= (AddFloatingActionButton) field.get(mFloatingActionsMenu);
+//                    addFloatingActionButton.setSize(FloatingActionButton.SIZE_NORMAL);
+//                    field.set();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                mVBg.setVisibility(View.GONE);
             }
         });
+
+
+
+
+//        mFab = (FabButton) findViewById(R.id.fab_opt);
+//        mCardView = (CardView) findViewById(R.id.cv_fab_sheet);
+//        // mFab.getBackgroundTintList().getDefaultColor()
+//        ListView lvSheet = (ListView) findViewById(R.id.lv_sheet);
+//        lvSheet.setAdapter(new HomeFabSheetAdapter(mActivity, getSheetData()));
+//        lvSheet.setOnItemClickListener(this);
+//        mMaterialSheetFab = new MaterialSheetFab<>(mFab, mCardView, findViewById(R.id.overlay),
+//                Color.WHITE, mFab.getBackgroundTintList().getDefaultColor());
+//        mMaterialSheetFab.setEventListener(new MaterialSheetFabEventListener() {
+//            @Override
+//            public void onShowSheet() {
+//            }
+//
+//            @Override
+//            public void onHideSheet() {
+//                // Restore status bar color
+//                // setStatusBarColor(statusBarColor);
+//            }
+//        });
     }
 
     private List<HomeSheetInfo> getSheetData() {

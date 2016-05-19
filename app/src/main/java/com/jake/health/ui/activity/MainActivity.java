@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.jake.health.R;
 import com.jake.health.config.ActionConfig;
-import com.jake.health.ui.AddActivity;
 import com.jake.health.ui.RichEditorActivity;
 import com.jake.health.ui.base.BaseWorkerFragmentActivity;
 import com.jake.health.ui.helper.MainFabHelper;
@@ -37,7 +36,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
 
     private DrawerLayout mDrawerLayout;
 
-    private FabButton mFabOpt;
+//    private FabButton mFabOpt;
 
     private DrawerArrowDrawable mDrawerArrowDrawable;
 
@@ -57,7 +56,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
         initView();
         initEvent();
         initData();
-        goActivity(RichEditorActivity.class);
+//        goActivity(RichEditorActivity.class);
     }
 
     private void initTitleBar() {
@@ -71,7 +70,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     private void initView() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mVTitleMenuRedDot = findViewById(R.id.v_red_dot);
-        mFabOpt = (FabButton) findViewById(R.id.fab_opt);
+//        mFabOpt = (FabButton) findViewById(R.id.fab_opt);
         mMainFabHelper = new MainFabHelper(this);
     }
 

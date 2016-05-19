@@ -3,13 +3,12 @@ package com.jake.health.ui;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jake.health.R;
+import com.jake.health.ui.widgt.recheditor.RichEditor;
 
-import jp.wasabeef.richeditor.RichEditor;
 
 public class RichEditorActivity extends Activity {
 

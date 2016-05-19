@@ -33,7 +33,7 @@
             android:layout_height="35dp"
             android:layout_alignParentRight="true"
             android:gravity="center_vertical"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/red_f51d67"
             android:textSize="@dimen/text_size_tip" />
 
         <TextView

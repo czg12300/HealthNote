@@ -61,7 +61,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/selector_btn_dialog_opt"
             android:text="@string/get_phone_code"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/red_f51d67"
             android:textSize="@dimen/text_size_content_small" />
 
     </LinearLayout>

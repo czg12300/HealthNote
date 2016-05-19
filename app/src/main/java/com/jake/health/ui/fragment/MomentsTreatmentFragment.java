@@ -1,4 +1,3 @@
-
 package com.jake.health.ui.fragment;
 
 import com.jake.health.R;

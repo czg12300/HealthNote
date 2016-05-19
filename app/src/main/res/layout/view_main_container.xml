@@ -1,69 +1,111 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
 
-    <!--<android.support.v4.widget.SwipeRefreshLayout-->
-    <!--android:id="@+id/swipe_container"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
-
-    <!--<com.jake.health.ui.widgt.LoadMoreListView-->
-    <!--android:id="@+id/lv_list"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:divider="@color/trans"-->
-    <!--android:dividerHeight="0dp" />-->
-    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
-<fragment
-    android:id="@+id/fragment_home"
-    android:layout_width="match_parent"
-    android:name="com.jake.health.ui.fragment.HomeFragment"
-    android:layout_height="match_parent"/>
-    <com.jake.health.ui.widgt.materialdesign.FabButton
-        android:id="@+id/fab_opt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="50dp"
-        android:layout_marginRight="16dp"
-        android:src="@drawable/img_fab_add"
-        app:backgroundTint="@drawable/selector_btn_fab" />
-
-    <!-- Overlay that dims the screen -->
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.jake.health.ui.fragment.HomeFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <View
         android:id="@+id/overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#6fffffff" />
-    <!--android:background="#60000000" />-->
+        android:visibility="gone"
+        android:background="@color/white_7f" />
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fam_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        fab:fab_addButtonColorNormal="@color/red_f51d67"
+        fab:fab_addButtonColorPressed="@color/red_f43576"
+        fab:fab_addButtonPlusIconColor="@color/white"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        fab:fab_addButtonSize="normal"
+        fab:fab_labelsPosition="left">
 
-    <io.codetail.widget.RevealLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="end|bottom"
-        android:orientation="vertical">
-
-        <!-- Sheet that contains your items -->
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_fab_sheet"
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fb_dt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:layout_marginRight="16dp">
+            fab:fab_colorNormal="@color/black_363636"
+            fab:fab_colorPressed="@color/red_f43576"
+            fab:fab_title="@string/home_fab_sheet_dt" />
 
-            <ListView
-                android:id="@+id/lv_sheet"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:cacheColorHint="@color/trans"
-                android:divider="@color/trans"
-                android:dividerHeight="0dp" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fb_bl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/indigo_3F51B5"
+            fab:fab_colorPressed="@color/red_f43576"
 
-        </android.support.v7.widget.CardView>
-    </io.codetail.widget.RevealLinearLayout>
+            fab:fab_title="@string/home_fab_sheet_bl" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fb_yy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/title_background"
+            fab:fab_colorPressed="@color/red_f43576"
+            fab:fab_title="@string/home_fab_sheet_yy" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fb_wbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_colorPressed="@color/red_f43576"
+
+            fab:fab_title="@string/home_fab_sheet_wbl" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    <!--<com.jake.health.ui.widgt.materialdesign.FabButton-->
+    <!--android:id="@+id/fab_opt"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginBottom="50dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:src="@drawable/img_fab_add"-->
+    <!--app:backgroundTint="@drawable/selector_btn_fab" />-->
+
+    <!--&lt;!&ndash; Overlay that dims the screen &ndash;&gt;-->
+
+    <!--android:background="#60000000" />-->
+
+    <!--<io.codetail.widget.RevealLinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="end|bottom"-->
+    <!--android:orientation="vertical">-->
+
+    <!--&lt;!&ndash; Sheet that contains your items &ndash;&gt;-->
+    <!--<android.support.v7.widget.CardView-->
+    <!--android:id="@+id/cv_fab_sheet"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="50dp"-->
+    <!--android:layout_marginRight="16dp">-->
+
+    <!--<ListView-->
+    <!--android:id="@+id/lv_sheet"-->
+    <!--android:layout_width="200dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:cacheColorHint="@color/trans"-->
+    <!--android:divider="@color/trans"-->
+    <!--android:dividerHeight="0dp" />-->
+
+    <!--</android.support.v7.widget.CardView>-->
+    <!--</io.codetail.widget.RevealLinearLayout>-->
 
 </RelativeLayout>

@@ -2,14 +2,16 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="red_f51d67">#f51d67</color>
+    <color name="red_f43576">#f43576</color>
     <color name="title_background">#4CAF50</color>
     <color name="edit_text_bg_normal">@color/gray_cccccc</color>
     <color name="edit_text_bg_focus">#4CAF50</color>
     <color name="black_363636">#363636</color>
     <color name="white">#ffffff</color>
-    <color name="white_7f">#7fffffff</color>
+    <color name="white_7f">#afffffff</color>
     <color name="trans">#00000000</color>
+    <color name="trans_7f">#7f000000</color>
     <color name="gray_cccccc">#cccccc</color>
     <color name="gray_dfdfdd">#dfdfdd</color>
     <color name="indigo_C5CAE9">#C5CAE9</color>
