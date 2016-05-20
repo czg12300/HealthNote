@@ -1,142 +1,73 @@
 
 package com.jake.health.ui.helper;
 
-import com.getbase.floatingactionbutton.AddFloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.gordonwong.materialsheetfab.MaterialSheetFab;
-import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 import com.jake.health.R;
-import com.jake.health.entity.HomeSheetInfo;
-import com.jake.health.ui.activity.AddAnalysisActivity;
-import com.jake.health.ui.adapter.BaseListAdapter;
 import com.jake.health.ui.base.BaseFragmentActivity;
-import com.jake.health.ui.widgt.materialdesign.FabButton;
 import com.jake.health.utils.ToastUtil;
-import com.jake.health.utils.ViewUtil;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.widget.CardView;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * 描述：首页floatButton的操作逻辑
- * compile 'com.getbase:floatingactionbutton:1.10.1'
+ * 描述：首页floatButton的操作逻辑 compile 'com.getbase:floatingactionbutton:1.10.1'
+ * 
  * @author jakechen
  * @since 2016/4/27 10:58
  */
-public class MainFabHelper implements AdapterView.OnItemClickListener {
-    private MaterialSheetFab<FabButton> mMaterialSheetFab;
+public class MainFabHelper implements View.OnClickListener {
+    private FloatingActionsMenu mFloatingActionsMenu;
 
-    private FabButton mFab;
-
-    private CardView mCardView;
-private FloatingActionsMenu mFloatingActionsMenu;
     private BaseFragmentActivity mActivity;
-private View mVBg;
+
+    private View mVBg;
+
+    private FloatingActionButton mFabDt;
+
+    private FloatingActionButton mFabBl;
+
+    private FloatingActionButton mFabWbl;
+
+    private FloatingActionButton mFabYy;
+
     public MainFabHelper(BaseFragmentActivity activity) {
         mActivity = activity;
         setupFab();
     }
 
     private void setupFab() {
-        mFloatingActionsMenu= (FloatingActionsMenu) findViewById(R.id.fam_menu);
-        mVBg= findViewById(R.id.overlay);
-        mVBg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mFloatingActionsMenu = (FloatingActionsMenu) findViewById(R.id.fam_menu);
+        mVBg = findViewById(R.id.overlay);
+        mFabDt = (FloatingActionButton) findViewById(R.id.fab_dt);
+        mFabBl = (FloatingActionButton) findViewById(R.id.fab_bl);
+        mFabYy = (FloatingActionButton) findViewById(R.id.fab_yy);
+        mFabWbl = (FloatingActionButton) findViewById(R.id.fab_wbl);
+        mVBg.setOnClickListener(this);
+        mFabDt.setOnClickListener(this);
+        mFabBl.setOnClickListener(this);
+        mFabYy.setOnClickListener(this);
+        mFabWbl.setOnClickListener(this);
+        mFabDt.setIcon(R.drawable.img_qq);
+        mFabBl.setIcon(R.drawable.img_wb);
+        mFabYy.setIcon(R.drawable.img_wx);
+        Drawable drawable=mActivity.getResources().getDrawable(R.drawable.img_tool);
+        drawable.setColorFilter(ViewHelper.color2ColorFilter(Color.parseColor("#252525")));
+        mFabWbl.setIconDrawable(drawable);
+        mFloatingActionsMenu
+                .setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+                    @Override
+                    public void onMenuExpanded() {
+                        mVBg.setVisibility(View.VISIBLE);
+                    }
 
-                mFloatingActionsMenu.collapse();
-            }
-        });
-        mFloatingActionsMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
-            @Override
-            public void onMenuExpanded() {
-                try {
-//                    Field field = mFloatingActionsMenu.getClass().getDeclaredField("mAddButton");
-//                    field.setAccessible(true);
-//                    AddFloatingActionButton addFloatingActionButton= (AddFloatingActionButton) field.get(mFloatingActionsMenu);
-//                    addFloatingActionButton.setSize(FloatingActionButton.SIZE_MINI);
-//                    field.set();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                mVBg.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onMenuCollapsed() {
-                try {
-//                    Field field = mFloatingActionsMenu.getClass().getDeclaredField("mAddButton");
-//                    field.setAccessible(true);
-//                    AddFloatingActionButton addFloatingActionButton= (AddFloatingActionButton) field.get(mFloatingActionsMenu);
-//                    addFloatingActionButton.setSize(FloatingActionButton.SIZE_NORMAL);
-//                    field.set();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                mVBg.setVisibility(View.GONE);
-            }
-        });
-
-
-
-
-//        mFab = (FabButton) findViewById(R.id.fab_opt);
-//        mCardView = (CardView) findViewById(R.id.cv_fab_sheet);
-//        // mFab.getBackgroundTintList().getDefaultColor()
-//        ListView lvSheet = (ListView) findViewById(R.id.lv_sheet);
-//        lvSheet.setAdapter(new HomeFabSheetAdapter(mActivity, getSheetData()));
-//        lvSheet.setOnItemClickListener(this);
-//        mMaterialSheetFab = new MaterialSheetFab<>(mFab, mCardView, findViewById(R.id.overlay),
-//                Color.WHITE, mFab.getBackgroundTintList().getDefaultColor());
-//        mMaterialSheetFab.setEventListener(new MaterialSheetFabEventListener() {
-//            @Override
-//            public void onShowSheet() {
-//            }
-//
-//            @Override
-//            public void onHideSheet() {
-//                // Restore status bar color
-//                // setStatusBarColor(statusBarColor);
-//            }
-//        });
-    }
-
-    private List<HomeSheetInfo> getSheetData() {
-        List<HomeSheetInfo> list = new ArrayList<>();
-        HomeSheetInfo info = new HomeSheetInfo();
-        info.setIcon("http://img0.imgtn.bdimg.com/it/u=3736756504,4060954350&fm=21&gp=0.jpg");
-        info.setName(getString(R.string.home_fab_sheet_dt));
-        list.add(info);
-        info = new HomeSheetInfo();
-        info.setIcon("http://img3.imgtn.bdimg.com/it/u=415649817,3173582892&fm=21&gp=0.jpg");
-        info.setName(getString(R.string.home_fab_sheet_bl));
-        list.add(info);
-        info = new HomeSheetInfo();
-        info.setName(getString(R.string.home_fab_sheet_yy));
-        info.setIcon("http://img4.imgtn.bdimg.com/it/u=155521134,3298666642&fm=21&gp=0.jpg");
-        list.add(info);
-        info = new HomeSheetInfo();
-        info.setName(getString(R.string.home_fab_sheet_wbl));
-        info.setIcon("http://img5.imgtn.bdimg.com/it/u=995063541,2109037826&fm=21&gp=0.jpg");
-        list.add(info);
-        return list;
-    }
-
-    private String getString(int id) {
-        return mActivity.getString(id);
+                    @Override
+                    public void onMenuCollapsed() {
+                        mVBg.setVisibility(View.GONE);
+                    }
+                });
     }
 
     private View findViewById(int id) {
@@ -144,55 +75,21 @@ private View mVBg;
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        HomeSheetInfo info = (HomeSheetInfo) parent.getAdapter().getItem(position);
-        switch (position) {
-            case 0:
-                // TODO
-                break;
-            case 1:
-                mActivity.goActivity(AddAnalysisActivity.class);
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-        }
-        ToastUtil.show(info.getName());
-        mMaterialSheetFab.hideSheet();
-    }
-
-    class HomeFabSheetAdapter extends BaseListAdapter<HomeSheetInfo> {
-        public HomeFabSheetAdapter(Context context, List<HomeSheetInfo> list) {
-            super(context, list);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            if (convertView == null) {
-                holder = new ViewHolder();
-                convertView = inflate(R.layout.item_home_fab_sheet);
-                holder.ivIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
-                holder.tvName = (TextView) convertView.findViewById(R.id.tv_name);
-                convertView.setTag(convertView.getId(), holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag(convertView.getId());
-            }
-            HomeSheetInfo info = mDataList.get(position);
-            if (info != null) {
-                ViewUtil.setText2TextView(holder.tvName, info.getName());
-                if (mImageLoadListener != null) {
-                    mImageLoadListener.loadImageByUrl(info.getIcon(), holder.ivIcon);
-                }
-            }
-            return convertView;
-        }
-
-        final class ViewHolder {
-            TextView tvName;
-
-            ImageView ivIcon;
+    public void onClick(View v) {
+        if (v == mVBg) {
+            mFloatingActionsMenu.collapse();
+        } else if (v == mFabDt) {
+            ToastUtil.show(mFabDt.getTitle());
+            mFloatingActionsMenu.collapse();
+        } else if (v == mFabBl) {
+            ToastUtil.show(mFabBl.getTitle());
+            mFloatingActionsMenu.collapse();
+        } else if (v == mFabYy) {
+            ToastUtil.show(mFabYy.getTitle());
+            mFloatingActionsMenu.collapse();
+        } else if (v == mFabWbl) {
+            ToastUtil.show(mFabWbl.getTitle());
+            mFloatingActionsMenu.collapse();
         }
     }
 }

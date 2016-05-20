@@ -4,6 +4,8 @@ package com.jake.health.ui.helper;
 import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.support.design.widget.TextInputLayout;
@@ -22,6 +24,18 @@ import java.lang.reflect.Field;
  * 描述：一些控件的操作 作者：jake on 2016/4/21 22:06
  */
 public class ViewHelper {
+    public static ColorFilter color2ColorFilter(int color) {
+        int red = (color & 0xFF0000) / 0xFFFF;
+        int green = (color & 0xFF00) / 0xFF;
+        int blue = color & 0xFF;
+
+        float[] matrix = {
+                0, 0, 0, 0, red, 0, 0, 0, 0, green, 0, 0, 0, 0, blue, 0, 0, 0, 1, 0
+        };
+
+        return new ColorMatrixColorFilter(matrix);
+    }
+
     /**
      * 创建返回按钮的图标
      * 
@@ -70,10 +84,13 @@ public class ViewHelper {
         }
 
     }
+
     public static void changeTextInputLayoutLabelColor(TextInputLayout layout) {
-        changeTextInputLayoutLabelColor(layout,HealthApplication.getInstance().getResources().getColor(R.color.edit_text_bg_focus));
+        changeTextInputLayoutLabelColor(layout, HealthApplication.getInstance().getResources()
+                .getColor(R.color.edit_text_bg_focus));
 
     }
+
     public static ColorStateList createColorStateList(int normal, int pressed, int select,
             int unable) {
         if (pressed == 0) {

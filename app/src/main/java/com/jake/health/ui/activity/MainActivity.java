@@ -16,11 +16,9 @@ import android.widget.TextView;
 
 import com.jake.health.R;
 import com.jake.health.config.ActionConfig;
-import com.jake.health.ui.RichEditorActivity;
 import com.jake.health.ui.base.BaseWorkerFragmentActivity;
 import com.jake.health.ui.helper.MainFabHelper;
 import com.jake.health.ui.widgt.ThemeUtils;
-import com.jake.health.ui.widgt.materialdesign.FabButton;
 import com.jake.health.utils.ToastUtil;
 
 import java.util.List;
@@ -36,7 +34,6 @@ public class MainActivity extends BaseWorkerFragmentActivity {
 
     private DrawerLayout mDrawerLayout;
 
-//    private FabButton mFabOpt;
 
     private DrawerArrowDrawable mDrawerArrowDrawable;
 
