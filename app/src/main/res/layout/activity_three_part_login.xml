@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_login_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:scaleType="fitXY" />
+
+    <FrameLayout
+        android:id="@+id/v_state_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/iv_title_back"
+            android:layout_width="@dimen/title_height"
+            android:layout_height="@dimen/title_height"
+            android:onClick="onClick"
+            android:scaleType="center" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingTop="30dp"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="35dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_divider_other_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_other_login"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="0.5dp"
+            android:alpha="0.7"
+            android:background="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:alpha="0.7"
+            android:text="@string/login_three_part_hint"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_content_small" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="0.5dp"
+            android:alpha="0.7"
+            android:background="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_other_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="80dp"
+        android:paddingTop="20dp">
+
+
+        <com.jake.health.ui.widgt.PressDrawableTextView
+            android:id="@+id/btn_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/img_qq"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:padding="15dp"
+            android:text="@string/login_qq"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_tip_small" />
+
+        <com.jake.health.ui.widgt.PressDrawableTextView
+            android:id="@+id/btn_wechat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/img_wx"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:padding="15dp"
+            android:text="@string/login_wechat"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_tip_small" />
+
+        <com.jake.health.ui.widgt.PressDrawableTextView
+            android:id="@+id/btn_wb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/img_wb"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:padding="15dp"
+            android:text="@string/login_weibo"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_tip_small" />
+    </LinearLayout>
+</RelativeLayout>

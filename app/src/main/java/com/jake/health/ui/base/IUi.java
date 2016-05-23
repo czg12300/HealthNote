@@ -20,6 +20,7 @@ public interface IUi {
     void goActivity(Class<?> clazz);
 
     void goActivity(Class<?> clazz, Bundle bundle);
+    void goActivity(Class<?> clazz, Bundle bundle,int flag);
 
     void goActivityForResult(Class<?> clazz);
 

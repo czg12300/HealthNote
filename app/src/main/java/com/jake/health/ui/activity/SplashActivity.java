@@ -40,7 +40,7 @@ public class SplashActivity extends BaseWorkerFragmentActivity {
         super.handleUiMessage(msg);
         switch (msg.what) {
             case MSG_UI_LOGIN:
-                goActivity(LoginActivity.class);
+                goActivity(ThreePartLoginActivity.class);
                 break;
             case MSG_UI_MAIN:
                 goActivity(MainActivity.class);

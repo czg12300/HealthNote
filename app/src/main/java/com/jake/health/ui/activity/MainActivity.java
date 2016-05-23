@@ -99,7 +99,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
             @Override
             public void onClick(View v) {
                 if (!isLogin) {
-                    goActivity(LoginActivity.class);
+                    goActivity(ThreePartLoginActivity.class);
                     return;
                 }
                 if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
@@ -157,7 +157,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     public void loginOut() {
         // isLogin = false;
         // mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        goActivity(LoginActivity.class);
+        goActivity(ThreePartLoginActivity.class);
     }
 
     @Override

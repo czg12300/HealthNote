@@ -309,11 +309,17 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
 
     @Override
     public void goActivity(Class<?> clazz, Bundle bundle) {
+       goActivity(clazz,bundle,0);
+    }
+
+    @Override
+    public void goActivity(Class<?> clazz, Bundle bundle, int flag) {
         Intent it = new Intent();
         it.setClass(getActivity(), clazz);
         if (bundle != null) {
             it.putExtras(bundle);
         }
+        it.setFlags(flag);
         startActivity(it);
     }
 
