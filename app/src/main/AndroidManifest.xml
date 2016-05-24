@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
         <meta-data
-            android:name="com.jake.health.config.GlideConfig"
+            android:name="com.jake.health.core.glide.GlideConfig"
             android:value="GlideModule" />
 
         <activity

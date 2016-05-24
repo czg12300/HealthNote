@@ -7,9 +7,6 @@ import com.jake.health.ui.adapter.CommonFragmentPagerAdapter;
 import com.jake.health.ui.fragment.AnalysisCommonFragment;
 import com.jake.health.ui.fragment.AnalysisIncurableFragment;
 import com.jake.health.ui.fragment.AnalysisInfectiousFragment;
-import com.jake.health.ui.fragment.QACommonFragment;
-import com.jake.health.ui.fragment.QAIncurableFragment;
-import com.jake.health.ui.fragment.QASexFragment;
 
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;

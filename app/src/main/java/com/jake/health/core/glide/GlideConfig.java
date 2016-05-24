@@ -1,20 +1,15 @@
 
-package com.jake.health.config;
+package com.jake.health.core.glide;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.load.DecodeFormat;
-import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool;
 import com.bumptech.glide.load.engine.cache.DiskLruCacheFactory;
-import com.bumptech.glide.load.engine.cache.LruResourceCache;
-import com.bumptech.glide.load.engine.executor.FifoPriorityThreadPoolExecutor;
+import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.GlideModule;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.jake.health.R;
-import com.jake.health.ui.base.BaseApplication;
 
-import android.app.Activity;
-import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
@@ -23,6 +18,8 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.text.TextUtils;
 import android.widget.ImageView;
+
+import java.io.InputStream;
 
 /**
  * 描述：Glide图片加载器配置
@@ -52,6 +49,7 @@ public class GlideConfig implements GlideModule {
 
     @Override
     public void registerComponents(Context context, Glide glide) {
+        glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory());
     }
 
     public static void loadImage(Fragment fragment, String url, ImageView view, boolean isCircle) {

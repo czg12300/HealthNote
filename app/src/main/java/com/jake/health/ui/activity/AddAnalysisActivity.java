@@ -24,17 +24,20 @@ public class AddAnalysisActivity extends TitleActivity {
     private ChoosePictureHelper mChoosePictureHelper;
 
     private ImageEditText mIevContent;
-private ResizeLayout mResizeLayout;
-private ScrollView sv_edit;
+
+    private ResizeLayout mResizeLayout;
+
+    private ScrollView sv_edit;
+
     @Override
     protected void initView() {
         setTitle(R.string.title_add_analysis);
         setContentView(R.layout.activity_add_analysis);
         mIevContent = (ImageEditText) findViewById(R.id.iev_content);
-        mResizeLayout= (ResizeLayout) findViewById(R.id.resize);
-        sv_edit= (ScrollView) findViewById(R.id.sv_edit);
+        mResizeLayout = (ResizeLayout) findViewById(R.id.resize);
+        sv_edit = (ScrollView) findViewById(R.id.sv_edit);
         mChoosePictureHelper = new ChoosePictureHelper(this);
-//        mChoosePictureHelper.setNeedCut(true);
+        // mChoosePictureHelper.setNeedCut(true);
     }
 
     @Override
@@ -56,9 +59,9 @@ private ScrollView sv_edit;
 
             @Override
             public void onKeyboardShow(int height) {
-//                sv_edit.scrollTo(0,mIevContent.getBottom()+height);
-//                sv_edit.requestLayout();
-//                mIevContent.requestFocus();
+                // sv_edit.scrollTo(0,mIevContent.getBottom()+height);
+                // sv_edit.requestLayout();
+                // mIevContent.requestFocus();
             }
         });
         mIevContent.addTextChangedListener(new TextWatcher() {

@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jake.health.R;
-import com.jake.health.entity.HomeNavInfo;
 import com.jake.health.entity.MineMenuInfo;
 import com.jake.health.ui.base.ImageLoadListener;
 import com.jake.health.utils.ViewUtil;

@@ -26,7 +26,6 @@ import com.jake.health.ui.widgt.banner.BannerView;
 import com.jake.health.utils.DisplayUtil;
 import com.jake.health.utils.ToastUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
