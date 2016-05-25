@@ -10,6 +10,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.ViewGroup;
 
 import com.jake.health.R;
+import com.jake.health.core.GeneralRequestTask;
 import com.jake.health.core.HttpRequestTask;
 import com.jake.health.core.response.TestResponse;
 import com.jake.health.ui.adapter.HospitalAdapter;
@@ -19,6 +20,8 @@ import com.jake.health.ui.helper.TestHelper;
 import com.jake.health.ui.widgt.StatusView;
 import com.jake.health.utils.ToastUtil;
 
+import java.util.Hashtable;
+
 /**
  * 描述：附近诊所
  *
@@ -26,7 +29,8 @@ import com.jake.health.utils.ToastUtil;
  * @since 2016/4/29 16:51
  */
 public class HospitalActivity extends TitleActivity {
-    final static String url = "http://gcapi.sy.kugou.com/index.php?r=GameCenter/index&platform=1&clienttype=2&userid=0&clientversion=1&gcClientVersion=410&token=&clientAppid=1005&systemVersion=21&jsonparam=[{\"i\":40}]";
+    final static String url = "http://gcapi.sy.kugou.com/index.php?r=GameCenter";
+//    final static String url = "http://gcapi.sy.kugou.com/index.php?r=GameCenter/index&platform=1&clienttype=2&userid=0&clientversion=1&gcClientVersion=410&token=&clientAppid=1005&systemVersion=21&jsonparam=[{\"i\":40}]";
 
     private static final int MSG_UI_INIT_DATA = 0x001;
 
@@ -56,7 +60,7 @@ public class HospitalActivity extends TitleActivity {
     protected void initData() {
         super.initData();
         sendEmptyUiMessage(MSG_UI_INIT_DATA);
-        sendEmptyBackgroundMessage(MSG_BACK_INIT_DATA);
+//        sendEmptyBackgroundMessage(MSG_BACK_INIT_DATA);
     }
 
     @Override
@@ -75,7 +79,30 @@ public class HospitalActivity extends TitleActivity {
         super.handleBackgroundMessage(msg);
         switch (msg.what) {
             case MSG_BACK_INIT_DATA:
-                HttpRequestTask requestTask = HttpRequestTask.obtainGet(TestResponse.class, url);
+                HttpRequestTask httpRequestTask = HttpRequestTask.obtainGet(TestResponse.class);
+                Hashtable<String, String> hashtable = new Hashtable<>();
+                hashtable.put("name", "jake");
+                hashtable.put("pwd", "jakechen");
+                hashtable.put("aa", "haha");
+                httpRequestTask.addParam("login", hashtable);
+                hashtable = new Hashtable<>();
+                hashtable.put("classId", "1");
+                hashtable.put("pageSize", "10");
+                hashtable.put("pageIndex", "2");
+                httpRequestTask.addParam("class", hashtable);
+                TestResponse testResponse = (TestResponse) httpRequestTask.request();
+                GeneralRequestTask requestTask = GeneralRequestTask.obtainGet(TestResponse.class,
+                        url);
+//                requestTask.addParam("r","GameCenter/index");
+                requestTask.addParam("platform","1");
+                requestTask.addParam("clienttype","2");
+                requestTask.addParam("userid","0");
+                requestTask.addParam("clientversion","1");
+                requestTask.addParam("gcClientVersion","410");
+                requestTask.addParam("token","");
+                requestTask.addParam("clientAppid","1005");
+                requestTask.addParam("systemVersion","21");
+                requestTask.addParam("jsonparam","[{\"i\":40}]");
                 TestResponse response = (TestResponse) requestTask.request();
                 Message ui = obtainUiMessage();
                 ui.what = MSG_UI_INIT_DATA;

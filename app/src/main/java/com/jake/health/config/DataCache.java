@@ -26,7 +26,7 @@ public class DataCache {
 
     private static final String KEY_USER_ID = "keyUserId";
 
-    private static final String KEY_USER_CODE = "keyCode";
+    private static final String KEY_TOKEN = "keyToken";
 
     private static final String KEY_MOBILE = "keyMobile";
 
@@ -58,12 +58,12 @@ public class DataCache {
         return getSharedPreferences().getString(KEY_DEVICE_DATA, null);
     }
 
-    public static void setUserCode(String code) {
-        getSharedPreferences().edit().putString(KEY_USER_CODE, code).commit();
+    public static void setToken(String code) {
+        getSharedPreferences().edit().putString(KEY_TOKEN, code).commit();
     }
 
-    public static String getUserCode() {
-        return getSharedPreferences().getString(KEY_USER_CODE, null);
+    public static String getToken() {
+        return getSharedPreferences().getString(KEY_TOKEN, null);
     }
 
     public static void setPassword(String pw) {

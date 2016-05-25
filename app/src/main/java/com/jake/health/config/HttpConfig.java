@@ -10,9 +10,9 @@ package com.jake.health.config;
 public interface HttpConfig {
     boolean isDebug = true;
 
-    String TEST_SERVER = "http://www.baidu.com";
+    String TEST_SERVER = "http://www.baidu.com?";
 
-    String RELEASE_SERVER = "http://www.baidu.com";
+    String RELEASE_SERVER = "http://www.baidu.com?";
 
     String SERVER = isDebug ? TEST_SERVER : RELEASE_SERVER;
 }
