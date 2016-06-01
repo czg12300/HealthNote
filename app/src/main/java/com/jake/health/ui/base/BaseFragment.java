@@ -22,7 +22,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseFragment extends Fragment implements IUi, ImageLoadListener {
+public abstract class BaseFragment extends Fragment implements IUi {
     private static final int MSG_UI_INIT_DATA = 30000;
 
     protected static final int REQUEST_CODE = 0x125f;
@@ -146,23 +146,6 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
         }
     }
 
-    @Override
-    public void loadImageByUrl(String url, ImageView imageView) {
-        loadImage(url, imageView);
-    }
-
-    @Override
-    public void loadImageByUrl(String url, ImageView imageView, boolean isCircle) {
-        loadImage(url, imageView, isCircle);
-    }
-
-    protected void loadImage(String url, ImageView view) {
-        loadImage(url, view, false);
-    }
-
-    protected void loadImage(String url, ImageView view, boolean isCircle) {
-        GlideConfig.loadImage(this, url, view, isCircle);
-    }
 
     /**
      * 获取资源文件的颜色值
@@ -302,7 +285,7 @@ public abstract class BaseFragment extends Fragment implements IUi, ImageLoadLis
 
     @Override
     public void goActivity(Class<?> clazz, Bundle bundle) {
-       goActivity(clazz,bundle,0);
+        goActivity(clazz, bundle, 0);
     }
 
     @Override

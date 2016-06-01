@@ -2,6 +2,7 @@
 package com.jake.health.ui.fragment;
 
 import com.jake.health.R;
+import com.jake.health.core.ImageLoadManager;
 import com.jake.health.ui.activity.MainActivity;
 import com.jake.health.ui.adapter.MineMenuAdapter;
 import com.jake.health.ui.base.BaseWorkerFragment;
@@ -83,7 +84,7 @@ public class MineFragment extends BaseWorkerFragment implements View.OnClickList
     }
 
     private void dealInitData() {
-        loadImage("http://img3.imgtn.bdimg.com/it/u=287053482,141286521&fm=11&gp=0.jpg", mIvAvatar,
+        ImageLoadManager.load(this, "http://img3.imgtn.bdimg.com/it/u=287053482,141286521&fm=11&gp=0.jpg", mIvAvatar,
                 true);
         mMineMenuAdapter.setDataAndNotifyDataSetChanged(TestHelper.getTestMenu());
     }

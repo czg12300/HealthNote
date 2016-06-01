@@ -10,13 +10,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.jake.health.R;
+import com.jake.health.core.ImageLoadManager;
 import com.jake.health.entity.HomeNavInfo;
 import com.jake.health.entity.QAInfo;
 import com.jake.health.ui.activity.AnalysisActivity;
 import com.jake.health.ui.activity.HospitalActivity;
 import com.jake.health.ui.activity.MomentsActivity;
 import com.jake.health.ui.activity.QAActivity;
-import com.jake.health.ui.adapter.BaseListAdapter;
+import com.jake.health.ui.base.BaseListAdapter;
 import com.jake.health.ui.adapter.HomeAdapter;
 import com.jake.health.ui.adapter.HomeNavAdapter;
 import com.jake.health.ui.base.BaseListFragment;
@@ -99,7 +100,7 @@ public class HomeFragment extends BaseListFragment<QAInfo> {
             @Override
             public void loadImageToBanner(Object banner, ImageView ivBanner) {
                 String url = (String) banner;
-                loadImage(url, ivBanner);
+                ImageLoadManager.load(HomeFragment.this, url, ivBanner);
             }
         });
         mGvNav.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -141,10 +142,10 @@ public class HomeFragment extends BaseListFragment<QAInfo> {
     @Override
     protected List<QAInfo> loadData() {
 //        if (isFirstIn) {
-            mBannerTop.setBannerList(TestHelper.getTestBanner());
-            mHomeNavAdapter.setData(TestHelper.getTestNav());
-            sendEmptyUiMessage(MSG_UI_TOP_DATA);
-            isFirstIn = false;
+        mBannerTop.setBannerList(TestHelper.getTestBanner());
+        mHomeNavAdapter.setData(TestHelper.getTestNav());
+        sendEmptyUiMessage(MSG_UI_TOP_DATA);
+        isFirstIn = false;
 //        }
 
         return TestHelper.loadQAInfoList(getAdapter(), getPageIndex());

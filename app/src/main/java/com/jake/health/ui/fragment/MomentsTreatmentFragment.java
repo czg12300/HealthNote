@@ -3,7 +3,7 @@ package com.jake.health.ui.fragment;
 import com.jake.health.R;
 import com.jake.health.entity.QAInfo;
 import com.jake.health.ui.HealthApplication;
-import com.jake.health.ui.adapter.BaseListAdapter;
+import com.jake.health.ui.base.BaseListAdapter;
 import com.jake.health.ui.adapter.HomeAdapter;
 import com.jake.health.ui.base.BaseListFragment;
 import com.jake.health.ui.helper.TestHelper;

@@ -10,7 +10,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jake.health.R;
-import com.jake.health.ui.adapter.BaseListAdapter;
 import com.jake.health.ui.widgt.MaterialProgressBar;
 import com.jake.health.ui.widgt.StatusView;
 import com.jake.health.utils.ToastUtil;

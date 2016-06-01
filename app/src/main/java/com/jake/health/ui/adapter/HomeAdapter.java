@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.jake.health.R;
 import com.jake.health.entity.QAInfo;
+import com.jake.health.ui.base.BaseListAdapter;
+import com.jake.health.ui.base.BaseListItemAdapter;
+import com.jake.health.ui.base.BaseViewHolder;
 import com.jake.health.utils.ViewUtil;
 
 /**
@@ -17,27 +20,14 @@ import com.jake.health.utils.ViewUtil;
  * @author jakechen
  * @since 2016/4/26 16:18
  */
-public class HomeAdapter extends BaseListAdapter<QAInfo> {
+public class HomeAdapter extends BaseListItemAdapter<QAInfo, HomeAdapter.ViewHolder> {
     public HomeAdapter(Context context) {
         super(context);
     }
 
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            holder = new ViewHolder();
-            convertView = inflate(R.layout.item_home);
-            holder.ivAvatar = (ImageView) convertView.findViewById(R.id.iv_avatar);
-            holder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
-            holder.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
-            holder.tvNikeName = (TextView) convertView.findViewById(R.id.tv_nike_name);
-            holder.tvZanNum = (TextView) convertView.findViewById(R.id.tv_zan_num);
-            holder.vDivider = convertView.findViewById(R.id.v_divider);
-            convertView.setTag(convertView.getId(), holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag(convertView.getId());
-        }
+    protected void onBindViewHolder(ViewHolder holder, int position) {
         if (position < getCount() - 1) {
             holder.vDivider.setVisibility(View.VISIBLE);
         } else {
@@ -45,18 +35,25 @@ public class HomeAdapter extends BaseListAdapter<QAInfo> {
         }
         QAInfo info = mDataList.get(position);
         if (info != null) {
-            if (mImageLoadListener != null) {
-                mImageLoadListener.loadImageByUrl(info.getAvater(), holder.ivAvatar, true);
-            }
+            loadImage(info.getAvater(), holder.ivAvatar, true);
             ViewUtil.setText2TextView(holder.tvTitle, info.getTitle());
             ViewUtil.setText2TextView(holder.tvNikeName, info.getNikeName());
             ViewUtil.setText2TextView(holder.tvContent, info.getContent());
             ViewUtil.setText2TextView(holder.tvZanNum, info.getZanNumText());
         }
-        return convertView;
     }
 
-    final class ViewHolder {
+    @Override
+    protected ViewHolder createViewHolder(View view) {
+        return new ViewHolder(view);
+    }
+
+    @Override
+    protected int getItemLayoutId() {
+        return R.layout.item_home;
+    }
+
+    static final class ViewHolder extends BaseViewHolder {
         ImageView ivAvatar;
 
         TextView tvTitle;
@@ -67,5 +64,15 @@ public class HomeAdapter extends BaseListAdapter<QAInfo> {
 
         TextView tvZanNum;
         View vDivider;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ivAvatar = (ImageView) findViewById(R.id.iv_avatar);
+            tvTitle = (TextView) findViewById(R.id.tv_title);
+            tvContent = (TextView) findViewById(R.id.tv_content);
+            tvNikeName = (TextView) findViewById(R.id.tv_nike_name);
+            tvZanNum = (TextView) findViewById(R.id.tv_zan_num);
+            vDivider = findViewById(R.id.v_divider);
+        }
     }
 }

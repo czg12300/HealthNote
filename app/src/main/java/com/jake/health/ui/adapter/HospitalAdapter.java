@@ -2,10 +2,11 @@
 package com.jake.health.ui.adapter;
 
 import com.jake.health.R;
+import com.jake.health.core.ImageLoadManager;
 import com.jake.health.entity.HospitalInfo;
-import com.jake.health.ui.base.ImageLoadListener;
 import com.jake.health.utils.ViewUtil;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +26,10 @@ import java.util.List;
 public class HospitalAdapter extends RecyclerView.Adapter<HospitalAdapter.ViewHolder> {
     private List<HospitalInfo> mList;
 
-    private ImageLoadListener mImageLoadListener;
+    private Context mContext;
 
-    public HospitalAdapter(ImageLoadListener listener) {
-        mImageLoadListener = listener;
+    public HospitalAdapter(Context context) {
+        mContext = context;
         mList = new ArrayList<>();
     }
 
@@ -37,9 +38,10 @@ public class HospitalAdapter extends RecyclerView.Adapter<HospitalAdapter.ViewHo
             mList = list;
         }
     }
+
     public void addALlDataList(List<HospitalInfo> list) {
         if (list != null && list.size() > 0) {
-            mList .addAll(list);
+            mList.addAll(list);
         }
     }
 
@@ -54,9 +56,7 @@ public class HospitalAdapter extends RecyclerView.Adapter<HospitalAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         HospitalInfo info = mList.get(position);
         if (info != null) {
-            if (mImageLoadListener != null) {
-                mImageLoadListener.loadImageByUrl(info.getAvater(), holder.ivAvatar, true);
-            }
+            ImageLoadManager.load(mContext, info.getAvater(), holder.ivAvatar, true);
             ViewUtil.setText2TextView(holder.tvTitle, info.getTitle());
             ViewUtil.setText2TextView(holder.tvNikeName, info.getNikeName());
             ViewUtil.setText2TextView(holder.tvContent, info.getContent());

@@ -3,6 +3,7 @@ package com.jake.health.ui.activity;
 
 import com.jake.health.R;
 import com.jake.health.config.ActionConfig;
+import com.jake.health.core.ImageLoadManager;
 import com.jake.health.ui.base.BaseSwipeBackFragmentActivity;
 import com.jake.health.ui.base.BaseWorkerFragment;
 import com.jake.health.ui.base.BaseWorkerFragmentActivity;
@@ -39,7 +40,8 @@ public class LoginActivity extends BaseWorkerFragmentActivity {
         mIvBg = (ImageView) findViewById(R.id.iv_bg);
         ((ImageView) findViewById(R.id.iv_title_back)).setImageDrawable(ViewHelper
                 .createBackDrawable());
-        loadImage(
+
+        ImageLoadManager.load(this,
                 "http://life.chinaunix.net/bbsfile/forum/month_0807/20080725_f20e048532825ae192dashNZJXNgofdT.jpg",
                 mIvBg);
     }
@@ -166,6 +168,7 @@ public class LoginActivity extends BaseWorkerFragmentActivity {
             dialog.show();
         }
     }
+
     private void showLoginByMessageCodeDialog() {
         if (!isFinishing()) {
             CommonDialog dialog = new CommonDialog(this) {

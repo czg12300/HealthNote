@@ -22,7 +22,7 @@ public class BaseSwipeBackFragmentActivity extends BaseWorkerFragmentActivity {
         DisplayMetrics metric = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metric);
         int width = metric.widthPixels;
-        getSwipeBackLayout().setEdgeSize(width);
+        getSwipeBackLayout().setEdgeSize(width/8);
     }
 
     @Override

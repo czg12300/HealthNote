@@ -20,8 +20,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseFragmentActivity extends FragmentActivity implements IUi,
-        ImageLoadListener {
+public abstract class BaseFragmentActivity extends FragmentActivity implements IUi {
     protected static final int REQUEST_CODE = 0x123f;
 
     protected static final int RESULT_CODE = 0x124f;
@@ -122,23 +121,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements I
         }
     }
 
-    @Override
-    public void loadImageByUrl(String url, ImageView imageView) {
-        loadImage(url, imageView);
-    }
-
-    @Override
-    public void loadImageByUrl(String url, ImageView imageView, boolean isCircle) {
-        loadImage(url, imageView, isCircle);
-    }
-
-    protected void loadImage(String url, ImageView view) {
-        loadImage(url, view, false);
-    }
-
-    protected void loadImage(String url, ImageView view, boolean isCircle) {
-        GlideConfig.loadImage(this, url, view, isCircle);
-    }
 
     protected void dealIntent(Bundle data) {
     }

@@ -1,20 +1,22 @@
 
-package com.jake.health.ui.adapter;
+package com.jake.health.ui.base;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 
-import com.jake.health.ui.base.ImageLoadListener;
+import com.jake.health.core.ImageLoadManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseListAdapter<T> extends BaseAdapter {
     private Context mContext;
-    protected ImageLoadListener mImageLoadListener;
+    protected Fragment mFragment;
     private LayoutInflater mInflater;
 
     protected List<T> mDataList;
@@ -36,19 +38,19 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     }
 
     public BaseListAdapter(Context context) {
-        this(context, null, context instanceof ImageLoadListener ? (ImageLoadListener) context : null);
+        this(context, null, null);
     }
 
-    public BaseListAdapter(Context context, ImageLoadListener listener) {
-        this(context, null, listener);
+    public BaseListAdapter(Context context, Fragment fragment) {
+        this(context, fragment, null);
     }
 
     public BaseListAdapter(Context context, List<T> list) {
-        this(context, list,context instanceof ImageLoadListener ? (ImageLoadListener) context : null );
+        this(context, null, list);
     }
 
-    public BaseListAdapter(Context context, List<T> list, ImageLoadListener listener) {
-        mImageLoadListener = listener;
+    public BaseListAdapter(Context context, Fragment fragment, List<T> list) {
+        mFragment = fragment;
         mContext = context;
         mInflater = LayoutInflater.from(context);
         if (isAvailable(list)) {
@@ -110,6 +112,18 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         if (t != null) {
             mDataList.add(t);
             notifyDataSetChanged();
+        }
+    }
+
+    protected void loadImage(String url, ImageView view) {
+        loadImage(url, view, false);
+    }
+
+    protected void loadImage(String url, ImageView view, boolean isCircle) {
+        if (mFragment != null) {
+            ImageLoadManager.load(mFragment, url, view, isCircle);
+        } else {
+            ImageLoadManager.load(mContext, url, view, isCircle);
         }
     }
 
