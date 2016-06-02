@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="base_activity_style" parent="Theme.AppCompat.Light">
+    <style name="base_activity_style" parent="@android:style/Theme.Light">
         <item name="android:windowNoTitle">true</item>
         <item name="android:screenOrientation">landscape</item>
         <item name="android:windowBackground">@android:color/transparent</item>

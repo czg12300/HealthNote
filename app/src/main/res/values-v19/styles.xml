@@ -5,9 +5,8 @@
     <style name="main_activity" parent="base_activity_style" />
 
     <style name="swipe_activity" parent="base_swipe_activity_style" />
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar"></style>
 
-    <style name="base_activity_style" parent="Theme.AppCompat.Light">
+    <style name="base_activity_style" parent="@android:style/Theme.Light">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:screenOrientation">landscape</item>
