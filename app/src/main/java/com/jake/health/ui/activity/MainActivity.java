@@ -16,14 +16,14 @@ import android.widget.TextView;
 
 import com.jake.health.R;
 import com.jake.health.config.ActionConfig;
-import com.jake.health.ui.base.BaseWorkerFragmentActivity;
+import com.jake.health.ui.base.BaseSwipeBackFragmentActivity;
 import com.jake.health.ui.helper.MainFabHelper;
 import com.jake.health.ui.widgt.ThemeUtils;
 import com.jake.health.utils.ToastUtil;
 
 import java.util.List;
 
-public class MainActivity extends BaseWorkerFragmentActivity {
+public class MainActivity extends BaseSwipeBackFragmentActivity {
     private static final int MSG_UI_INIT_DATA = 0x001;
 
     private static final int MSG_UI_SHOW_MINE = 0x002;
@@ -33,7 +33,6 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     private ImageView mIvTitleMenu;
 
     private DrawerLayout mDrawerLayout;
-
 
     private DrawerArrowDrawable mDrawerArrowDrawable;
 
@@ -48,12 +47,13 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setSwipeBackEnable(false);
         setContentView(R.layout.activity_main);
         initTitleBar();
         initView();
         initEvent();
         initData();
-//        goActivity(RichEditorActivity.class);
+        // goActivity(RichEditorActivity.class);
     }
 
     private void initTitleBar() {
@@ -67,7 +67,7 @@ public class MainActivity extends BaseWorkerFragmentActivity {
     private void initView() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mVTitleMenuRedDot = findViewById(R.id.v_red_dot);
-//        mFabOpt = (FabButton) findViewById(R.id.fab_opt);
+        // mFabOpt = (FabButton) findViewById(R.id.fab_opt);
         mMainFabHelper = new MainFabHelper(this);
     }
 
