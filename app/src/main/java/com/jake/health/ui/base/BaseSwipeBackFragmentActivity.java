@@ -18,7 +18,7 @@ public class BaseSwipeBackFragmentActivity extends BaseWorkerFragmentActivity {
         super.onCreate(savedInstanceState);
         SwipeBackHelper.onCreate(this);
         SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(true).setSwipeSensitivity(0.5f)
-                .setSwipeRelateEnable(true);
+                .setSwipeRelateEnable(false);
         // mHelper = new SwipeBackActivityHelper(this);
         // mHelper.onActivityCreate();
         // getSwipeBackLayout().setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);

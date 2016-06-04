@@ -50,7 +50,7 @@ public class ThreePartLoginActivity extends BaseSwipeBackFragmentActivity {
         } else if (id == R.id.btn_qq) {
             mLoginHelper.qqLogin();
         }
-        goActivity(MainActivity.class, null, Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//        goActivity(MainActivity.class, null, Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         finish();
     }
 

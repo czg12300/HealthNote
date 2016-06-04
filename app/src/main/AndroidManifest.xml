@@ -11,15 +11,14 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        >
         <meta-data
             android:name="com.jake.health.core.glide.GlideConfig"
             android:value="GlideModule" />
 
-        <activity
-            android:name=".ui.activity.SplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/main_activity">
+        <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,44 +27,35 @@
         </activity>
         <activity
             android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/main_activity" />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.ThreePartLoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/main_activity" />
+            android:theme="@style/SwipeActivity" />
         <activity
             android:name=".ui.activity.SettingActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/swipe_activity" />
+            android:theme="@style/SwipeActivity" />
         <activity
             android:name=".ui.activity.QAActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/swipe_activity" />
+            android:theme="@style/SwipeActivity" />
         <activity
             android:name=".ui.activity.AnalysisActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/swipe_activity" />
+            android:theme="@style/SwipeActivity" />
         <activity
             android:name=".ui.activity.MomentsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/swipe_activity" />
+            android:theme="@style/SwipeActivity" />
         <activity
             android:name=".ui.activity.HospitalActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/swipe_activity" />
+            android:theme="@style/SwipeActivity" />
         <activity
             android:name=".ui.activity.AddAnalysisActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/swipe_activity" />
+            android:theme="@style/SwipeActivity" />
         <activity
             android:name=".ui.RichEditorActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/swipe_activity" />
+            android:theme="@style/SwipeActivity" />
     </application>
 
 </manifest>

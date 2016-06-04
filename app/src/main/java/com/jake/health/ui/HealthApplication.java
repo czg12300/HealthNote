@@ -14,6 +14,7 @@ public class HealthApplication extends BaseApplication {
     @Override
     protected void onConfig() {
         LogUtil.setIsOpenLog(true);
+        setIsWatcherRef(false);
     }
 
     @Override

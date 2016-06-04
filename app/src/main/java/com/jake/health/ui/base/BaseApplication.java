@@ -24,7 +24,7 @@ public abstract class BaseApplication extends Application {
     public static BaseApplication mInstance;
 
     private static RefWatcher watcher;
-
+    private static boolean isWatcherRef = false;
     private HashMap<String, WeakReference<Activity>> mActivityMap;
 
     @Override
@@ -38,12 +38,20 @@ public abstract class BaseApplication extends Application {
         super.onCreate();
         mInstance = getChildInstance();
         mActivityMap = new HashMap<String, WeakReference<Activity>>();
-        watcher = LeakCanary.install(this);
+        if (isWatcherRef) {
+            watcher = LeakCanary.install(this);
+        }
         onConfig();
     }
 
     public static void setWatcher(Object obj) {
-        watcher.watch(obj);
+        if (isWatcherRef && watcher != null) {
+            watcher.watch(obj);
+        }
+    }
+
+    public static void setIsWatcherRef(boolean enable) {
+        isWatcherRef = enable;
     }
 
     protected abstract void onConfig();
@@ -55,13 +63,14 @@ public abstract class BaseApplication extends Application {
         if (activity != null) {
             mActivityMap.put(activity.getClass().getSimpleName(), new WeakReference<Activity>(
                     activity));
-            watcher.watch(activity);
-            if (activity instanceof FragmentActivity){
-                FragmentActivity fragmentActivity= (FragmentActivity) activity;
-                List<Fragment> fragments= fragmentActivity.getSupportFragmentManager().getFragments();
-                if (fragments!=null&&fragments.size()>0){
-                    for (int i=0;i<fragments.size();i++){
-                    watcher.watch(fragments.get(i));}
+            setWatcher(activity);
+            if (activity instanceof FragmentActivity) {
+                FragmentActivity fragmentActivity = (FragmentActivity) activity;
+                List<Fragment> fragments = fragmentActivity.getSupportFragmentManager().getFragments();
+                if (fragments != null && fragments.size() > 0) {
+                    for (int i = 0; i < fragments.size(); i++) {
+                        setWatcher(fragments.get(i));
+                    }
                 }
             }
         }

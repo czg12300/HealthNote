@@ -1,18 +1,23 @@
 <resources>
 
-    <style name="base_activity_style" parent="@android:style/Theme.Light">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:screenOrientation">landscape</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="base_swipe_activity_style" parent="base_activity_style">
+    <style name="SwipeActivity" parent="AppTheme">
+        <item name="android:screenOrientation">portrait</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+    <style name="AnimationActivity" parent="@android:style/Animation.Activity">
+        <!--<item name="android:windowEnterAnimation">@anim/slide_right_in</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/slide_left_in</item>-->
+        <!--<item name="android:activityOpenEnterAnimation">@anim/slide_left_out</item>-->
+        <!--<item name="android:activityOpenExitAnimation">@anim/slide_right_in</item>-->
+        <!--<item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>-->
+        <!--<item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>-->
+    </style>
 
-    <style name="main_activity" parent="base_activity_style" />
-
-    <style name="swipe_activity" parent="base_swipe_activity_style" />
     <!-- 上面进出动画样式 -->
     <style name="slide_top_bottom_animation" mce_bogus="1" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/slide_in_top</item>
@@ -23,7 +28,6 @@
         <item name="android:windowEnterAnimation">@anim/alpha_in</item>
         <item name="android:windowExitAnimation">@anim/alpha_out</item>
     </style>
-
 
 
     <style name="menu_labels_style">
