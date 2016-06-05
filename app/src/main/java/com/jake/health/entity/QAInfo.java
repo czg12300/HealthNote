@@ -10,9 +10,9 @@ package com.jake.health.entity;
 public class QAInfo {
     private String title;
 
-    private String avater;
+    private String avatar;
 
-    private String nickName;
+    private String nickname;
 
     private String content;
 
@@ -26,20 +26,20 @@ public class QAInfo {
         this.title = title;
     }
 
-    public String getAvater() {
-        return avater;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setAvater(String avater) {
-        this.avater = avater;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getNikeName() {
-        return nickName;
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getContent() {

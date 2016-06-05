@@ -15,7 +15,7 @@ public class HomeNavInfo {
     private int showDot;
 
     private int type;
-
+    private String hint;
     public static final int TYPE_QA = 1;
 
     public static final int TYPE_ANALYSIS = 2;
@@ -54,5 +54,18 @@ public class HomeNavInfo {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public String getHint() {
+        return hint;
+    }
+
+    public void setHint(String hint) {
+        this.hint = hint;
+    }
+
+
+    public boolean isShowRedDot(){
+        return showDot>0;
     }
 }

@@ -13,12 +13,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jake.health.R;
 import com.jake.health.ui.widgt.MaterialProgressBar;
-import com.jake.health.ui.widgt.materialdesign.pullrefresh.MaterialProgressDrawable;
 
 /**
  * 描述：dialog的父类

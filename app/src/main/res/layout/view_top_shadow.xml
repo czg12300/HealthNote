@@ -6,6 +6,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="6dp"
+        android:layout_height="3dp"
+        android:visibility="visible"
         android:background="@drawable/img_shadow_bottom" />
 </LinearLayout>

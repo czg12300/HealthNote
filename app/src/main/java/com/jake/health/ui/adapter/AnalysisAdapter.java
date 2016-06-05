@@ -7,19 +7,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jake.health.R;
-import com.jake.health.entity.QAInfo;
+import com.jake.health.entity.AnalysisInfo;
 import com.jake.health.ui.base.BaseListItemAdapter;
 import com.jake.health.ui.base.BaseViewHolder;
 import com.jake.health.utils.ViewUtil;
 
 /**
- * 描述：首页数据
+ * 描述：病理分析
  *
  * @author jakechen
  * @since 2016/4/26 16:18
  */
-public class HomeAdapter extends BaseListItemAdapter<QAInfo, HomeAdapter.ViewHolder> {
-    public HomeAdapter(Context context) {
+public class AnalysisAdapter extends BaseListItemAdapter<AnalysisInfo, AnalysisAdapter.ViewHolder> {
+    public AnalysisAdapter(Context context) {
         super(context);
     }
 
@@ -31,13 +31,14 @@ public class HomeAdapter extends BaseListItemAdapter<QAInfo, HomeAdapter.ViewHol
         } else {
             holder.vDivider.setVisibility(View.GONE);
         }
-        QAInfo info = mDataList.get(position);
+        AnalysisInfo info = mDataList.get(position);
         if (info != null) {
             loadImage(info.getAvatar(), holder.ivAvatar, true);
-            ViewUtil.setText2TextView(holder.tvQuestion, info.getTitle());
-            ViewUtil.setText2TextView(holder.tvNikeName, info.getNikeName());
-            ViewUtil.setText2TextView(holder.tvHotAnswer, info.getContent());
+            ViewUtil.setText2TextView(holder.tvTitle, info.getTitle());
+            ViewUtil.setText2TextView(holder.tvNickname, info.getNickname());
+            ViewUtil.setText2TextView(holder.tvSummary, info.getSummary());
             ViewUtil.setText2TextView(holder.tvZanNum, info.getZanNumText());
+            ViewUtil.setText2TextView(holder.tvDate, info.getDateText());
         }
     }
 
@@ -48,30 +49,30 @@ public class HomeAdapter extends BaseListItemAdapter<QAInfo, HomeAdapter.ViewHol
 
     @Override
     protected int getItemLayoutId() {
-        return R.layout.item_home;
+        return R.layout.item_analysis;
     }
 
     static final class ViewHolder extends BaseViewHolder {
         ImageView ivAvatar;
 
-        TextView tvQuestion;
+        TextView tvTitle;
 
-        TextView tvHotAnswer;
+        TextView tvSummary;
 
-        TextView tvNikeName;
+        TextView tvNickname;
 
-        TextView tvOtherAnswerNum;
         TextView tvZanNum;
+        TextView tvDate;
         View vDivider;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ivAvatar = (ImageView) findViewById(R.id.iv_avatar);
-            tvQuestion = (TextView) findViewById(R.id.tv_question);
-            tvHotAnswer = (TextView) findViewById(R.id.tv_hot_answer);
-            tvNikeName = (TextView) findViewById(R.id.tv_nike_name);
+            tvTitle = (TextView) findViewById(R.id.tv_title);
+            tvSummary = (TextView) findViewById(R.id.tv_summary);
+            tvNickname = (TextView) findViewById(R.id.tv_nike_name);
             tvZanNum = (TextView) findViewById(R.id.tv_zan_num);
-            tvOtherAnswerNum = (TextView) findViewById(R.id.tv_other_answer_num);
+            tvDate = (TextView) findViewById(R.id.tv_date);
             vDivider = findViewById(R.id.v_divider);
         }
     }

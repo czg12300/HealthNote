@@ -258,7 +258,7 @@ public abstract class BaseFragment extends Fragment implements IUi {
 
     }
 
-    protected View findViewById(int id) {
+    public View findViewById(int id) {
         return mDecorView.findViewById(id);
     }
 

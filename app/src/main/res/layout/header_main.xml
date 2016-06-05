@@ -14,16 +14,258 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:cacheColorHint="@color/trans"
-        android:numColumns="4" />
+        android:numColumns="4"
+        android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tv_hot_title"
+    <RelativeLayout
+        android:id="@+id/rl_nav"
         android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="#f9f9f9"
+        android:layout_height="231dp"
+        android:background="@color/list_divider">
+
+        <RelativeLayout
+            android:id="@+id/rl_left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/rl_right_top"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_left"
+                        android:layout_width="@dimen/nav_icon"
+                        android:layout_height="@dimen/nav_icon"
+                        android:scaleType="fitCenter" />
+
+                    <include
+                        layout="@layout/view_red_dot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/iv_left"
+                        android:layout_alignTop="@+id/iv_left" />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_size_content" />
+
+                <TextView
+                    android:id="@+id/tv_left_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/text_label"
+                    android:textSize="@dimen/text_size_tip_small" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_right_top"
+            android:layout_width="201dp"
+            android:layout_height="115dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="1dp"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp">
+
+                    <ImageView
+                        android:id="@+id/iv_right_top"
+                        android:layout_width="@dimen/nav_icon"
+                        android:layout_height="@dimen/nav_icon"
+                        android:scaleType="fitCenter" />
+
+                    <include
+                        layout="@layout/view_red_dot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/iv_right_top"
+                        android:layout_alignTop="@+id/iv_right_top" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_right_top"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_size_content" />
+
+                    <TextView
+                        android:id="@+id/tv_right_top_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_label"
+                        android:textSize="@dimen/text_size_tip_small" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_right_bottom_left"
+            android:layout_width="100dp"
+            android:layout_height="115dp"
+            android:layout_below="@+id/rl_right_top"
+            android:layout_marginRight="1dp"
+            android:layout_toLeftOf="@+id/rl_right_bottom_right"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_right_bottom_left"
+                        android:layout_width="@dimen/nav_icon"
+                        android:layout_height="@dimen/nav_icon"
+                        android:scaleType="fitCenter" />
+
+                    <include
+                        layout="@layout/view_red_dot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/iv_right_bottom_left"
+                        android:layout_toRightOf="@+id/iv_right_bottom_left" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_right_bottom_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_size_content" />
+
+                <TextView
+                    android:id="@+id/tv_right_bottom_left_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_label"
+                    android:textSize="@dimen/text_size_tip_small" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_right_bottom_right"
+            android:layout_width="100dp"
+            android:layout_height="115dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/rl_right_top"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_right_bottom_right"
+                        android:layout_width="@dimen/nav_icon"
+                        android:layout_height="@dimen/nav_icon"
+                        android:scaleType="fitCenter" />
+
+                    <include
+                        layout="@layout/view_red_dot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/iv_right_bottom_right"
+                        android:layout_toRightOf="@+id/iv_right_bottom_right" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_right_bottom_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_size_content" />
+
+                <TextView
+                    android:id="@+id/tv_right_bottom_right_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_label"
+                    android:textSize="@dimen/text_size_tip_small" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/list_divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:text="热门问题"
-        android:textColor="@color/text_primary"
-        android:textSize="@dimen/text_size_tip_small" />
+        android:paddingTop="10dp">
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="10dp"
+            android:background="@drawable/bg_home_qa_label" />
+
+        <TextView
+            android:id="@+id/tv_hot_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:text="热门问题"
+            android:textColor="@color/black_363636"
+            android:textSize="@dimen/text_size_tip_small" />
+    </LinearLayout>
 </LinearLayout>

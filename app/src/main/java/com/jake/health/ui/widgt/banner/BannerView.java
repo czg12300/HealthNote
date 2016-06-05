@@ -158,6 +158,7 @@ public class BannerView extends FrameLayout implements OnPageChangeListener, Han
     private int mPageSize = 1;
 
     private int defaultResId = -1;
+    private int autoSlideTimeSpit = 5;
 
     public BannerView(Context context) {
         this(context, null);
@@ -290,15 +291,27 @@ public class BannerView extends FrameLayout implements OnPageChangeListener, Han
         addView(mDotView);
     }
 
-    public void startScroll(int seconds) {
+    public int getAutoSlideTimeSpit() {
+        return autoSlideTimeSpit;
+    }
+
+    public void setAutoSlideTimeSpit(int autoSlideTimeSpit) {
+        this.autoSlideTimeSpit = autoSlideTimeSpit;
+    }
+
+    public void startScroll() {
         if (isLoop && !isStartedLoop && mPageSize > 1) {
-            scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+            if (scheduledExecutorService == null) {
+                scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+            } else {
+                scheduledExecutorService.shutdownNow();
+            }
             scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
                     mHandler.sendEmptyMessage(MSG_UI_UPDATE_PAGE);
                 }
-            }, seconds, seconds, TimeUnit.SECONDS);
+            }, autoSlideTimeSpit, autoSlideTimeSpit, TimeUnit.SECONDS);
             isStartedLoop = true;
         }
     }

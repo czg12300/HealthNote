@@ -16,7 +16,13 @@
     <color name="gray_dfdfdd">#dfdfdd</color>
     <color name="indigo_C5CAE9">#C5CAE9</color>
     <color name="indigo_3F51B5">#3F51B5</color>
+
+
+    <!--具体业务逻辑的color-->
     <color name="text_primary">@color/black_363636</color>
     <color name="text_second">#757575</color>
+    <color name="text_label">#908e8e</color>
+    <color name="list_divider">#f0f0f0</color>
+    <color name="list_zan">@color/red_f51d67</color>
 
 </resources>

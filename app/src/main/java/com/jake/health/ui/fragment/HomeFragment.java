@@ -21,8 +21,8 @@ import com.jake.health.ui.base.BaseListAdapter;
 import com.jake.health.ui.adapter.HomeAdapter;
 import com.jake.health.ui.adapter.HomeNavAdapter;
 import com.jake.health.ui.base.BaseListFragment;
+import com.jake.health.ui.helper.HomeNavHelper;
 import com.jake.health.ui.helper.TestHelper;
-import com.jake.health.ui.widgt.ZoomOutPageTransformer;
 import com.jake.health.ui.widgt.banner.BannerView;
 import com.jake.health.utils.DisplayUtil;
 import com.jake.health.utils.ToastUtil;
@@ -45,6 +45,7 @@ public class HomeFragment extends BaseListFragment<QAInfo> {
     private BannerView mBannerTop;
 
     private HomeAdapter mHomeAdapter;
+    private HomeNavHelper mHomeNavHelper;
 
     @Override
     protected BaseListAdapter<QAInfo> createAdapter() {
@@ -67,10 +68,12 @@ public class HomeFragment extends BaseListFragment<QAInfo> {
         mBannerTop.getDotView().setRadius(DisplayUtil.dip(2));
         mBannerTop.getDotView().setNormalColor(Color.parseColor("#60000000"));
         mBannerTop.getDotView().setSelectColor(Color.parseColor("#afffffff"));
-        mBannerTop.getViewPager().setPageTransformer(true, new ZoomOutPageTransformer());
-        mBannerTop.setDuration(300);
+        mBannerTop.setAutoSlideTimeSpit(10);
+//        mBannerTop.getViewPager().setPageTransformer(true, new ZoomOutPageTransformer());
+//        mBannerTop.setDuration(300);
         mHomeNavAdapter = new HomeNavAdapter(getActivity());
         mGvNav.setAdapter(mHomeNavAdapter);
+        mHomeNavHelper=new HomeNavHelper(this);
         setLoadViewBackgroundColor(Color.parseColor("#f9f9f9"));
     }
 
@@ -132,7 +135,8 @@ public class HomeFragment extends BaseListFragment<QAInfo> {
             case MSG_UI_TOP_DATA:
                 mBannerTop.notifyDataSetChanged();
                 mHomeNavAdapter.notifyDataSetChanged();
-                mBannerTop.startScroll(5);
+                mHomeNavHelper.setData(TestHelper.getTestNav());
+                mBannerTop.startScroll();
                 break;
         }
     }

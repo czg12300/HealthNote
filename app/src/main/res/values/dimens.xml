@@ -3,6 +3,8 @@
     <dimen name="navigation_drawer_width">280dp</dimen>
     <dimen name="title_height">45dp</dimen>
     <dimen name="tab_height">40dp</dimen>
+    <dimen name="list_avatar">16dp</dimen>
+    <dimen name="nav_icon">50dp</dimen>
     <!--字体大小-->
     <dimen name="text_size_content">15dp</dimen>
     <dimen name="text_size_content_small">12dp</dimen>

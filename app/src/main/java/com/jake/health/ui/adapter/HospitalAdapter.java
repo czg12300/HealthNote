@@ -56,7 +56,7 @@ public class HospitalAdapter extends RecyclerView.Adapter<HospitalAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         HospitalInfo info = mList.get(position);
         if (info != null) {
-            ImageLoadManager.load(mContext, info.getAvater(), holder.ivAvatar, true);
+            ImageLoadManager.load(mContext, info.getAvatar(), holder.ivAvatar, true);
             ViewUtil.setText2TextView(holder.tvTitle, info.getTitle());
             ViewUtil.setText2TextView(holder.tvNikeName, info.getNikeName());
             ViewUtil.setText2TextView(holder.tvContent, info.getContent());
@@ -86,7 +86,7 @@ public class HospitalAdapter extends RecyclerView.Adapter<HospitalAdapter.ViewHo
             super(itemView);
             ivAvatar = (ImageView) itemView.findViewById(R.id.iv_avatar);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
-            tvContent = (TextView) itemView.findViewById(R.id.tv_content);
+            tvContent = (TextView) itemView.findViewById(R.id.tv_summary);
             tvNikeName = (TextView) itemView.findViewById(R.id.tv_nike_name);
             tvZanNum = (TextView) itemView.findViewById(R.id.tv_zan_num);
             vDivider = itemView.findViewById(R.id.v_divider);

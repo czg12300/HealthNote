@@ -2,8 +2,10 @@
 package com.jake.health.ui.fragment;
 
 import com.jake.health.R;
+import com.jake.health.entity.AnalysisInfo;
 import com.jake.health.entity.QAInfo;
 import com.jake.health.ui.HealthApplication;
+import com.jake.health.ui.adapter.AnalysisAdapter;
 import com.jake.health.ui.base.BaseListAdapter;
 import com.jake.health.ui.adapter.HomeAdapter;
 import com.jake.health.ui.base.BaseListFragment;
@@ -17,15 +19,15 @@ import java.util.List;
  * @author jakechen
  * @since 2016/4/29 11:24
  */
-public class AnalysisCommonFragment extends BaseListFragment<QAInfo> {
+public class AnalysisCommonFragment extends BaseListFragment<AnalysisInfo> {
     @Override
-    protected BaseListAdapter<QAInfo> createAdapter() {
-        return new HomeAdapter(getActivity());
+    protected BaseListAdapter<AnalysisInfo> createAdapter() {
+        return new AnalysisAdapter(getActivity());
     }
 
     @Override
-    protected List<QAInfo> loadData() {
-        return TestHelper.loadQAInfoList(getAdapter(), getPageIndex());
+    protected List<AnalysisInfo> loadData() {
+        return TestHelper.loadAnalysisInfoList(getAdapter(), getPageIndex());
     }
 
     public static String getTabTitle() {
