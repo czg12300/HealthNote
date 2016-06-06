@@ -3,11 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:visibility="gone"
+        android:background="@color/list_divider" />
     <com.jake.health.ui.widgt.banner.BannerView
         android:id="@+id/banner_top"
         android:layout_width="match_parent"
-        android:layout_height="130dp" />
+        android:layout_height="170dp" />
 
     <GridView
         android:id="@+id/gv_nav"
@@ -16,7 +20,11 @@
         android:cacheColorHint="@color/trans"
         android:numColumns="4"
         android:visibility="gone" />
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:visibility="visible"
+        android:background="@color/list_divider" />
     <RelativeLayout
         android:id="@+id/rl_nav"
         android:layout_width="match_parent"
